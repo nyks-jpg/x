@@ -720,8 +720,36 @@
         .ai-header {
             display: flex;
             align-items: center;
-            gap: 10px;
+            justify-content: space-between;
             margin-bottom: 18px;
+        }
+
+        .ai-header-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .ai-new-btn {
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.5);
+            transition: all 0.2s;
+            flex-shrink: 0;
+        }
+
+        .ai-new-btn:hover {
+            background: rgba(255,255,255,0.12);
+            color: #fff;
+            border-color: rgba(255,255,255,0.25);
         }
 
         .ai-header-text {
@@ -856,25 +884,55 @@
 
         .ai-response {
             margin-top: 16px;
-            padding: 16px 18px;
-            background: rgba(0, 0, 0, 0.1);
-            border-radius: 16px;
-            font-size: 0.92rem;
-            line-height: 1.7;
-            color: rgba(255, 255, 255, 0.85);
+            max-height: 360px;
+            overflow-y: auto;
             display: none;
-            white-space: pre-wrap;
-            word-wrap: break-word;
+            flex-direction: column;
+            gap: 10px;
+            padding: 4px 0;
         }
 
-        .ai-response.loading {
-            display: block;
-            color: rgba(255, 255, 255, 0.5);
+        .ai-response::-webkit-scrollbar { width: 4px; }
+        .ai-response::-webkit-scrollbar-track { background: transparent; }
+        .ai-response::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 4px; }
+
+        .chat-msg {
+            padding: 12px 16px;
+            border-radius: 16px;
+            font-size: 0.92rem;
+            line-height: 1.6;
+            word-wrap: break-word;
+            white-space: pre-wrap;
+            max-width: 88%;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+        .chat-msg.user {
+            align-self: flex-end;
+            background: linear-gradient(135deg, #ffb3c6, #f07090);
+            color: #5a1e2e;
+            border-bottom-right-radius: 4px;
+        }
+
+        .chat-msg.ai {
+            align-self: flex-start;
+            background: rgba(255, 255, 255, 0.07);
+            color: rgba(255, 255, 255, 0.88);
+            border-bottom-left-radius: 4px;
+        }
+
+        .chat-msg.loading-msg {
+            align-self: flex-start;
+            background: transparent;
+            color: rgba(255, 255, 255, 0.4);
             font-style: italic;
+            font-size: 0.85rem;
         }
 
         .ai-response.show {
-            display: block;
+            display: flex;
         }
 
         .motivation-container {
@@ -963,7 +1021,10 @@
 
     <div class="ai-container">
         <div class="ai-header">
-            <span class="ai-header-text">Oran'a Sor</span>
+            <div class="ai-header-left">
+                <span class="ai-header-text">Oran'a Sor</span>
+                <button class="ai-new-btn" onclick="newChat()" title="Yeni Sohbet">✕</button>
+            </div>
         </div>
         <div class="ai-img-preview" id="ai-img-preview">
             <img id="ai-img-preview-img" src="" alt="">
@@ -2535,9 +2596,37 @@
         }
 
     // ========================================================
-        // AI SORU SORMA - GERÇEK GEMINI ENTEGRASYONU (GÜNCEL)
+        // AI SORU SORMA - SOHBET GEÇMİŞİ
         // ========================================================
         let aiFileData = null;
+        let chatHistory = JSON.parse(localStorage.getItem('oranChat') || '[]');
+
+        function renderChat() {
+            const el = document.getElementById('ai-response');
+            if (!el) return;
+            if (chatHistory.length === 0) {
+                el.innerHTML = '';
+                el.className = 'ai-response';
+                return;
+            }
+            el.innerHTML = chatHistory.map((msg, i) =>
+                `<div class="chat-msg ${msg.role}">${msg.text}</div>`
+            ).join('');
+            el.className = 'ai-response show';
+            el.scrollTop = el.scrollHeight;
+        }
+
+        function newChat() {
+            chatHistory = [];
+            localStorage.removeItem('oranChat');
+            renderChat();
+            document.getElementById('ai-input').value = '';
+            removeAiImage();
+        }
+
+        function saveChat() {
+            localStorage.setItem('oranChat', JSON.stringify(chatHistory));
+        }
 
         function handleAiKey(e) {
             if (e.key === 'Enter' && !e.shiftKey) { 
@@ -2582,9 +2671,12 @@
 
             if (!question && !aiFileData) return;
 
+            chatHistory.push({ role: 'user', text: question || (aiFileData ? `[Dosya: ${aiFileData.name}]` : '') });
+            chatHistory.push({ role: 'loading-msg', text: 'Oran düşünüyor... 🧠' });
+            renderChat();
+            saveChat();
+
             sendBtn.disabled = true;
-            responseEl.textContent = 'Oran düşünüyor... 🧠';
-            responseEl.className = 'ai-response loading';
 
             try {
                 const formData = new FormData();
@@ -2606,19 +2698,22 @@
                 }
 
                 const data = await res.json();
-                if (data.error) {
-                    responseEl.innerHTML = `<span style="color:#ff4a4a">Hata: ${data.error}</span>`;
-                } else {
-                    responseEl.textContent = data.reply || data.text || JSON.stringify(data);
-                }
+                const reply = data.error ? `Hata: ${data.error}` : (data.reply || data.text || JSON.stringify(data));
+
+                chatHistory.pop();
+                chatHistory.push({ role: 'ai', text: reply });
+                renderChat();
+                saveChat();
             } catch (err) {
-                responseEl.innerHTML = `<span style="color:#ff4a4a">Bağlantı Hatası: ${err.message}</span>`;
+                chatHistory.pop();
+                chatHistory.push({ role: 'ai', text: `Bağlantı Hatası: ${err.message}` });
+                renderChat();
+                saveChat();
                 console.error(err);
             } finally {
                 input.value = '';
                 removeAiImage();
                 sendBtn.disabled = false;
-                responseEl.className = 'ai-response show';
             }
         }
 
@@ -2627,6 +2722,7 @@
         changeQuote();
         renderTodos();
         renderWrongWords();
+        renderChat();
         setInterval(updateTimers, 1000);
 
     </script>
