@@ -2597,7 +2597,7 @@
         // AI SORU SORMA - SOHBET GEÇMİŞİ
         // ========================================================
         let aiFileData = null;
-        let chatHistory = JSON.parse(localStorage.getItem('oranChat') || '[]');
+        let chatHistory = [];
 
         function escHtml(str) {
             const div = document.createElement('div');
@@ -2622,14 +2622,9 @@
 
         function newChat() {
             chatHistory = [];
-            localStorage.removeItem('oranChat');
             renderChat();
             document.getElementById('ai-input').value = '';
             removeAiImage();
-        }
-
-        function saveChat() {
-            localStorage.setItem('oranChat', JSON.stringify(chatHistory));
         }
 
         function handleAiKey(e) {
@@ -2686,7 +2681,6 @@
             removeAiImage();
             chatHistory.push({ role: 'loading-msg', text: 'Oran düşünüyor... 🧠' });
             renderChat();
-            saveChat();
 
             sendBtn.disabled = true;
 
@@ -2715,12 +2709,10 @@
                 chatHistory.pop();
                 chatHistory.push({ role: 'ai', text: reply });
                 renderChat();
-                saveChat();
             } catch (err) {
                 chatHistory.pop();
                 chatHistory.push({ role: 'ai', text: `Bağlantı Hatası: ${escHtml(err.message)}` });
                 renderChat();
-                saveChat();
                 console.error(err);
             } finally {
                 sendBtn.disabled = false;
