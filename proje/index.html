@@ -911,6 +911,8 @@
             justify-content: center;
             transition: all 0.3s ease;
             user-select: none;
+            line-height: 1;
+            padding: 0;
         }
         .dark-toggle:hover { transform: scale(1.1); background: rgba(255,255,255,0.18); }
         body.dark-mode {
@@ -2513,7 +2515,7 @@
 
         // İlerleme göstergesi
         function updateProgress() {
-            const done = uniqueWordBank.filter(e => getShown(e.word) >= 2).length;
+            const done = uniqueWordBank.filter(e => getShown(e.word) > 0).length;
             const total = uniqueWordBank.length;
             const el = document.getElementById('progress-label');
             if (el) el.textContent = `Tamamlanan: ${done} / ${total}`;
