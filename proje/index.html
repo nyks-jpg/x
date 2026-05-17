@@ -2671,6 +2671,8 @@
 
             if (!question && !aiFileData) return;
 
+            input.value = '';
+
             chatHistory.push({ role: 'user', text: question || (aiFileData ? `[Dosya: ${aiFileData.name}]` : '') });
             chatHistory.push({ role: 'loading-msg', text: 'Oran düşünüyor... 🧠' });
             renderChat();
@@ -2711,7 +2713,6 @@
                 saveChat();
                 console.error(err);
             } finally {
-                input.value = '';
                 removeAiImage();
                 sendBtn.disabled = false;
             }
