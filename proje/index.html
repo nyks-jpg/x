@@ -2646,3 +2646,58 @@
             }
         }
     </script>
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        // Sayfadaki gönder butonunu otomatik buluyoruz
+        const buton = document.querySelector('button');
+        if (!buton) return;
+
+        // Eski tetikleyicileri temizleyip kurşun geçirmez yeni dinleyiciyi bağlıyoruz
+        buton.removeAttribute('onclick');
+        buton.addEventListener('click', async (e) => {
+            e.preventDefault();
+            
+            const dosyaGirdisi = document.querySelector('input[type="file"]');
+            const mesajGirdisi = document.querySelector('textarea') || document.querySelector('input[type="text"]');
+            
+            // Cevabın yazılacağı alanı bul (yoksa geçici olarak butonun altına ekler)
+            let cevapAlani = document.getElementById('yapayZekaCevap') || document.getElementById('output');
+            if (!cevapAlani) {
+                cevapAlani = document.createElement('div');
+                cevapAlani.id = 'yapayZekaCevap';
+                cevapAlani.style.marginTop = '15px';
+                buton.parentNode.appendChild(cevapAlani);
+            }
+
+            if (!mesajGirdisi || !mesajGirdisi.value.trim()) {
+                alert("Lütfen bir mesaj yazın!");
+                return;
+            }
+
+            cevapAlani.innerHTML = "<strong>Düşünüyorum... 🧠</strong>";
+
+            const formData = new FormData();
+            formData.append('message', mesajGirdisi.value);
+            if (dosyaGirdisi && dosyaGirdisi.files[0]) {
+                formData.append('file', dosyaGirdisi.files[0]);
+            }
+
+            try {
+                const response = await fetch('/api/chat', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const data = await response.json();
+                
+                if (data.error) {
+                    cevapAlani.innerHTML = `<span style="color:red">Hata: ${data.error}</span>`;
+                } else {
+                    cevapAlani.innerHTML = `<strong>Gemini:</strong> ${data.reply}`;
+                }
+            } catch (error) {
+                cevapAlani.innerHTML = `<span style="color:red">Bağlantı Hatası: Sunucu yanıt vermedi.</span>`;
+            }
+        });
+    });
+</script>
