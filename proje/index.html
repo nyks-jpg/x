@@ -370,31 +370,20 @@
             color: #ff477e;
         }
 
-        /* Drag handle */
-        .drag-handle {
+        /* Todo move buttons */
+        .todo-move-btn {
+            background: none;
+            border: none;
             color: rgba(255,255,255,0.25);
-            font-size: 1rem;
-            cursor: grab;
-            flex-shrink: 0;
-            padding: 0 2px;
+            cursor: pointer;
+            font-size: 10px;
             line-height: 1;
+            padding: 1px 3px;
             transition: color 0.2s;
-            user-select: none;
-            display: flex;
-            flex-direction: column;
-            gap: 3px;
+            width: 18px;
+            text-align: center;
         }
-
-        .drag-handle span {
-            display: block;
-            width: 14px;
-            height: 1.5px;
-            background: currentColor;
-            border-radius: 2px;
-        }
-
-        .drag-handle:hover { color: rgba(255,255,255,0.55); }
-        .drag-handle:active { cursor: grabbing; }
+        .todo-move-btn:hover { color: rgba(255,255,255,0.6); }
 
         .todo-item.dragging {
             opacity: 0.4;
@@ -937,7 +926,11 @@
             background: rgba(20, 20, 40, 0.6) !important;
             border-color: rgba(255,255,255,0.08) !important;
         }
-        body.dark-mode .ai-input { background: rgba(20, 20, 40, 0.6); border-color: rgba(255,255,255,0.1); color: #e0e0e0; }
+        body.dark-mode .ai-input-wrap {
+            background: rgba(20, 20, 40, 0.6);
+            border-color: rgba(255,255,255,0.1);
+        }
+        body.dark-mode .ai-input { background: transparent; border-color: transparent; color: #e0e0e0; }
         body.dark-mode .ai-input::placeholder { color: rgba(255,255,255,0.35); }
         body.dark-mode .option-btn { background: rgba(20, 20, 40, 0.5); border-color: rgba(255,255,255,0.1); color: #e0e0e0; }
         body.dark-mode .wrong-word-item { background: rgba(40, 20, 20, 0.4); border-color: rgba(255,80,80,0.2); color: #e0a0a0; }
@@ -987,7 +980,7 @@
         <div class="todo-container">
             <div class="todo-title">
                 <span class="todo-title-text">Bugün Ne Yapacaksın?</span>
-                <span class="todo-clear-btn" onclick="localStorage.removeItem('orhan_todos');todos=[];renderTodos()">Temizle</span>
+                <span class="todo-clear-btn" onclick="todos=[];renderTodos()">Temizle</span>
             </div>
             <div class="todo-input-group">
                 <input type="text" id="todo-input" class="todo-input" placeholder="Yeni görev ekle..." onkeypress="handleTodoKey(event)">
@@ -1140,7 +1133,7 @@
         }
 
         // YAPILACAKLAR LİSTESİ (TODO) MANTIĞI
-        let todos = JSON.parse(localStorage.getItem('orhan_todos')) || [];
+        let todos = [];
 
         function renderTodos() {
             const listEl = document.getElementById('todo-list');
@@ -1151,7 +1144,10 @@
                 li.draggable = true;
                 li.dataset.index = index;
                 li.innerHTML = `
-                    <span class="drag-handle"><span></span><span></span><span></span></span>
+                    <div class="move-group" style="display:flex;flex-direction:column;gap:2px;flex-shrink:0;margin-right:4px;">
+                        <button class="todo-move-btn" data-dir="up" style="background:none;border:none;color:rgba(255,255,255,0.3);cursor:pointer;font-size:10px;line-height:1;padding:1px 3px;">▲</button>
+                        <button class="todo-move-btn" data-dir="down" style="background:none;border:none;color:rgba(255,255,255,0.3);cursor:pointer;font-size:10px;line-height:1;padding:1px 3px;">▼</button>
+                    </div>
                     <input type="checkbox" class="todo-checkbox" ${todo.completed ? 'checked' : ''}>
                     <span class="todo-text">${todo.text}</span>
                     <button class="todo-delete-btn">×</button>
@@ -1164,7 +1160,6 @@
                 li.addEventListener('dragleave', handleDragLeave);
                 listEl.appendChild(li);
             });
-            localStorage.setItem('orhan_todos', JSON.stringify(todos));
         }
 
         function setupTodoEvents() {
@@ -1176,6 +1171,10 @@
                     toggleTodo(idx);
                 } else if (e.target.closest('.todo-delete-btn')) {
                     deleteTodo(idx);
+                } else if (e.target.closest('.todo-move-btn')) {
+                    const dir = e.target.closest('.todo-move-btn').dataset.dir;
+                    if (dir === 'up' && idx > 0) { [todos[idx-1], todos[idx]] = [todos[idx], todos[idx-1]]; renderTodos(); }
+                    if (dir === 'down' && idx < todos.length - 1) { [todos[idx], todos[idx+1]] = [todos[idx+1], todos[idx]]; renderTodos(); }
                 }
             });
         }
