@@ -2838,8 +2838,10 @@
             const gameArea = document.getElementById('game-area');
             if (gameArea.style.display === "block") {
                 gameArea.style.display = "none";
+                localStorage.setItem('orhan_game_visible', '0');
             } else {
                 gameArea.style.display = "block";
+                localStorage.setItem('orhan_game_visible', '1');
                 if (!currentQuestion.word) generateQuestion();
             }
         }
@@ -3044,9 +3046,11 @@
             if (el.style.display === 'block') {
                 el.style.display = 'none';
                 btn.classList.remove('active');
+                localStorage.setItem('orhan_week_visible', '0');
             } else {
                 el.style.display = 'block';
                 btn.classList.add('active');
+                localStorage.setItem('orhan_week_visible', '1');
                 renderWeek();
             }
         }
@@ -3180,6 +3184,17 @@
         renderTodos();
         renderWrongWords();
         setInterval(updateTimers, 1000);
+
+        // Açık panel durumlarını geri yükle
+        if (localStorage.getItem('orhan_game_visible') === '1') {
+            document.getElementById('game-area').style.display = 'block';
+            if (!currentQuestion.word) generateQuestion();
+        }
+        if (localStorage.getItem('orhan_week_visible') === '1') {
+            document.getElementById('week-area').style.display = 'block';
+            document.getElementById('week-btn').classList.add('active');
+            renderWeek();
+        }
 
         // Dark Mode Toggle
         const darkToggle = document.createElement('button');
