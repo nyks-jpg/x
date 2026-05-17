@@ -2523,11 +2523,19 @@
 
         // Kaç kez gösterildi (localStorage'da tutulur)
         let showCount = JSON.parse(localStorage.getItem('orhan_show_count_v3')) || {};
+        let correctCount = JSON.parse(localStorage.getItem('orhan_correct_v3')) || {};
         let lastWord = null;
 
         function _key(word) { return word.toLowerCase().trim(); }
 
         function getShown(word) { return showCount[_key(word)] || 0; }
+
+        function isCorrect(word) { return correctCount[_key(word)] || false; }
+
+        function markCorrect(word) {
+            correctCount[_key(word)] = true;
+            localStorage.setItem('orhan_correct_v3', JSON.stringify(correctCount));
+        }
 
         function incrementShown(word) {
             showCount[_key(word)] = getShown(word) + 1;
@@ -2541,7 +2549,9 @@
             // Havuz bittiyse sayaçları sıfırla, yeniden başla
             if (pool.length === 0) {
                 showCount = {};
+                correctCount = {};
                 localStorage.setItem('orhan_show_count_v3', JSON.stringify(showCount));
+                localStorage.setItem('orhan_correct_v3', JSON.stringify(correctCount));
                 pool = uniqueWordBank;
             }
 
@@ -2557,7 +2567,7 @@
 
         // İlerleme göstergesi
         function updateProgress() {
-            const done = uniqueWordBank.filter(e => getShown(e.word) >= 2).length;
+            const done = uniqueWordBank.filter(e => isCorrect(e.word)).length;
             const total = uniqueWordBank.length;
             const el = document.getElementById('progress-label');
             if (el) el.textContent = `Tamamlanan: ${done} / ${total}`;
@@ -2613,7 +2623,9 @@
                 }
             }
 
-            if (selectedIndex !== currentQuestion.correctIndex) {
+            if (selectedIndex === currentQuestion.correctIndex) {
+                markCorrect(currentQuestion.word);
+            } else {
                 addWrongWord(currentQuestion.word, currentQuestion.mean);
             }
 
