@@ -371,33 +371,7 @@
             color: #ff477e;
         }
 
-        /* Drag handle */
-        .drag-handle {
-            color: rgba(74, 44, 58, 0.25);
-            font-size: 1rem;
-            cursor: grab;
-            flex-shrink: 0;
-            padding: 0 2px;
-            line-height: 1;
-            transition: color 0.2s;
-            user-select: none;
-            display: flex;
-            flex-direction: column;
-            gap: 3px;
-        }
-
-        .drag-handle span {
-            display: block;
-            width: 14px;
-            height: 1.5px;
-            background: currentColor;
-            border-radius: 2px;
-        }
-
-        .drag-handle:hover { color: rgba(74, 44, 58, 0.55); }
-        .drag-handle:active { cursor: grabbing; }
-
-        .todo-item.dragging {
+        .todo-item.drag-over {
             opacity: 0.4;
             transform: scale(0.97);
             border-color: rgba(255,179,198,0.3);
@@ -445,8 +419,8 @@
 
         .game-title {
             font-family: 'Mulish', sans-serif;
-            font-size: 0.75rem;
-            font-weight: 300;
+            font-size: 0.85rem;
+            font-weight: 400;
             letter-spacing: 4px;
             text-transform: uppercase;
             color: rgba(74, 44, 58, 0.5);
@@ -456,7 +430,7 @@
 
         .target-word {
             font-family: 'DM Serif Display', serif;
-            font-size: 2.4rem;
+            font-size: 2.6rem;
             font-weight: 400;
             margin-bottom: 4px;
             color: rgba(74, 44, 58, 0.92);
@@ -487,32 +461,38 @@
         }
 
         .option-btn {
-            background: rgba(255, 255, 255, 0.4);
-            border: 1px solid rgba(74, 44, 58, 0.08);
-
-            border-radius: 20px;
-            padding: 6px 6px 6px 18px;
+            background: rgba(255, 255, 255, 0.5);
+            border: 1px solid rgba(74, 44, 58, 0.1);
+            border-radius: 16px;
+            padding: 12px 16px 12px 16px;
             transition: all 0.25s ease;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 0.95rem;
+            cursor: pointer;
+            font-family: 'Mulish', sans-serif;
+            color: #4a2c3a;
         }
 
         .option-btn:hover {
-            background: rgba(255, 255, 255, 0.9);
+            background: rgba(255, 255, 255, 0.7);
             border-color: rgba(74, 44, 58, 0.2);
-            transform: scale(1.02);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.06);
         }
 
         .option-prefix {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            width: 28px;
-            height: 28px;
-            background: rgba(255, 179, 198, 0.25);
+            width: 32px;
+            height: 32px;
+            background: rgba(255, 179, 198, 0.3);
             border-radius: 50%;
-            font-size: 0.75rem;
+            font-size: 0.8rem;
             font-weight: 700;
             color: #a04560;
-            margin-right: 10px;
             flex-shrink: 0;
         }
 
@@ -582,14 +562,15 @@
 
         .copy-wrong-btn {
             background: rgba(74, 44, 58, 0.06);
-            border: 1px solid rgba(74, 44, 58, 0.1);
+            border: 1px solid rgba(74, 44, 58, 0.12);
             color: rgba(74, 44, 58, 0.5);
-            font-size: 0.6rem;
-            padding: 4px 12px;
+            font-size: 0.75rem;
+            padding: 6px 16px;
             border-radius: 20px;
             cursor: pointer;
             font-family: 'Mulish', sans-serif;
             transition: all 0.2s;
+            letter-spacing: 0.5px;
         }
 
         .copy-wrong-btn:hover {
@@ -646,13 +627,13 @@
             border: none;
             color: rgba(74, 44, 58, 0.25);
             cursor: pointer;
-            font-size: 0.8rem;
-            padding: 0 2px;
+            font-size: 0.7rem;
+            padding: 0;
             line-height: 1;
             transition: all 0.2s;
             flex-shrink: 0;
-            width: 22px;
-            height: 22px;
+            width: 24px;
+            height: 24px;
             display: inline-flex;
             align-items: center;
             justify-content: center;
@@ -691,14 +672,9 @@
 
         .ai-header {
             display: flex;
-            justify-content: center;
-            margin-bottom: 16px;
-        }
-
-        .ai-header-left {
-            display: flex;
             align-items: center;
-            gap: 12px;
+            justify-content: space-between;
+            margin-bottom: 16px;
         }
 
         .ai-header-text {
@@ -1006,10 +982,8 @@
 
     <div class="ai-container">
         <div class="ai-header">
-            <div class="ai-header-left">
-                <span class="ai-header-text">Oran'a Sor</span>
-                <button class="ai-new-btn" onclick="newChat()" title="Yeni Sohbet">Yeni Sohbet</button>
-            </div>
+            <span class="ai-header-text">Oran'a Sor</span>
+            <button class="ai-new-btn" onclick="newChat()" title="Yeni Sohbet">Yeni Sohbet</button>
         </div>
         <div class="ai-img-preview" id="ai-img-preview">
             <img id="ai-img-preview-img" src="" alt="">
@@ -1029,7 +1003,7 @@
 
     <div class="game-container" id="game-area">
         <div class="game-title">Kelime Çalışması</div>
-        <div id="progress-label" style="font-size:0.75rem; color:rgba(74,44,58,0.5); text-align:center; margin-bottom:14px; letter-spacing:2px; font-weight:300;">Tamamlanan: 0 / 0</div>
+        <div id="progress-label" style="font-size:0.85rem; color:rgba(74,44,58,0.5); text-align:center; margin-bottom:14px; letter-spacing:2px; font-weight:300;">Tamamlanan: 0 / 0</div>
         <div class="target-word" id="word-target">Word</div>
         <div class="sentence-box" id="sentence-target">"Orhan is studying."</div>
         
@@ -1179,11 +1153,10 @@
                 li.draggable = true;
                 li.dataset.index = index;
                 li.innerHTML = `
-                    <span class="drag-handle"><span></span><span></span><span></span></span>
-                    <input type="checkbox" class="todo-checkbox" ${todo.completed ? 'checked' : ''}>
-                    <span class="todo-text">${todo.text}</span>
                     <button class="todo-move-btn" onclick="moveTodo(${index}, -1)" title="Yukarı">▲</button>
                     <button class="todo-move-btn" onclick="moveTodo(${index}, 1)" title="Aşağı">▼</button>
+                    <input type="checkbox" class="todo-checkbox" ${todo.completed ? 'checked' : ''}>
+                    <span class="todo-text">${todo.text}</span>
                     <button class="todo-delete-btn">×</button>
                 `;
                 li.addEventListener('dragstart', handleDragStart);
