@@ -33,8 +33,7 @@ async function handleChat(request, env) {
             });
         }
 
-        const model = "@cf/meta/llama-3.2-11b-vision-instruct";
-        let aiInput;
+        let model, aiInput;
 
         if (file && file.size > 0 && file.type.startsWith("image/")) {
             const arrayBuffer = await file.arrayBuffer();
@@ -43,6 +42,7 @@ async function handleChat(request, env) {
             );
             const dataUrl = `data:${file.type};base64,${base64Data}`;
 
+            model = "@cf/meta/llama-3.2-11b-vision-instruct";
             aiInput = {
                 messages: [
                     {
@@ -55,11 +55,14 @@ async function handleChat(request, env) {
                 ],
                 max_tokens: 1024
             };
+
+            await env.AI.run(model, { prompt: "agree" }).catch(() => {});
         } else {
             const context = file
                 ? `Kullanıcı "${file.name}" adında bir dosya yükledi (${file.type}). Soru: ${message || "Bu dosyayı özetle."}`
                 : message;
 
+            model = "@cf/mistral/mistral-7b-instruct-v0.1";
             aiInput = {
                 messages: [
                     { role: "user", content: context }
@@ -69,8 +72,8 @@ async function handleChat(request, env) {
         }
 
         const result = await env.AI.run(model, aiInput);
-
         const reply = result?.response || result?.choices?.[0]?.message?.content || JSON.stringify(result);
+
         return new Response(JSON.stringify({ reply }), {
             headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" }
         });
