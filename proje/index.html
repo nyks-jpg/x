@@ -3021,9 +3021,6 @@
                 weekDays.forEach(d => weekData[d] = { s: 0, t: [] });
                 saveWeek();
                 localStorage.setItem('orhan_week_key', weekKey);
-                localStorage.removeItem('orhan_todos');
-                todos = [];
-                renderTodos();
                 if (document.getElementById('week-area').style.display === 'block') renderWeek();
                 return true;
             }
