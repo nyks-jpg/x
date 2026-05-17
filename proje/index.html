@@ -2534,7 +2534,7 @@
             updateProgress();
         }
 
-       // ========================================================
+    // ========================================================
         // AI SORU SORMA - GERÇEK GEMINI ENTEGRASYONU (GÜNCEL)
         // ========================================================
         let aiFileData = null;
@@ -2580,26 +2580,22 @@
             const sendBtn = document.getElementById('ai-send-btn');
             const question = input.value.trim();
 
-            // Soru yoksa ve dosya yüklenmediyse işlem yapma
             if (!question && !aiFileData) return;
 
-            // Arayüzü kilitle ve yükleniyor animasyonuna geç
             sendBtn.disabled = true;
             responseEl.textContent = 'Gemini düşünüyor... 🧠';
             responseEl.className = 'ai-response loading';
 
-            // Verileri Cloudflare API'sine iletmek üzere FormData formatına alıyoruz
             const formData = new FormData();
             formData.append('message', question);
             
-            // Eğer yüklenen bir dosya varsa FormData içine gömüyoruz
             const fileInput = document.getElementById('ai-img-input');
             if (fileInput && fileInput.files[0]) {
                 formData.append('file', fileInput.files[0]);
             }
 
-            // Cloudflare Worker/Pages backend endpoint'ine istek atıyoruz
-            fetch('/api/chat', {
+            // Doğrudan senin Cloudflare Workers URL'ine istek atıyoruz
+            fetch('https://x.calisma.workers.dev/', {
                 method: 'POST',
                 body: formData
             })
@@ -2611,7 +2607,6 @@
                 if (data.error) {
                     responseEl.innerHTML = `<span style="color:#ff4a4a">Hata: ${data.error}</span>`;
                 } else {
-                    // YANIT GELDİ: Gerçek yapay zeka cevabını ekrana basıyoruz
                     responseEl.textContent = data.reply;
                 }
             })
@@ -2620,7 +2615,6 @@
                 console.error(err);
             })
             .finally(() => {
-                // Girişleri temizle ve arayüzü eski haline getir
                 if (input) input.value = '';
                 removeAiImage();
                 sendBtn.disabled = false;
@@ -2628,7 +2622,7 @@
             });
         }
 
-        // Başlangıç Çağrıları (Senin mevcut fonksiyonların)
+        // Başlangıç Çağrıları
         updateTimers();
         changeQuote();
         renderTodos();
