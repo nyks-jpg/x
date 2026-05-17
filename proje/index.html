@@ -970,13 +970,12 @@
             background: rgba(255,255,255,0.05);
             border: 1px solid rgba(255,255,255,0.08);
             border-radius: 16px;
-            padding: 18px 10px;
+            padding: 14px 10px;
             transition: all 0.2s;
             display: flex;
             flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 90px;
+            min-height: 120px;
+            position: relative;
         }
         .week-day:hover {
             background: rgba(255,255,255,0.08);
@@ -988,21 +987,107 @@
         }
         .week-day-name {
             font-family: 'DM Serif Display', serif;
-            font-size: 1rem;
+            font-size: 0.85rem;
             color: rgba(255,255,255,0.9);
             font-weight: 400;
-            margin-bottom: 8px;
+            text-align: center;
+            margin-bottom: 2px;
         }
         .week-day-hours {
-            font-size: 1.4rem;
+            font-size: 1.1rem;
             color: rgba(255,179,198,0.85);
             font-family: 'DM Serif Display', serif;
             letter-spacing: 0.5px;
+            text-align: center;
+            margin-bottom: 6px;
         }
         .week-day-hours.small {
-            font-size: 0.65rem;
-            color: rgba(255,255,255,0.3);
+            font-size: 0.6rem;
+            color: rgba(255,255,255,0.25);
         }
+        .week-tasks {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+            flex: 1;
+            min-height: 0;
+        }
+        .week-task {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.05);
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 0.65rem;
+            color: rgba(255,255,255,0.8);
+            cursor: grab;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.15s;
+            user-select: none;
+        }
+        .week-task:active { cursor: grabbing; }
+        .week-task.dragging {
+            opacity: 0.3;
+            transform: scale(0.95);
+        }
+        .week-task.drag-over {
+            border-color: rgba(255,179,198,0.4);
+            background: rgba(255,179,198,0.1);
+            transform: translateY(-2px);
+        }
+        .week-task-del {
+            background: none;
+            border: none;
+            color: rgba(255,255,255,0.2);
+            cursor: pointer;
+            font-size: 0.7rem;
+            line-height: 1;
+            padding: 0 2px;
+            transition: color 0.15s;
+        }
+        .week-task-del:hover { color: #ff477e; }
+        .week-add-row {
+            display: flex;
+            gap: 4px;
+            margin-top: 6px;
+        }
+        .week-add-input {
+            flex: 1;
+            background: rgba(0,0,0,0.2);
+            border: 1px solid rgba(255,255,255,0.08);
+            padding: 4px 6px;
+            border-radius: 6px;
+            color: #fff;
+            font-size: 0.6rem;
+            outline: none;
+            font-family: 'Mulish', sans-serif;
+            transition: all 0.2s;
+            min-width: 0;
+        }
+        .week-add-input:focus {
+            border-color: #ffb3c6;
+            background: rgba(0,0,0,0.3);
+        }
+        .week-add-input::placeholder { color: rgba(255,255,255,0.2); }
+        .week-add-task-btn {
+            background: linear-gradient(135deg, #ffb3c6, #f07090);
+            color: #5a1e2e;
+            border: none;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-weight: 700;
+            cursor: pointer;
+            font-size: 0.55rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-family: 'Mulish', sans-serif;
+            box-shadow: 0 2px 8px rgba(240,112,144,0.35);
+            transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+            flex-shrink: 0;
+        }
+        .week-add-task-btn:hover { background: #fff; }
         .week-total-row {
             text-align: center;
             margin-top: 18px;
@@ -1040,6 +1125,16 @@
         body.dark-mode .week-day {
             background: rgba(255,255,255,0.03);
             border-color: rgba(255,255,255,0.05);
+        }
+        body.dark-mode .week-day.today {
+            border-color: #ff7098 !important;
+            background: rgba(255,112,152,0.15) !important;
+        }
+        body.dark-mode .week-day.today .week-day-name {
+            color: #ffb3c6;
+        }
+        body.dark-mode .week-day.today .week-day-hours {
+            color: #ff90b0;
         }
 
         /* Dark Mode Toggle */
@@ -2892,14 +2987,32 @@
 
         // HAFTALIK PROGRAM
         const weekDays = ["Pazartesi", "Salı", "Çarşamba", "Perşembe", "Cuma", "Cumartesi", "Pazar"];
-        let weekData = JSON.parse(localStorage.getItem('orhan_weekly_v2')) || {};
+        let weekData = JSON.parse(localStorage.getItem('orhan_weekly_v3')) || {};
 
         function saveWeek() {
-            localStorage.setItem('orhan_weekly_v2', JSON.stringify(weekData));
+            localStorage.setItem('orhan_weekly_v3', JSON.stringify(weekData));
         }
 
         function initWeek() {
-            weekDays.forEach(d => { if (typeof weekData[d] !== 'number') weekData[d] = 0; });
+            const now = new Date();
+            const dayOfWeek = now.getDay();
+            const diffToMon = dayOfWeek === 0 ? -6 : 1 - dayOfWeek;
+            const monday = new Date(now);
+            monday.setDate(now.getDate() + diffToMon);
+            const weekKey = monday.toISOString().slice(0, 10);
+            const savedKey = localStorage.getItem('orhan_week_key');
+            if (savedKey !== weekKey) {
+                weekData = {};
+                weekDays.forEach(d => weekData[d] = { s: 0, t: [] });
+                saveWeek();
+                localStorage.setItem('orhan_week_key', weekKey);
+                localStorage.removeItem('orhan_todos');
+                todos = [];
+            } else {
+                weekDays.forEach(d => {
+                    if (!weekData[d] || typeof weekData[d].s !== 'number') weekData[d] = { s: 0, t: [] };
+                });
+            }
         }
         initWeek();
 
@@ -2935,30 +3048,106 @@
             let totalAll = 0;
             const today = todayName();
             weekDays.forEach(day => {
-                const secs = weekData[day] || 0;
-                totalAll += secs;
+                const d = weekData[day] || { s: 0, t: [] };
+                totalAll += d.s;
                 const dayEl = document.createElement('div');
                 dayEl.className = 'week-day' + (day === today ? ' today' : '');
+                dayEl.setAttribute('data-day', day);
+
+                let tasksHtml = '';
+                (d.t || []).forEach((task, i) => {
+                    tasksHtml += `<li class="week-task" draggable="true" data-day="${day}" data-idx="${i}">
+                        <span>${task}</span>
+                        <button class="week-task-del" onclick="event.stopPropagation(); removeWeekTask('${day}',${i})">×</button>
+                    </li>`;
+                });
+
                 dayEl.innerHTML = `
                     <div class="week-day-name">${day}</div>
-                    <div class="week-day-hours">${secsToStr(secs) || '<span class="week-day-hours small">—</span>'}</div>
+                    <div class="week-day-hours">${secsToStr(d.s) || '<span class="week-day-hours small">—</span>'}</div>
+                    <ul class="week-tasks" id="wt-${day}">${tasksHtml}</ul>
+                    <div class="week-add-row">
+                        <input class="week-add-input" id="wa-${day}" placeholder="Görev ekle..." onkeypress="if(event.key==='Enter')addWeekTask('${day}')">
+                        <button class="week-add-task-btn" onclick="addWeekTask('${day}')">+</button>
+                    </div>
                 `;
                 container.appendChild(dayEl);
             });
+
+            // Drag events
+            document.querySelectorAll('.week-task').forEach(el => {
+                el.addEventListener('dragstart', handleWeekDragStart);
+                el.addEventListener('dragend', handleWeekDragEnd);
+            });
+            document.querySelectorAll('.week-tasks').forEach(el => {
+                el.addEventListener('dragover', handleWeekDragOver);
+                el.addEventListener('dragenter', handleWeekDragEnter);
+                el.addEventListener('dragleave', handleWeekDragLeave);
+                el.addEventListener('drop', handleWeekDrop);
+            });
+
             const totalRow = document.getElementById('week-total');
             if (totalRow) totalRow.textContent = `Toplam: ${secsToStr(totalAll) || '0dk'}`;
         }
 
+        let weekDragSrc = null;
+        function handleWeekDragStart(e) {
+            weekDragSrc = { day: e.target.getAttribute('data-day'), idx: parseInt(e.target.getAttribute('data-idx')) };
+            e.target.classList.add('dragging');
+            e.dataTransfer.effectAllowed = 'move';
+        }
+        function handleWeekDragEnd(e) {
+            e.target.classList.remove('dragging');
+            document.querySelectorAll('.week-task.drag-over').forEach(el => el.classList.remove('drag-over'));
+        }
+        function handleWeekDragOver(e) { e.preventDefault(); e.dataTransfer.dropEffect = 'move'; }
+        function handleWeekDragEnter(e) { e.preventDefault(); if (e.target.classList.contains('week-task')) e.target.classList.add('drag-over'); }
+        function handleWeekDragLeave(e) { if (e.target.classList.contains('week-task')) e.target.classList.remove('drag-over'); }
+        function handleWeekDrop(e) {
+            e.preventDefault();
+            const target = e.target.closest('.week-task');
+            if (!target || !weekDragSrc) return;
+            const targetDay = target.getAttribute('data-day');
+            const targetIdx = parseInt(target.getAttribute('data-idx'));
+            if (weekDragSrc.day !== targetDay) return; // sadece aynı gün içinde
+            const tasks = weekData[targetDay].t;
+            const [moved] = tasks.splice(weekDragSrc.idx, 1);
+            tasks.splice(targetIdx, 0, moved);
+            weekData[targetDay].t = tasks;
+            saveWeek();
+            renderWeek();
+        }
+
+        function addWeekTask(day) {
+            const input = document.getElementById(`wa-${day}`);
+            const text = input.value.trim();
+            if (!text) return;
+            if (!weekData[day]) weekData[day] = { s: 0, t: [] };
+            weekData[day].t.push(text);
+            saveWeek();
+            input.value = '';
+            renderWeek();
+        }
+
+        function removeWeekTask(day, idx) {
+            if (weekData[day] && weekData[day].t) {
+                weekData[day].t.splice(idx, 1);
+                saveWeek();
+                renderWeek();
+            }
+        }
+
         function addSecondsToToday(seconds) {
             const day = todayName();
-            weekData[day] = (weekData[day] || 0) + seconds;
+            if (!weekData[day]) weekData[day] = { s: 0, t: [] };
+            weekData[day].s = (weekData[day].s || 0) + seconds;
             saveWeek();
             if (document.getElementById('week-area').style.display === 'block') renderWeek();
         }
 
         function resetWeek() {
             weekData = {};
-            initWeek();
+            weekDays.forEach(d => weekData[d] = { s: 0, t: [] });
             saveWeek();
             renderWeek();
         }
