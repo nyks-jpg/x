@@ -2552,21 +2552,24 @@
             const colors = ['#ffb3c6', '#f07090', '#ff477e', '#ffd700', '#50c878', '#ff8c00', '#9370db'];
             for (let i = 0; i < 60; i++) {
                 const el = document.createElement('div');
-                el.style.cssText = `
-                    position:fixed; z-index:9999; pointer-events:none;
-                    left:${Math.random() * 100}vw; top:-10px;
-                    width:${6 + Math.random() * 6}px; height:${6 + Math.random() * 6}px;
-                    background:${colors[Math.floor(Math.random() * colors.length)]};
-                    border-radius:${Math.random() > 0.5 ? '50%' : '2px'};
-                    opacity:1;
-                    transition: transform ${1.5 + Math.random() * 1}s cubic-bezier(.25,.46,.45,.94), opacity ${1.5 + Math.random() * 1}s ease;
-                `;
+                el.style.position = 'fixed';
+                el.style.zIndex = '9999';
+                el.style.pointerEvents = 'none';
+                el.style.left = Math.random() * 100 + 'vw';
+                el.style.top = '-10px';
+                el.style.width = 6 + Math.random() * 6 + 'px';
+                el.style.height = 6 + Math.random() * 6 + 'px';
+                el.style.background = colors[Math.floor(Math.random() * colors.length)];
+                el.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+                el.style.opacity = '1';
+                el.style.transform = 'translateY(0)';
+                el.style.transition = 'transform ' + (1.5 + Math.random() * 1) + 's cubic-bezier(.25,.46,.45,.94), opacity ' + (1.5 + Math.random() * 1) + 's ease';
                 document.body.appendChild(el);
-                requestAnimationFrame(() => {
-                    el.style.transform = `translateY(${window.innerHeight + 50}px) rotate(${Math.random() * 720}deg) translateX(${(Math.random() - 0.5) * 200}px)`;
+                requestAnimationFrame(function() {
+                    el.style.transform = 'translateY(' + (window.innerHeight + 50) + 'px) rotate(' + (Math.random() * 720) + 'deg) translateX(' + ((Math.random() - 0.5) * 200) + 'px)';
                     el.style.opacity = '0';
                 });
-                setTimeout(() => el.remove(), 3000);
+                setTimeout(function() { el.remove(); }, 3000);
             }
         }
 
