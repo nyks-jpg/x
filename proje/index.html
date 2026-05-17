@@ -1209,28 +1209,28 @@
             .dark-toggle { width: 38px; height: 38px; font-size: 15px; bottom: 12px; right: 12px; }
             .ai-container { padding: 1.2rem; }
             .game-container { padding: 1.2rem; }
-            .week-container { max-width: 100%; padding: 1rem 0.6rem; }
+            .week-container { max-width: 100%; padding: 1rem 0.8rem; }
             .week-days {
-                display: grid;
-                grid-template-columns: repeat(7, 1fr);
-                gap: 4px;
+                display: flex;
+                flex-direction: column;
+                gap: 8px;
             }
             .week-day {
                 min-height: auto;
-                padding: 6px 4px;
-                border-radius: 10px;
-                min-width: 0;
+                padding: 10px 12px;
+                border-radius: 12px;
             }
-            .week-day-name { font-size: 0.65rem; margin-bottom: 1px; }
-            .week-day-hours { font-size: 0.7rem; margin-bottom: 4px; }
-            .week-tasks { display: none; }
-            .week-add-row { display: none; }
-            .week-total-row { font-size: 0.7rem; margin-top: 10px; }
+            .week-day-name { font-size: 0.9rem; margin-bottom: 2px; }
+            .week-day-hours { font-size: 0.85rem; margin-bottom: 6px; }
+            .week-tasks { display: flex; }
+            .week-tasks { gap: 4px; }
+            .week-task { font-size: 0.75rem; padding: 5px 8px; }
+            .week-add-row { display: flex; }
+            .week-add-input { font-size: 0.75rem; padding: 6px 8px; }
+            .week-add-task-btn { font-size: 0.65rem; padding: 6px 10px; }
+            .week-total-row { font-size: 0.8rem; margin-top: 12px; }
             .stopwatch-display { font-size: 2.2rem; }
             .todo-list { max-height: 200px; }
-            .week-task { font-size: 0.55rem; padding: 2px 4px; }
-            .week-add-input { font-size: 0.5rem; padding: 2px 4px; }
-            .week-add-task-btn { font-size: 0.45rem; padding: 2px 5px; }
         }
         @media (max-width: 480px) {
             body { padding: 65px 6px 20px 6px; }
@@ -1242,15 +1242,18 @@
             .todo-container, .stopwatch-container { padding: 0.8rem; }
             .ai-container { padding: 0.8rem; }
             .game-container { padding: 0.8rem; }
-            .week-container { padding: 0.6rem 0.3rem; }
-            .week-day { padding: 4px 3px; border-radius: 8px; }
-            .week-day-name { font-size: 0.55rem; }
-            .week-day-hours { font-size: 0.6rem; }
+            .week-container { padding: 0.8rem 0.5rem; }
+            .week-day { padding: 8px 10px; }
+            .week-day-name { font-size: 0.8rem; }
+            .week-day-hours { font-size: 0.75rem; }
+            .week-task { font-size: 0.65rem; padding: 4px 6px; }
+            .week-add-input { font-size: 0.65rem; padding: 5px 6px; }
+            .week-add-task-btn { font-size: 0.55rem; padding: 5px 8px; }
             .target-word { font-size: 1.4rem; }
             .stopwatch-display { font-size: 1.5rem; }
             .option-btn { font-size: 0.75rem; padding: 8px 10px; }
             .motivation-text { font-size: 0.8rem; }
-            .week-total-row { font-size: 0.6rem; }
+            .week-total-row { font-size: 0.7rem; }
         }
     </style>
 </head>
