@@ -1,6 +1,6 @@
 export default {
     async fetch(request, env, ctx) {
-        // Tarayıcıların güvenlik amaçlı attığı ön istekleri (OPTIONS) el sallayarak onaylıyoruz
+        // 1. Tarayıcıların güvenlik amaçlı attığı OPTIONS isteklerine anında onay veriyoruz (CORS)
         if (request.method === "OPTIONS") {
             return new Response(null, {
                 headers: {
@@ -11,6 +11,7 @@ export default {
             });
         }
 
+        // 2. Eğer gelen istek POST değilse hata döndür (Ama artık POST isteklerini kabul edecek!)
         if (request.method !== "POST") {
             return new Response(JSON.stringify({ error: "Sadece POST istekleri desteklenir." }), {
                 status: 405,
@@ -22,19 +23,19 @@ export default {
             const apiKey = env.GEMINI_API_KEY; 
 
             if (!apiKey) {
-                return new Response(JSON.stringify({ error: "GEMINI_API_KEY bulunamadı! Lütfen Cloudflare panelinden değişkeni kontrol edin." }), { 
+                return new Response(JSON.stringify({ error: "GEMINI_API_KEY bulunamadı! Lütfen Cloudflare Settings -> Variables altından kontrol edin." }), { 
                     status: 500,
                     headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" }
                 });
             }
 
-            // Ön yüzden (index.html) gelen FormData verilerini yakalıyoruz
+            // index.html'den gelen verileri alıyoruz
             const formData = await request.formData();
             const message = formData.get('message') || "";
             const file = formData.get('file');
 
             if (!message && !file) {
-                return new Response(JSON.stringify({ error: "Mesaj alanı veya dosya boş olamaz." }), { 
+                return new Response(JSON.stringify({ error: "Mesaj alanı boş olamaz." }), { 
                     status: 400,
                     headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" }
                 });
@@ -43,7 +44,7 @@ export default {
             const googleUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
             let parts = [{ text: message }];
 
-            // Eğer resim/dosya geldiyse bunu Gemini için Base64 formatına çeviriyoruz
+            // Eğer resim/dosya yüklendiyse base64'e çevirip Gemini'ye ekliyoruz
             if (file && file.size > 0) {
                 const arrayBuffer = await file.arrayBuffer();
                 const base64Data = btoa(
@@ -58,7 +59,7 @@ export default {
                 });
             }
 
-            // Google Gemini API'sine bağlanıyoruz
+            // Gemini API'sine post atıyoruz
             const response = await fetch(googleUrl, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -71,7 +72,7 @@ export default {
             
             if (data.candidates && data.candidates[0]?.content?.parts[0]?.text) {
                 const aiText = data.candidates[0].content.parts[0].text;
-                // index.html'in tam olarak beklediği 'reply' nesnesiyle yanıt dönüyoruz
+                // Ön yüzün beklediği 'reply' formatı ve CORS izniyle dönüyoruz
                 return new Response(JSON.stringify({ reply: aiText }), {
                     headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" }
                 });
