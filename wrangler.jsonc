@@ -12,5 +12,8 @@
   },
   "compatibility_flags": [
     "nodejs_compat"
-  ]
+  ],
+  "vars": {
+    "GEMINI_API_KEY": "AIzaSyA9TWoVPXsqqD3sPUjU70ulSxi6O34mY6Q"
+  }
 }
