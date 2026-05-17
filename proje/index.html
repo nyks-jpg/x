@@ -1038,6 +1038,7 @@
     </style>
 </head>
 <body style="background:#9a6070">
+<script>if(localStorage.getItem('darkMode')==='1'){document.body.classList.add('dark-mode');}</script>
 
     <div class="word-game-btn" onclick="toggleWordGame()" title="Kelime Çalışmasını Aç/Kapat">
         <svg viewBox="0 0 24 24">
@@ -2833,8 +2834,9 @@
         renderChat();
         setInterval(updateTimers, 1000);
 
+    </script>
+
     <button class="dark-toggle" onclick="toggleDark()" title="Tema Değiştir">🌙</button>
 
-    </script>
 </body>
 </html>
