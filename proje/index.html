@@ -932,11 +932,12 @@
         @media (max-width: 768px) {
             body { padding: 60px 12px 20px; }
             .word-game-btn { top: 12px; left: 12px; width: 38px; height: 38px; }
-            .countdown-top { top: 12px; right: 12px; gap: 6px; }
-            .countdown-item { padding: 6px 8px; font-size: 0.7rem; }
+            .countdown-top { position: static; display: flex; flex-direction: row; justify-content: center; gap: 8px; margin-bottom: 12px; }
+            .countdown-item { padding: 6px 10px; font-size: 0.7rem; }
             .cd-number { font-size: 0.85rem; }
             .main-row { flex-direction: column; gap: 14px; }
             .motivation-text { font-size: 1rem; }
+            .motivation-container { margin-top: 4px; }
             .stopwatch-container,
             .todo-container,
             .ai-container,
