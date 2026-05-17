@@ -21,12 +21,12 @@
 
         body {
             font-family: 'Mulish', sans-serif;
-            background: #9a6070;
+            background: #f8b8cc;
             background-image:
-                radial-gradient(ellipse 80% 60% at 20% 0%, rgba(180, 80, 110, 0.35) 0%, transparent 60%),
-                radial-gradient(ellipse 60% 50% at 80% 100%, rgba(130, 60, 90, 0.3) 0%, transparent 60%),
-                radial-gradient(ellipse 50% 40% at 50% 50%, rgba(100, 40, 60, 0.25) 0%, transparent 70%);
-            color: #fff;
+                radial-gradient(ellipse 80% 60% at 20% 0%, rgba(200, 120, 150, 0.2) 0%, transparent 60%),
+                radial-gradient(ellipse 60% 50% at 80% 100%, rgba(180, 100, 130, 0.2) 0%, transparent 60%),
+                radial-gradient(ellipse 50% 40% at 50% 50%, rgba(160, 80, 110, 0.15) 0%, transparent 70%);
+            color: #4a2c3a;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -45,7 +45,7 @@
             background: rgba(255, 255, 255, 0.08);
             backdrop-filter: blur(24px);
             -webkit-backdrop-filter: blur(24px);
-            border: 1px solid rgba(255, 255, 255, 0.18);
+            border: 1px solid rgba(74, 44, 58, 0.15);
             border-radius: 15px;
             display: flex;
             justify-content: center;
@@ -92,9 +92,9 @@
         }
 
         .countdown-item {
-            background: rgba(255, 255, 255, 0.07);
+            background: rgba(255, 255, 255, 0.55);
             backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(74, 44, 58, 0.12);
             padding: 10px 14px;
             border-radius: 14px;
             display: flex;
@@ -107,30 +107,30 @@
 
         .cd-label {
             font-size: 0.65rem;
-            color: rgba(255,255,255,0.5);
+            color: rgba(74, 44, 58, 0.5);
             letter-spacing: 1px;
             margin-right: 4px;
             font-style: italic;
         }
 
         .cd-number {
-            color: rgba(255, 255, 255, 0.95);
+            color: rgba(74, 44, 58, 0.95);
             font-size: 0.95rem;
             letter-spacing: 0.5px;
         }
 
         .cd-unit {
-            color: rgba(255, 255, 255, 0.35);
+            color: rgba(74, 44, 58, 0.35);
             font-size: 0.6rem;
             margin-right: 2px;
         }
 
         /* KRONOMETRE */
         .stopwatch-container {
-            background: rgba(255, 255, 255, 0.04);
+            background: rgba(255, 255, 255, 0.55);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(74, 44, 58, 0.08);
             flex: 1;
             min-width: 0;
             padding: 2rem;
@@ -155,7 +155,7 @@
             font-size: 0.7rem;
             letter-spacing: 4px;
             text-transform: uppercase;
-            color: rgba(255, 255, 255, 0.5);
+            color: rgba(74, 44, 58, 0.5);
             margin-bottom: 12px;
             font-weight: 600;
         }
@@ -170,9 +170,9 @@
         }
 
         .stopwatch-btn {
-            background: rgba(255, 255, 255, 0.15);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            color: white;
+            background: rgba(180, 100, 130, 0.3);
+            border: 1px solid rgba(180, 100, 130, 0.25);
+            color: #4a2c3a;
             padding: 10px 24px;
             font-size: 0.9rem;
             border-radius: 50px;
@@ -184,16 +184,16 @@
         }
 
         .stopwatch-btn:hover {
-            background: rgba(255, 255, 255, 0.3);
+            background: rgba(180, 100, 130, 0.5);
             transform: translateY(-2px);
         }
 
         /* YAPILACAKLAR LİSTESİ (TODO TABLE) */
         .todo-container {
-            background: rgba(255, 255, 255, 0.04);
+            background: rgba(255, 255, 255, 0.55);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(74, 44, 58, 0.08);
             flex: 1;
             min-width: 0;
             padding: 2rem;
@@ -217,7 +217,7 @@
             font-size: 0.7rem;
             letter-spacing: 4px;
             text-transform: uppercase;
-            color: rgba(255, 255, 255, 0.5);
+            color: rgba(74, 44, 58, 0.5);
             margin-bottom: 16px;
             display: flex;
             align-items: center;
@@ -238,11 +238,11 @@
 
         .todo-input {
             flex: 1;
-            background: rgba(0, 0, 0, 0.2);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(74, 44, 58, 0.06);
+            border: 1px solid rgba(74, 44, 58, 0.15);
             padding: 12px 16px;
             border-radius: 12px;
-            color: #fff;
+            color: #4a2c3a;
             font-size: 0.95rem;
             outline: none;
             transition: all 0.2s;
@@ -250,7 +250,7 @@
 
         .todo-input:focus {
             border-color: #ffb3c6;
-            background: rgba(0, 0, 0, 0.3);
+            background: rgba(255, 255, 255, 0.7);
         }
 
         .todo-add-btn {
@@ -293,8 +293,8 @@
             display: flex;
             align-items: center;
             gap: 10px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+                        background: rgba(255, 255, 255, 0.5);
+            border: 1px solid rgba(74, 44, 58, 0.08);
             padding: 10px 14px;
             border-radius: 12px;
             margin-bottom: 8px;
@@ -303,8 +303,8 @@
         }
 
         .todo-item:hover {
-            background: rgba(255, 255, 255, 0.08);
-            border-color: rgba(255,255,255,0.12);
+            background: rgba(74, 44, 58, 0.06);
+            border-color: rgba(74,44,58,0.18);
         }
 
         .todo-text {
@@ -318,26 +318,26 @@
         }
 
         .todo-item.completed {
-            background: rgba(0, 0, 0, 0.25);
-            border-color: rgba(255, 255, 255, 0.04);
+            background: rgba(74, 44, 58, 0.06);
+            border-color: rgba(74, 44, 58, 0.08);
         }
 
         .todo-item.completed .todo-text {
             text-decoration: line-through;
-            color: rgba(255, 255, 255, 0.3);
+            color: rgba(74, 44, 58, 0.3);
         }
 
         .todo-clear-btn {
             font-size: 0.55rem;
             letter-spacing: 2px;
             text-transform: uppercase;
-            color: rgba(255,255,255,0.2);
+            color: rgba(74, 44, 58, 0.2);
             cursor: pointer;
             transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
             padding: 5px 12px;
             border-radius: 20px;
-            border: 1px solid rgba(255,255,255,0.06);
-            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(74,44,58,0.06);
+            background: rgba(255,255,255,0.5);
             font-weight: 500;
             flex-shrink: 0;
         }
@@ -349,9 +349,9 @@
         }
 
         .todo-delete-btn {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            color: rgba(255, 255, 255, 0.4);
+                        background: rgba(255, 255, 255, 0.5);
+            border: 1px solid rgba(74, 44, 58, 0.08);
+            color: rgba(74, 44, 58, 0.4);
             cursor: pointer;
             font-size: 1.1rem;
             width: 30px;
@@ -373,7 +373,7 @@
 
         /* Drag handle */
         .drag-handle {
-            color: rgba(255,255,255,0.25);
+            color: rgba(74, 44, 58, 0.25);
             font-size: 1rem;
             cursor: grab;
             flex-shrink: 0;
@@ -394,7 +394,7 @@
             border-radius: 2px;
         }
 
-        .drag-handle:hover { color: rgba(255,255,255,0.55); }
+        .drag-handle:hover { color: rgba(74, 44, 58, 0.55); }
         .drag-handle:active { cursor: grabbing; }
 
         .todo-item.dragging {
@@ -412,10 +412,10 @@
 
         /* KELİME ÇALIŞMASI ALANI */
         .game-container {
-            background: rgba(255, 255, 255, 0.05);
+                        background: rgba(255, 255, 255, 0.5);
             backdrop-filter: blur(25px);
             -webkit-backdrop-filter: blur(25px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(74, 44, 58, 0.1);
             max-width: 900px;
             width: 100%;
             padding: 2.5rem 2rem;
@@ -459,7 +459,7 @@
             font-size: 2.4rem;
             font-weight: 400;
             margin-bottom: 4px;
-            color: rgba(255, 255, 255, 0.92);
+            color: rgba(74, 44, 58, 0.92);
             text-align: center;
             text-shadow: 0 2px 24px rgba(255,179,198,0.25);
             letter-spacing: -0.5px;
@@ -469,7 +469,7 @@
             font-size: 0.92rem;
             font-weight: 300;
             font-style: italic;
-            color: rgba(255, 255, 255, 0.6);
+            color: rgba(74, 44, 58, 0.6);
             margin: 14px 0 22px;
             text-align: center;
             line-height: 1.65;
@@ -487,285 +487,9 @@
         }
 
         .option-btn {
-            background: rgba(255, 255, 255, 0.06);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            color: rgba(255, 255, 255, 0.9);
-            padding: 13px 18px;
-            border-radius: 16px;
-            cursor: pointer;
-            text-align: left;
-            font-size: 0.92rem;
-            transition: all 0.2s ease;
-            display: flex;
-            align-items: center;
-            font-family: 'Mulish', sans-serif;
-            font-weight: 400;
-            letter-spacing: 0.2px;
-        }
+            background: rgba(255, 255, 255, 0.5);
+            border: 1px solid rgba(74, 44, 58, 0.08);
 
-        .option-btn:hover {
-            background: rgba(255, 255, 255, 0.12);
-            border-color: rgba(255,255,255,0.18);
-            transform: translateX(5px);
-        }
-
-        .option-prefix {
-            font-weight: 400;
-            color: rgba(255,179,198,0.75);
-            margin-right: 12px;
-            background: rgba(255,179,198,0.08);
-            border: 1px solid rgba(255,179,198,0.15);
-            width: 28px;
-            height: 28px;
-            display: inline-flex;
-            justify-content: center;
-            align-items: center;
-            border-radius: 50%;
-            font-size: 0.78rem;
-            flex-shrink: 0;
-        }
-
-        .correct-ans {
-            background: rgba(46, 204, 113, 0.3) !important;
-            border-color: rgba(46, 204, 113, 0.5) !important;
-        }
-
-        .wrong-ans {
-            background: rgba(231, 76, 60, 0.3) !important;
-            border-color: rgba(231, 76, 60, 0.5) !important;
-        }
-
-        .next-btn {
-            background: linear-gradient(135deg, #ffb3c6, #f07090);
-            color: #5a1e2e;
-            border: none;
-            padding: 11px 28px;
-            font-size: 0.78rem;
-            font-weight: 600;
-            border-radius: 50px;
-            cursor: pointer;
-            float: right;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            display: none;
-            transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
-            font-family: 'Mulish', sans-serif;
-            box-shadow: 0 4px 16px rgba(240, 112, 144, 0.35);
-        }
-
-        .next-btn:hover {
-            background: #fff;
-            transform: translateY(-2px);
-        }
-
-        /* YANLIŞ BİLİNEN KELİMELER LİSTESİ */
-        .wrong-words-container {
-            margin-top: 30px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            padding-top: 20px;
-        }
-
-        .wrong-words-title {
-            font-size: 0.65rem;
-            letter-spacing: 3.5px;
-            text-transform: uppercase;
-            color: rgba(255, 130, 155, 0.8);
-            margin-bottom: 12px;
-            font-weight: 400;
-        }
-
-        .wrong-words-list {
-            list-style: none;
-            max-height: 150px;
-            overflow-y: auto;
-            padding-right: 5px;
-        }
-
-        .wrong-words-list::-webkit-scrollbar {
-            width: 5px;
-        }
-        .wrong-words-list::-webkit-scrollbar-thumb {
-            background: rgba(255, 255, 255, 0.15);
-            border-radius: 10px;
-        }
-
-        .wrong-word-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: rgba(231, 76, 60, 0.06);
-            border: 1px solid rgba(231, 76, 60, 0.12);
-            padding: 8px 12px;
-            border-radius: 11px;
-            margin-bottom: 6px;
-            font-size: 0.85rem;
-            font-weight: 300;
-            letter-spacing: 0.3px;
-            animation: fadeIn 0.3s ease;
-        }
-
-        .wrong-word-text {
-            color: rgba(255, 255, 255, 0.9);
-        }
-
-        .wrong-word-text strong {
-            color: rgba(255, 179, 198, 0.85);
-            font-weight: 500;
-        }
-
-        .wrong-word-delete-btn {
-            background: transparent;
-            border: none;
-            color: rgba(255, 255, 255, 0.4);
-            cursor: pointer;
-            font-size: 1.2rem;
-            line-height: 1;
-            padding: 0 4px;
-            transition: color 0.2s;
-        }
-
-        .wrong-word-delete-btn:hover {
-            color: #ff477e;
-        }
-
-        /* TODO CHECKBOX */
-        .todo-checkbox {
-            appearance: none;
-            -webkit-appearance: none;
-            width: 18px;
-            height: 18px;
-            border: 1.5px solid rgba(255, 255, 255, 0.35);
-            border-radius: 5px;
-            background: transparent;
-            cursor: pointer;
-            flex-shrink: 0;
-            transition: all 0.2s;
-            position: relative;
-        }
-
-        .todo-checkbox:checked {
-            background: linear-gradient(135deg, #ffb3c6, #f07090);
-            border-color: transparent;
-            box-shadow: 0 2px 8px rgba(240,112,144,0.4);
-        }
-
-        .todo-checkbox:checked::after {
-            content: '✓';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 10px;
-            color: #5a1e2e;
-            font-weight: 800;
-        }
-
-        /* YANLIŞ KELİMELER BAŞLIK + KOPYALA BUTONU */
-        .wrong-words-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 12px;
-        }
-
-        .copy-wrong-btn {
-            background: rgba(255, 179, 198, 0.08);
-            border: 1px solid rgba(255, 179, 198, 0.2);
-            color: rgba(255,179,198,0.7);
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 0.7rem;
-            cursor: pointer;
-            transition: all 0.2s;
-            letter-spacing: 0.8px;
-            font-family: 'Mulish', sans-serif;
-            font-weight: 400;
-        }
-
-        .copy-wrong-btn:hover {
-            background: rgba(255, 179, 198, 0.3);
-            color: #fff;
-        }
-
-        .copy-wrong-btn.copied {
-            background: rgba(100, 220, 150, 0.2);
-            border-color: rgba(100, 220, 150, 0.5);
-            color: #80ffb0;
-        }
-
-        /* AI SORU SORMA - Gemini Style */
-        .ai-container {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(25px);
-            -webkit-backdrop-filter: blur(25px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            max-width: 900px;
-            width: 100%;
-            padding: 1.6rem 1.8rem 1.8rem;
-            border-radius: 24px;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
-            margin-top: 24px;
-            flex-shrink: 0;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .ai-container::after {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-        }
-
-        .ai-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 18px;
-        }
-
-        .ai-header-left {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .ai-new-btn {
-            background: rgba(255,255,255,0.06);
-            border: 1px solid rgba(255,255,255,0.12);
-            border-radius: 14px;
-            padding: 4px 12px;
-            cursor: pointer;
-            font-size: 0.72rem;
-            color: rgba(255,255,255,0.5);
-            transition: all 0.2s;
-            flex-shrink: 0;
-            font-family: 'Mulish', sans-serif;
-            letter-spacing: 0.3px;
-        }
-
-        .ai-new-btn:hover {
-            background: rgba(255,255,255,0.12);
-            color: #fff;
-            border-color: rgba(255,255,255,0.25);
-        }
-
-        .ai-header-text {
-            font-family: 'DM Serif Display', serif;
-            font-size: 1.1rem;
-            font-weight: 400;
-            font-style: italic;
-            color: rgba(255, 255, 255, 0.9);
-            letter-spacing: 0.5px;
-        }
-
-        .ai-input-wrap {
-            display: flex;
-            align-items: flex-end;
-            gap: 10px;
-            background: rgba(0, 0, 0, 0.15);
-            border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 20px;
             padding: 6px 6px 6px 18px;
             transition: all 0.25s ease;
@@ -773,7 +497,7 @@
 
         .ai-input-wrap:focus-within {
             border-color: rgba(255, 179, 198, 0.4);
-            background: rgba(0, 0, 0, 0.22);
+            background: rgba(255, 255, 255, 0.6);
             box-shadow: 0 0 0 3px rgba(255,179,198,0.06);
         }
 
@@ -782,7 +506,7 @@
             background: transparent;
             border: none;
             padding: 8px 0;
-            color: #fff;
+            color: #4a2c3a;
             font-size: 0.95rem;
             outline: none;
             font-family: 'Mulish', sans-serif;
@@ -803,9 +527,9 @@
             width: 40px;
             height: 40px;
             border-radius: 50%;
-            border: 1px solid rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(74, 44, 58, 0.15);
             background: rgba(255, 255, 255, 0.06);
-            color: rgba(255, 255, 255, 0.6);
+            color: rgba(74, 44, 58, 0.6);
             cursor: pointer;
             display: flex;
             align-items: center;
@@ -816,9 +540,9 @@
         }
 
         .ai-action-btn:hover {
-            background: rgba(255, 255, 255, 0.14);
-            color: #fff;
-            border-color: rgba(255, 255, 255, 0.25);
+            background: rgba(255, 255, 255, 0.25);
+            color: #4a2c3a;
+            border-color: rgba(74, 44, 58, 0.25);
         }
 
         .ai-send-btn {
@@ -911,21 +635,21 @@
         .chat-msg.user {
             align-self: flex-end;
             background: rgba(255, 179, 198, 0.12);
-            color: rgba(255, 255, 255, 0.9);
+            color: rgba(74, 44, 58, 0.9);
             border: 1px solid rgba(255, 179, 198, 0.15);
         }
 
         .chat-msg.ai {
             align-self: flex-start;
             background: rgba(0, 0, 0, 0.15);
-            color: rgba(255, 255, 255, 0.85);
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            color: rgba(74, 44, 58, 0.85);
+            border: 1px solid rgba(74, 44, 58, 0.06);
         }
 
         .chat-msg.loading-msg {
             align-self: flex-start;
             background: transparent;
-            color: rgba(255, 255, 255, 0.4);
+            color: rgba(74, 44, 58, 0.4);
             font-style: italic;
             font-size: 0.85rem;
         }
@@ -949,7 +673,7 @@
             font-size: 1.3rem;
             font-weight: 400;
             font-style: italic;
-            color: rgba(255, 255, 255, 0.82);
+            color: rgba(74, 44, 58, 0.82);
             letter-spacing: 0.5px;
             text-align: center;
             max-width: 700px;
