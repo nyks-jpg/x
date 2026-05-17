@@ -170,22 +170,25 @@
         }
 
         .stopwatch-btn {
-            background: rgba(180, 100, 130, 0.3);
-            border: 1px solid rgba(180, 100, 130, 0.25);
-            color: #4a2c3a;
+            background: linear-gradient(135deg, #ffb3c6, #f07090);
+            border: none;
+            color: #5a1e2e;
             padding: 10px 24px;
             font-size: 0.9rem;
             border-radius: 50px;
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
             text-transform: uppercase;
             letter-spacing: 1px;
             margin: 0 5px;
+            font-weight: 700;
+            box-shadow: 0 4px 16px rgba(240, 112, 144, 0.3);
         }
 
         .stopwatch-btn:hover {
-            background: rgba(180, 100, 130, 0.5);
+            background: linear-gradient(135deg, #ffc4d4, #f0809e);
             transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(240, 112, 144, 0.4);
         }
 
         /* YAPILACAKLAR LİSTESİ (TODO TABLE) */
@@ -328,24 +331,24 @@
         }
 
         .todo-clear-btn {
-            font-size: 0.55rem;
-            letter-spacing: 2px;
+            font-size: 0.6rem;
+            letter-spacing: 1.5px;
             text-transform: uppercase;
-            color: rgba(74, 44, 58, 0.2);
+            color: rgba(74, 44, 58, 0.6);
             cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transition: all 0.2s;
             padding: 5px 12px;
             border-radius: 20px;
-            border: 1px solid rgba(74,44,58,0.06);
-            background: rgba(255,255,255,0.3);
-            font-weight: 500;
+            border: 1px solid rgba(74,44,58,0.12);
+            background: rgba(74,44,58,0.06);
+            font-weight: 600;
+            font-family: 'Mulish', sans-serif;
             flex-shrink: 0;
         }
         .todo-clear-btn:hover {
-            color: #ff7098;
-            border-color: rgba(255,112,152,0.25);
-            background: rgba(255,112,152,0.08);
-            transform: scale(1.04);
+            background: rgba(255,179,198,0.2);
+            border-color: rgba(255,179,198,0.3);
+            color: #d4607a;
         }
 
         .todo-delete-btn {
@@ -627,22 +630,29 @@
             border: none;
             color: rgba(74, 44, 58, 0.25);
             cursor: pointer;
-            font-size: 0.7rem;
+            font-size: 0.6rem;
             padding: 0;
             line-height: 1;
             transition: all 0.2s;
             flex-shrink: 0;
-            width: 24px;
-            height: 24px;
+            width: 20px;
+            height: 18px;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            border-radius: 6px;
+            border-radius: 4px;
         }
 
         .todo-move-btn:hover {
             background: rgba(74, 44, 58, 0.08);
             color: rgba(74, 44, 58, 0.6);
+        }
+
+        .move-group {
+            display: inline-flex;
+            flex-direction: column;
+            gap: 2px;
+            flex-shrink: 0;
         }
 
         .ai-container {
@@ -1153,8 +1163,10 @@
                 li.draggable = true;
                 li.dataset.index = index;
                 li.innerHTML = `
-                    <button class="todo-move-btn" onclick="moveTodo(${index}, -1)" title="Yukarı">▲</button>
-                    <button class="todo-move-btn" onclick="moveTodo(${index}, 1)" title="Aşağı">▼</button>
+                    <span class="move-group">
+                        <button class="todo-move-btn" onclick="moveTodo(${index}, -1)" title="Yukarı">▲</button>
+                        <button class="todo-move-btn" onclick="moveTodo(${index}, 1)" title="Aşağı">▼</button>
+                    </span>
                     <input type="checkbox" class="todo-checkbox" ${todo.completed ? 'checked' : ''}>
                     <span class="todo-text">${todo.text}</span>
                     <button class="todo-delete-btn">×</button>
