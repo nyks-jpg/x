@@ -21,54 +21,63 @@ export default {
 };
 
 async function handleChat(request, env) {
-    const apiKey = env.GEMINI_API_KEY;
-    if (!apiKey) {
-        return new Response(JSON.stringify({ error: "GEMINI_API_KEY bulunamadı!" }), {
+    try {
+        const formData = await request.formData();
+        const message = formData.get('message') || "";
+        const file = formData.get('file');
+
+        if (!message && !file) {
+            return new Response(JSON.stringify({ error: "Mesaj boş olamaz." }), {
+                status: 400,
+                headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" }
+            });
+        }
+
+        const model = "@cf/meta/llama-3.2-11b-vision-instruct";
+        let aiInput;
+
+        if (file && file.size > 0 && file.type.startsWith("image/")) {
+            const arrayBuffer = await file.arrayBuffer();
+            const base64Data = btoa(
+                new Uint8Array(arrayBuffer).reduce((data, byte) => data + String.fromCharCode(byte), '')
+            );
+            const dataUrl = `data:${file.type};base64,${base64Data}`;
+
+            aiInput = {
+                messages: [
+                    {
+                        role: "user",
+                        content: [
+                            { type: "text", text: message || "Bu görseli detaylıca açıkla." },
+                            { type: "image_url", image_url: { url: dataUrl } }
+                        ]
+                    }
+                ],
+                max_tokens: 1024
+            };
+        } else {
+            const context = file
+                ? `Kullanıcı "${file.name}" adında bir dosya yükledi (${file.type}). Soru: ${message || "Bu dosyayı özetle."}`
+                : message;
+
+            aiInput = {
+                messages: [
+                    { role: "user", content: context }
+                ],
+                max_tokens: 1024
+            };
+        }
+
+        const result = await env.AI.run(model, aiInput);
+
+        const reply = result?.response || result?.choices?.[0]?.message?.content || JSON.stringify(result);
+        return new Response(JSON.stringify({ reply }), {
+            headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" }
+        });
+
+    } catch (error) {
+        return new Response(JSON.stringify({ error: "AI Hatası: " + error.message }), {
             status: 500,
-            headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" }
-        });
-    }
-
-    const formData = await request.formData();
-    const message = formData.get('message') || "";
-    const file = formData.get('file');
-
-    if (!message && !file) {
-        return new Response(JSON.stringify({ error: "Mesaj boş olamaz." }), {
-            status: 400,
-            headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" }
-        });
-    }
-
-    const model = env.GEMINI_MODEL || "gemini-2.0-flash-lite";
-const googleUrl = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
-    let parts = [{ text: message }];
-
-    if (file && file.size > 0) {
-        const arrayBuffer = await file.arrayBuffer();
-        const base64Data = btoa(
-            new Uint8Array(arrayBuffer).reduce((data, byte) => data + String.fromCharCode(byte), '')
-        );
-        parts.push({
-            inlineData: { mimeType: file.type, data: base64Data }
-        });
-    }
-
-    const response = await fetch(googleUrl, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ contents: [{ parts: parts }] })
-    });
-
-    const data = await response.json();
-
-    if (data.candidates && data.candidates[0]?.content?.parts[0]?.text) {
-        return new Response(JSON.stringify({ reply: data.candidates[0].content.parts[0].text }), {
-            headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" }
-        });
-    } else {
-        const errMsg = data.error ? data.error.message : "Yapay zeka yanıt oluşturamadı.";
-        return new Response(JSON.stringify({ error: "Gemini Hatası: " + errMsg }), {
             headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" }
         });
     }

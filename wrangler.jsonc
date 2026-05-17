@@ -13,8 +13,7 @@
   "compatibility_flags": [
     "nodejs_compat"
   ],
-  "vars": {
-    "GEMINI_API_KEY": "AIzaSyA9TWoVPXsqqD3sPUjU70ulSxi6O34mY6Q",
-    "GEMINI_MODEL": "gemini-2.0-flash-lite"
+  "ai": {
+    "binding": "AI"
   }
 }
