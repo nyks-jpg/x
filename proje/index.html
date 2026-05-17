@@ -2608,3 +2608,41 @@
     </script>
 </body>
 </html>
+<script>
+        async function istekGonder() {
+            const dosyaGirdisi = document.getElementById('dosyaYukle');
+            const mesajGirdisi = document.getElementById('kullaniciMesaj');
+            const cevapAlani = document.getElementById('yapayZekaCevap');
+
+            if (!mesajGirdisi.value.trim()) {
+                alert("Lütfen bir mesaj yazın!");
+                return;
+            }
+
+            cevapAlani.innerHTML = "<strong>Düşünüyorum... 🧠</strong>";
+
+            const formData = new FormData();
+            formData.append('message', mesajGirdisi.value);
+            if (dosyaGirdisi.files[0]) {
+                formData.append('file', dosyaGirdisi.files[0]);
+            }
+
+            try {
+                // Cloudflare Pages fonksiyonumuza istek atıyoruz
+                const response = await fetch('/api/chat', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const data = await response.json();
+                
+                if (data.error) {
+                    cevapAlani.innerHTML = `<span style="color:red">Hata: ${data.error}</span>`;
+                } else {
+                    cevapAlani.innerHTML = `<strong>Gemini:</strong> ${data.reply}`;
+                }
+            } catch (error) {
+                cevapAlani.innerHTML = `<span style="color:red">Bağlantı Hatası: ${error.message}</span>`;
+            }
+        }
+    </script>
