@@ -33,9 +33,11 @@ async function handleChat(request, env) {
             });
         }
 
-        let model, aiInput;
-
         const systemMsg = { role: "system", content: "Sen samimi, arkadaş canlısı bir asistansın. Kullanıcıya her zaman TÜRKÇE yanıt ver. Resmi değil, günlük konuşma dilinde cevap ver. Kısa ve net ol." };
+        const model = "@cf/meta/llama-3.2-11b-vision-instruct";
+        await env.AI.run(model, { prompt: "agree" }).catch(() => {});
+
+        let aiInput;
 
         if (file && file.size > 0 && file.type.startsWith("image/")) {
             const arrayBuffer = await file.arrayBuffer();
@@ -44,7 +46,6 @@ async function handleChat(request, env) {
             );
             const dataUrl = `data:${file.type};base64,${base64Data}`;
 
-            model = "@cf/meta/llama-3.2-11b-vision-instruct";
             aiInput = {
                 messages: [
                     systemMsg,
@@ -58,14 +59,11 @@ async function handleChat(request, env) {
                 ],
                 max_tokens: 1024
             };
-
-            await env.AI.run(model, { prompt: "agree" }).catch(() => {});
         } else {
             const context = file
                 ? `Kullanıcı "${file.name}" adında bir dosya yükledi (${file.type}). Soru: ${message || "Bu dosyayı özetle."}`
                 : message;
 
-            model = "@cf/mistral/mistral-7b-instruct-v0.1";
             aiInput = {
                 messages: [
                     systemMsg,
