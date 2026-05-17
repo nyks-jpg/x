@@ -34,7 +34,7 @@ async function handleChat(request, env) {
         }
 
         const systemMsg = { role: "system", content: "Sen samimi, arkadaş canlısı bir asistansın. Kullanıcıya her zaman TÜRKÇE yanıt ver. Resmi değil, günlük konuşma dilinde cevap ver. Kısa ve net ol." };
-        const model = "@cf/meta/llama-3.2-90b-vision-instruct";
+        const model = "@cf/meta/llama-3.2-11b-vision-instruct";
         await env.AI.run(model, { prompt: "agree" }).catch(() => {});
 
         let aiInput;
