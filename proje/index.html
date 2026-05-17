@@ -2595,7 +2595,7 @@
                     formData.append('file', fileInput.files[0]);
                 }
 
-                const res = await fetch('https://x.calisma.workers.dev/', {
+                const res = await fetch('/api/chat', {
                     method: 'POST',
                     body: formData
                 });
