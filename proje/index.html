@@ -1099,8 +1099,30 @@
 
         // KRONOMETRE
         let stopwatchInterval;
-        let elapsedSeconds = 0;
+        let elapsedSeconds = parseInt(localStorage.getItem('orhan_elapsed')) || 0;
         let isRunning = false;
+
+        function saveStopwatch() {
+            localStorage.setItem('orhan_elapsed', elapsedSeconds);
+            localStorage.setItem('orhan_stopwatch_running', isRunning ? '1' : '');
+        }
+
+        // Sayfa yüklenince süreyi göster ve çalışıyorsa devam et
+        (function restoreStopwatch() {
+            const hrs = Math.floor(elapsedSeconds / 3600);
+            const mins = Math.floor((elapsedSeconds % 3600) / 60);
+            const secs = elapsedSeconds % 60;
+            const display = document.getElementById('stopwatch-display');
+            if (display) display.innerText =
+                `${hrs < 10 ? '0'+hrs : hrs}:${mins < 10 ? '0'+mins : mins}:${secs < 10 ? '0'+secs : secs}`;
+            const wasRunning = localStorage.getItem('orhan_stopwatch_running') === '1';
+            if (wasRunning) {
+                isRunning = true;
+                stopwatchInterval = setInterval(updateStopwatch, 1000);
+                const btn = document.getElementById('start-stop-btn');
+                if (btn) { btn.innerText = "Durdur"; btn.style.background = "rgba(231, 76, 60, 0.3)"; }
+            }
+        })();
 
         function toggleStopwatch() {
             const btn = document.getElementById('start-stop-btn');
@@ -1114,6 +1136,7 @@
                 btn.style.background = "rgba(231, 76, 60, 0.3)";
             }
             isRunning = !isRunning;
+            saveStopwatch();
         }
 
         function resetStopwatch() {
@@ -1124,6 +1147,7 @@
             const btn = document.getElementById('start-stop-btn');
             btn.innerText = "Başlat";
             btn.style.background = "rgba(255, 255, 255, 0.15)";
+            saveStopwatch();
         }
 
         function updateStopwatch() {
@@ -1131,8 +1155,9 @@
             const hrs = Math.floor(elapsedSeconds / 3600);
             const mins = Math.floor((elapsedSeconds % 3600) / 60);
             const secs = elapsedSeconds % 60;
-            document.getElementById('stopwatch-display').innerText = 
+            document.getElementById('stopwatch-display').innerText =
                 `${hrs < 10 ? '0'+hrs : hrs}:${mins < 10 ? '0'+mins : mins}:${secs < 10 ? '0'+secs : secs}`;
+            saveStopwatch();
         }
 
         // YAPILACAKLAR LİSTESİ (TODO) MANTIĞI
@@ -2483,6 +2508,7 @@
 
         // Kaç kez gösterildi (localStorage'da tutulur)
         let showCount = JSON.parse(localStorage.getItem('orhan_show_count_v3')) || {};
+        let correctWords = JSON.parse(localStorage.getItem('orhan_correct_words')) || [];
         let lastWord = null;
 
         function _key(word) { return word.toLowerCase().trim(); }
@@ -2517,7 +2543,7 @@
 
         // İlerleme göstergesi
         function updateProgress() {
-            const done = uniqueWordBank.filter(e => getShown(e.word) > 0).length;
+            const done = correctWords.length;
             const total = uniqueWordBank.length;
             const el = document.getElementById('progress-label');
             if (el) el.textContent = `Tamamlanan: ${done} / ${total}`;
@@ -2539,6 +2565,9 @@
         function resetWordGame() {
             showCount = {};
             localStorage.setItem('orhan_show_count_v3', JSON.stringify(showCount));
+            correctWords = [];
+            localStorage.setItem('orhan_correct_words', JSON.stringify(correctWords));
+            localStorage.removeItem('orhan_wrong_words');
             currentQuestion = {};
             canAnswer = true;
             document.getElementById('next-question-btn').style.display = "none";
@@ -2586,6 +2615,12 @@
 
             if (selectedIndex !== currentQuestion.correctIndex) {
                 addWrongWord(currentQuestion.word, currentQuestion.mean);
+            } else {
+                const key = _key(currentQuestion.word);
+                if (!correctWords.includes(key)) {
+                    correctWords.push(key);
+                    localStorage.setItem('orhan_correct_words', JSON.stringify(correctWords));
+                }
             }
 
             updateProgress();
