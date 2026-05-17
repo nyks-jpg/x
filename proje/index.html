@@ -2675,14 +2675,15 @@
 
             if (!question && !aiFileData) return;
 
-            input.value = '';
-
             const hasFile = aiFileData;
             const userText = question || (hasFile ? `[Dosya: ${aiFileData.name}]` : '');
             const userMsg = hasFile && aiFileData.type.startsWith('image/')
                 ? `${userText}<br><img src="${aiFileData.data}" style="max-width:200px;border-radius:10px;margin-top:6px;">`
                 : userText;
             chatHistory.push({ role: 'user', text: userMsg });
+
+            input.value = '';
+            removeAiImage();
             chatHistory.push({ role: 'loading-msg', text: 'Oran düşünüyor... 🧠' });
             renderChat();
             saveChat();
@@ -2722,7 +2723,6 @@
                 saveChat();
                 console.error(err);
             } finally {
-                removeAiImage();
                 sendBtn.disabled = false;
             }
         }
