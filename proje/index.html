@@ -125,6 +125,147 @@
             z-index: 50;
         }
 
+        .right-panel {
+            background: rgba(255,255,255,0.07);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 14px;
+            padding: 10px 12px;
+            min-width: 180px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+        }
+        .right-panel-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+        .rp-arrow {
+            font-size: 1.1rem;
+            color: rgba(255,255,255,0.4);
+            cursor: pointer;
+            transition: color 0.2s;
+            user-select: none;
+            line-height: 1;
+        }
+        .rp-arrow:hover { color: #ffb3c6; }
+        .rp-title {
+            font-family: 'Mulish', sans-serif;
+            font-size: 0.6rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.6);
+            font-weight: 500;
+        }
+        .right-panel-body {
+            font-family: 'Mulish', sans-serif;
+            font-size: 0.7rem;
+            color: rgba(255,255,255,0.8);
+            line-height: 1.6;
+            min-height: 30px;
+        }
+        .rp-loading {
+            text-align: center;
+            color: rgba(255,255,255,0.3);
+            font-size: 0.6rem;
+            letter-spacing: 1px;
+        }
+        .rp-lb-entry {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 2px 0;
+            font-size: 0.68rem;
+        }
+        .rp-lb-rank {
+            color: rgba(255,255,255,0.25);
+            font-size: 0.6rem;
+            width: 16px;
+            text-align: right;
+            margin-right: 6px;
+        }
+        .rp-lb-rank.gold { color: #ffd700; }
+        .rp-lb-rank.silver { color: #c0c0c0; }
+        .rp-lb-rank.bronze { color: #cd7f32; }
+        .rp-lb-name {
+            flex: 1;
+            color: rgba(255,255,255,0.8);
+        }
+        .rp-lb-name.me { color: #ffb3c6; font-weight: 600; }
+        .rp-lb-hours {
+            color: rgba(255,179,198,0.7);
+            font-size: 0.6rem;
+        }
+        .rp-lb-empty {
+            text-align: center;
+            color: rgba(255,255,255,0.25);
+            font-size: 0.6rem;
+        }
+        .rp-week-summary {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 3px 6px;
+        }
+        .rp-week-day {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-width: 38px;
+            padding: 3px 4px;
+            border-radius: 6px;
+            background: rgba(255,255,255,0.04);
+        }
+        .rp-week-day.today {
+            background: rgba(255,112,152,0.15);
+            border: 1px solid rgba(255,112,152,0.3);
+        }
+        .rp-week-day-name {
+            font-size: 0.5rem;
+            color: rgba(255,255,255,0.35);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .rp-week-day-hours {
+            font-size: 0.65rem;
+            color: rgba(255,179,198,0.8);
+            font-family: 'DM Serif Display', serif;
+        }
+        .rp-login-btn {
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: rgba(255,255,255,0.5);
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.55rem;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-family: 'Mulish', sans-serif;
+            transition: all 0.2s;
+            text-align: center;
+            margin-top: 4px;
+        }
+        .rp-login-btn:hover {
+            color: #ffb3c6;
+            border-color: rgba(255,179,198,0.3);
+        }
+        .rp-user {
+            font-size: 0.55rem;
+            color: rgba(255,255,255,0.3);
+            text-align: center;
+            margin-top: 4px;
+            letter-spacing: 0.5px;
+        }
+        .rp-user strong { color: rgba(255,179,198,0.7); }
+        .rp-logout {
+            color: rgba(255,255,255,0.2);
+            cursor: pointer;
+            margin-left: 4px;
+            font-size: 0.5rem;
+        }
+        .rp-logout:hover { color: #ff477e; }
+
         .countdown-item {
             background: rgba(255, 255, 255, 0.07);
             backdrop-filter: blur(16px);
@@ -1343,7 +1484,8 @@
         body.dark-mode .todo-container,
         body.dark-mode .stopwatch-container,
         body.dark-mode .ai-container,
-        body.dark-mode .game-container {
+        body.dark-mode .game-container,
+        body.dark-mode .right-panel {
             background: rgba(20, 20, 40, 0.6) !important;
             border-color: rgba(255,255,255,0.08) !important;
         }
@@ -1399,6 +1541,17 @@
             .word-game-btn { top: 12px; left: 8px; width: 34px; height: 34px; }
             .week-btn { top: 52px; left: 8px; width: 34px; height: 34px; font-size: 13px; }
             .leaderboard-btn { top: 92px; left: 8px; width: 34px; height: 34px; font-size: 13px; }
+            .right-panel { min-width: 120px; padding: 6px 8px; }
+            .rp-week-day { min-width: 28px; padding: 2px 2px; }
+            .rp-week-day-name { font-size: 0.4rem; }
+            .rp-week-day-hours { font-size: 0.5rem; }
+            .rp-lb-entry { font-size: 0.6rem; }
+            .rp-lb-hours { font-size: 0.55rem; }
+            .rp-week-day { min-width: 30px; padding: 2px 3px; }
+            .rp-week-day-name { font-size: 0.45rem; }
+            .rp-week-day-hours { font-size: 0.55rem; }
+            .right-panel { min-width: 100px; padding: 4px 6px; }
+            .rp-lb-entry { font-size: 0.55rem; }
             .countdown-top { top: 12px; right: 8px; gap: 4px; }
             .countdown-item { padding: 3px 5px; font-size: 0.5rem; }
             .countdown-item .cd-number { font-size: 0.65rem; }
@@ -1428,10 +1581,6 @@
         </svg>
     </div>
 
-    <div class="week-btn" id="week-btn" onclick="toggleWeek()" title="Haftalık Program">📅</div>
-
-    <div class="leaderboard-btn" id="leaderboard-btn" onclick="toggleLeaderboard()" title="Liderlik Tablosu">🏆</div>
-
     <div class="countdown-top">
         <div class="countdown-item">
             <span class="cd-label">9 Haz</span>
@@ -1444,6 +1593,17 @@
             <span class="cd-number" id="days-20">00</span><span class="cd-unit">g</span>
             <span class="cd-number" id="hours-20">00</span><span class="cd-unit">s</span>
             <span class="cd-number" id="mins-20">00</span><span class="cd-unit">d</span>
+        </div>
+
+        <div class="right-panel" id="right-panel">
+            <div class="right-panel-header">
+                <span class="rp-arrow" onclick="switchPanel(-1)">‹</span>
+                <span class="rp-title" id="rp-title">Günlük Liderlik</span>
+                <span class="rp-arrow" onclick="switchPanel(1)">›</span>
+            </div>
+            <div class="right-panel-body" id="right-panel-body">
+                <div class="rp-loading">Yükleniyor...</div>
+            </div>
         </div>
     </div>
 
@@ -1474,7 +1634,7 @@
         </div>
     </div>
 
-    <div class="week-container" id="week-area">
+    <div class="week-container" id="week-area" style="display:block;">
         <div class="week-title">📅 Haftalık Çalışma</div>
 
         <div class="week-days" id="week-days"></div>
@@ -1482,14 +1642,6 @@
         <div class="week-total-row" id="week-total">Toplam: 0dk</div>
 
         <button class="week-reset-btn" onclick="resetWeek()">Sıfırla</button>
-    </div>
-
-    <div class="leaderboard-container" id="leaderboard-area">
-        <div class="leaderboard-title">🏆 Bugünün Liderlik Tablosu</div>
-        <div id="leaderboard-body">
-            <div class="leaderboard-empty">Giriş yap ve çalışmaya başla, liderlik tablosunda görün!</div>
-        </div>
-        <div class="leaderboard-user" id="leaderboard-user"></div>
     </div>
 
     <div class="ai-container">
@@ -3254,14 +3406,7 @@
         // her 30 sn'de bir pazartesi 00:00 kontrolü
         setInterval(checkWeekReset, 30000);
 
-        function toggleWeek() {
-            const el = document.getElementById('week-area');
-            const btn = document.getElementById('week-btn');
-            if (el.style.display === 'block') {
-                el.style.display = 'none';
-                btn.classList.remove('active');
-                localStorage.setItem('orhan_week_visible', '0');
-            } else {
+        function toggleWeek() { const el = document.getElementById("week-area"); if (el.style.display === "none") { el.style.display = "block"; } else { el.style.display = "none"; } }\n else {
                 el.style.display = 'block';
                 btn.classList.add('active');
                 localStorage.setItem('orhan_week_visible', '1');
@@ -3392,19 +3537,20 @@
             renderWeek();
         }
 
-        // GİRİŞ & LİDERLİK
+        // SAĞ PANEL (GÜNLÜK LİDERLİK / HAFTALIK)
         let myNickname = localStorage.getItem('orhan_nickname') || '';
+        let rpMode = 0;
 
         function getTodayStr() {
             return new Date().toISOString().slice(0, 10);
         }
 
         function loginPrompt() {
-            const name = prompt('Adın ne? (Liderlik tablosunda görünecek)');
+            const name = prompt('Adın ne?');
             if (name && name.trim()) {
                 myNickname = name.trim();
                 localStorage.setItem('orhan_nickname', myNickname);
-                updateLoginUI();
+                renderPanel();
                 syncHours();
             }
         }
@@ -3412,20 +3558,17 @@
         function logout() {
             myNickname = '';
             localStorage.removeItem('orhan_nickname');
-            updateLoginUI();
-            document.getElementById('leaderboard-body').innerHTML = '<div class="leaderboard-empty">Giriş yap ve çalışmaya başla!</div>';
+            renderPanel();
         }
 
-        function updateLoginUI() {
-            const el = document.getElementById('leaderboard-user');
-            if (!el) return;
-            if (myNickname) {
-                el.innerHTML = `👋 <strong>${myNickname}</strong> — <span style="cursor:pointer;color:rgba(255,255,255,0.3);font-size:0.55rem;text-transform:uppercase;letter-spacing:1px;" onclick="logout()">Çıkış</span>`;
-                const btn = document.querySelector('.login-btn');
-                if (btn) btn.classList.add('logged-in');
-            } else {
-                el.innerHTML = `<span class="login-btn" onclick="loginPrompt()">Giriş Yap</span>`;
-            }
+        function switchPanel(dir) {
+            rpMode = (rpMode + dir + 2) % 2;
+            renderPanel();
+        }
+
+        function renderPanel() {
+            if (rpMode === 0) renderDailyLeaderboard();
+            else renderWeekSummary();
         }
 
         async function syncHours() {
@@ -3442,53 +3585,70 @@
             } catch (e) {}
         }
 
-        async function fetchLeaderboard() {
-            const day = getTodayStr();
+        async function renderDailyLeaderboard() {
+            const title = document.getElementById('rp-title');
+            const body = document.getElementById('right-panel-body');
+            if (title) title.textContent = 'Günlük Liderlik';
+            body.innerHTML = '<div class="rp-loading">Yükleniyor...</div>';
             try {
-                const res = await fetch(`/api/leaderboard?date=${day}`);
+                const res = await fetch(`/api/leaderboard?date=${getTodayStr()}`);
                 const data = await res.json();
-                renderLeaderboard(Array.isArray(data) ? data : []);
-            } catch (e) {
-                document.getElementById('leaderboard-body').innerHTML = '<div class="leaderboard-empty">Yüklenemedi</div>';
-            }
-        }
-
-        function renderLeaderboard(list) {
-            const el = document.getElementById('leaderboard-body');
-            if (!list.length) {
-                el.innerHTML = '<div class="leaderboard-empty">Bugün henüz kimse çalışmadı. İlk sen ol! 🚀</div>';
-                return;
-            }
-            list.sort((a, b) => b.hours - a.hours);
-            let html = '<table class="leaderboard-table"><tr><th></th><th>İsim</th><th style="text-align:right">Saat</th></tr>';
-            list.forEach((entry, i) => {
-                const isMe = entry.nickname === myNickname;
-                const rankClass = i === 0 ? 'rank-1' : i === 1 ? 'rank-2' : i === 2 ? 'rank-3' : '';
-                const meClass = isMe ? 'me' : '';
-                html += `<tr class="${meClass}">
-                    <td class="rank-num ${rankClass}">${i + 1}</td>
-                    <td>${entry.nickname}${isMe ? ' 👑' : ''}</td>
-                    <td style="text-align:right">${entry.hours.toFixed(1)}</td>
-                </tr>`;
-            });
-            html += '</table>';
-            el.innerHTML = html;
-        }
-
-        function toggleLeaderboard() {
-            const el = document.getElementById('leaderboard-area');
-            const btn = document.getElementById('leaderboard-btn');
-            if (el.style.display === 'block') {
-                el.style.display = 'none';
-                btn.classList.remove('active');
-            } else {
-                el.style.display = 'block';
-                btn.classList.add('active');
-                if (!myNickname) {
-                    loginPrompt();
+                const list = Array.isArray(data) ? data : [];
+                list.sort((a, b) => b.hours - a.hours);
+                if (!list.length) {
+                    body.innerHTML = '<div class="rp-lb-empty">Bugün kimse çalışmadı</div>';
+                } else {
+                    let html = '';
+                    list.forEach((entry, i) => {
+                        const rankClass = i === 0 ? 'gold' : i === 1 ? 'silver' : i === 2 ? 'bronze' : '';
+                        const meClass = entry.nickname === myNickname ? 'me' : '';
+                        html += `<div class="rp-lb-entry">
+                            <span class="rp-lb-rank ${rankClass}">${i + 1}</span>
+                            <span class="rp-lb-name ${meClass}">${entry.nickname}</span>
+                            <span class="rp-lb-hours">${entry.hours.toFixed(1)}s</span>
+                        </div>`;
+                    });
+                    body.innerHTML = html;
                 }
-                fetchLeaderboard();
+            } catch (e) {
+                body.innerHTML = '<div class="rp-lb-empty">Yüklenemedi</div>';
             }
+            body.appendChild(createLoginUI());
+        }
+
+        function renderWeekSummary() {
+            const title = document.getElementById('rp-title');
+            const body = document.getElementById('right-panel-body');
+            if (title) title.textContent = 'Haftalık';
+            const today = todayName();
+            let html = '<div class="rp-week-summary">';
+            weekDays.forEach(day => {
+                const secs = (weekData[day] && weekData[day].s) || 0;
+                const h = Math.floor(secs / 3600);
+                const m = Math.floor((secs % 3600) / 60);
+                const display = h > 0 ? `${h}s` : m > 0 ? `${m}dk` : '—';
+                const isToday = day === today;
+                html += `<div class="rp-week-day${isToday ? ' today' : ''}">
+                    <span class="rp-week-day-name">${day.slice(0, 3)}</span>
+                    <span class="rp-week-day-hours">${display}</span>
+                </div>`;
+            });
+            html += '</div>';
+            body.innerHTML = html;
+            body.appendChild(createLoginUI());
+        }
+
+        function createLoginUI() {
+            const div = document.createElement('div');
+            if (myNickname) {
+                div.className = 'rp-user';
+                div.innerHTML = `<strong>${myNickname}</strong><span class="rp-logout" onclick="logout()"> çıkış</span>`;
+            } else {
+                div.className = 'rp-login-btn';
+                div.textContent = 'Giriş Yap';
+                div.onclick = loginPrompt;
+            }
+            return div;
         }
 
         // Başlangıç Çağrıları
@@ -3497,8 +3657,9 @@
         renderTodos();
         renderWrongWords();
         setInterval(updateTimers, 1000);
-        updateLoginUI();
+        renderPanel();
         setInterval(syncHours, 300000);
+        setInterval(renderPanel, 30000);
 
         // Açık panel durumlarını geri yükle
         if (localStorage.getItem('orhan_game_visible') === '1') {
