@@ -35,6 +35,8 @@ async function handleChat(request, env) {
 
         let model, aiInput;
 
+        const systemMsg = { role: "system", content: "Sen yardımsever bir asistansın. Kullanıcıya her zaman TÜRKÇE yanıt ver." };
+
         if (file && file.size > 0 && file.type.startsWith("image/")) {
             const arrayBuffer = await file.arrayBuffer();
             const base64Data = btoa(
@@ -45,6 +47,7 @@ async function handleChat(request, env) {
             model = "@cf/meta/llama-3.2-11b-vision-instruct";
             aiInput = {
                 messages: [
+                    systemMsg,
                     {
                         role: "user",
                         content: [
@@ -65,6 +68,7 @@ async function handleChat(request, env) {
             model = "@cf/mistral/mistral-7b-instruct-v0.1";
             aiInput = {
                 messages: [
+                    systemMsg,
                     { role: "user", content: context }
                 ],
                 max_tokens: 1024
