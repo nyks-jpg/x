@@ -3004,13 +3004,17 @@
             localStorage.setItem('orhan_weekly_v3', JSON.stringify(weekData));
         }
 
-        function initWeek() {
+        function getWeekKey() {
             const now = new Date();
             const dayOfWeek = now.getDay();
             const diffToMon = dayOfWeek === 0 ? -6 : 1 - dayOfWeek;
             const monday = new Date(now);
             monday.setDate(now.getDate() + diffToMon);
-            const weekKey = monday.toISOString().slice(0, 10);
+            return monday.toISOString().slice(0, 10);
+        }
+
+        function checkWeekReset() {
+            const weekKey = getWeekKey();
             const savedKey = localStorage.getItem('orhan_week_key');
             if (savedKey !== weekKey) {
                 weekData = {};
@@ -3019,13 +3023,23 @@
                 localStorage.setItem('orhan_week_key', weekKey);
                 localStorage.removeItem('orhan_todos');
                 todos = [];
-            } else {
+                renderTodos();
+                if (document.getElementById('week-area').style.display === 'block') renderWeek();
+                return true;
+            }
+            return false;
+        }
+
+        function initWeek() {
+            if (!checkWeekReset()) {
                 weekDays.forEach(d => {
                     if (!weekData[d] || typeof weekData[d].s !== 'number') weekData[d] = { s: 0, t: [] };
                 });
             }
         }
         initWeek();
+        // her 30 sn'de bir pazartesi 00:00 kontrolü
+        setInterval(checkWeekReset, 30000);
 
         function toggleWeek() {
             const el = document.getElementById('week-area');
