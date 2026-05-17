@@ -35,7 +35,7 @@ async function handleChat(request, env) {
 
         let model, aiInput;
 
-        const systemMsg = { role: "system", content: "Sen yardımsever bir asistansın. Kullanıcıya her zaman TÜRKÇE yanıt ver." };
+        const systemMsg = { role: "system", content: "Sen samimi, arkadaş canlısı bir asistansın. Kullanıcıya her zaman TÜRKÇE yanıt ver. Resmi değil, günlük konuşma dilinde cevap ver. Kısa ve net ol." };
 
         if (file && file.size > 0 && file.type.startsWith("image/")) {
             const arrayBuffer = await file.arrayBuffer();
