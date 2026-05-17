@@ -2573,6 +2573,42 @@
             }
         }
 
+        let currentQuestion = {};
+        let canAnswer = true;
+
+        function toggleWordGame() {
+            const gameArea = document.getElementById('game-area');
+            if (gameArea.style.display === "block") {
+                gameArea.style.display = "none";
+            } else {
+                gameArea.style.display = "block";
+                if (!currentQuestion.word) generateQuestion();
+            }
+        }
+
+        function generateQuestion() {
+            canAnswer = true;
+            document.getElementById('next-question-btn').style.display = "none";
+            for (let i = 0; i < 3; i++) document.getElementById(`opt-${i}`).className = "option-btn";
+
+            currentQuestion = selectNextWord();
+
+            document.getElementById('word-target').innerText = currentQuestion.word;
+            document.getElementById('sentence-target').innerText = `"${currentQuestion.sentence}"`;
+
+            let wrongMeans = uniqueWordBank
+                .filter(w => w.mean !== currentQuestion.mean)
+                .map(w => w.mean);
+            wrongMeans = [...new Set(wrongMeans)].sort(() => 0.5 - Math.random()).slice(0, 2);
+
+            const options = [currentQuestion.mean, wrongMeans[0], wrongMeans[1]].sort(() => 0.5 - Math.random());
+            currentQuestion.correctIndex = options.indexOf(currentQuestion.mean);
+
+            for (let i = 0; i < 3; i++) document.getElementById(`text-${i}`).innerText = options[i];
+
+            updateProgress();
+        }
+
         function checkAnswer(selectedIndex) {
             if (!canAnswer) return;
             canAnswer = false;
