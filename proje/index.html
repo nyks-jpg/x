@@ -1286,7 +1286,7 @@
         }
 
         // YANLIŞ BİLİNEN KELİMELER MANTIĞI
-        let wrongWords = JSON.parse(localStorage.getItem('orhan_wrong_words')) || [];
+        let wrongWords = [];
 
         function renderWrongWords() {
             const wrongListEl = document.getElementById('wrong-words-list');
@@ -1300,7 +1300,6 @@
                 `;
                 wrongListEl.appendChild(li);
             });
-            localStorage.setItem('orhan_wrong_words', JSON.stringify(wrongWords));
         }
 
         function addWrongWord(word, mean) {
@@ -2522,8 +2521,8 @@
         }
 
         // Kaç kez gösterildi (localStorage'da tutulur)
-        let showCount = JSON.parse(localStorage.getItem('orhan_show_count_v3')) || {};
-        let correctCount = JSON.parse(localStorage.getItem('orhan_correct_v3')) || {};
+        let showCount = {};
+        let correctCount = {};
         let lastWord = null;
 
         function _key(word) { return word.toLowerCase().trim(); }
@@ -2534,12 +2533,10 @@
 
         function markCorrect(word) {
             correctCount[_key(word)] = true;
-            localStorage.setItem('orhan_correct_v3', JSON.stringify(correctCount));
         }
 
         function incrementShown(word) {
             showCount[_key(word)] = getShown(word) + 1;
-            localStorage.setItem('orhan_show_count_v3', JSON.stringify(showCount));
         }
 
         function selectNextWord() {
@@ -2550,8 +2547,6 @@
             if (pool.length === 0) {
                 showCount = {};
                 correctCount = {};
-                localStorage.setItem('orhan_show_count_v3', JSON.stringify(showCount));
-                localStorage.setItem('orhan_correct_v3', JSON.stringify(correctCount));
                 pool = uniqueWordBank;
             }
 
