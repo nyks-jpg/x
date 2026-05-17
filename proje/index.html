@@ -2574,7 +2574,7 @@
             if (preview) preview.style.display = 'none';
         }
 
-        function askAi() {
+        async function askAi() {
             const input = document.getElementById('ai-input');
             const responseEl = document.getElementById('ai-response');
             const sendBtn = document.getElementById('ai-send-btn');
@@ -2586,40 +2586,40 @@
             responseEl.textContent = 'Gemini düşünüyor... 🧠';
             responseEl.className = 'ai-response loading';
 
-            const formData = new FormData();
-            formData.append('message', question);
-            
-            const fileInput = document.getElementById('ai-img-input');
-            if (fileInput && fileInput.files[0]) {
-                formData.append('file', fileInput.files[0]);
-            }
+            try {
+                const formData = new FormData();
+                formData.append('message', question);
 
-            // Doğrudan senin Cloudflare Workers URL'ine istek atıyoruz
-            fetch('https://x.calisma.workers.dev/', {
-                method: 'POST',
-                body: formData
-            })
-            .then(res => {
-                if (!res.ok) throw new Error("Sunucu hata kodu döndürdü: " + res.status);
-                return res.json();
-            })
-            .then(data => {
+                const fileInput = document.getElementById('ai-img-input');
+                if (fileInput && fileInput.files[0]) {
+                    formData.append('file', fileInput.files[0]);
+                }
+
+                const res = await fetch('https://x.calisma.workers.dev/', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (!res.ok) {
+                    const text = await res.text();
+                    throw new Error(`Sunucu hatası (${res.status}): ${text}`);
+                }
+
+                const data = await res.json();
                 if (data.error) {
                     responseEl.innerHTML = `<span style="color:#ff4a4a">Hata: ${data.error}</span>`;
                 } else {
-                    responseEl.textContent = data.reply;
+                    responseEl.textContent = data.reply || data.text || JSON.stringify(data);
                 }
-            })
-            .catch(err => {
-                responseEl.innerHTML = `<span style="color:#ff4a4a">Bağlantı Hatası: Yapay zeka sunucusuna ulaşılamadı.</span>`;
+            } catch (err) {
+                responseEl.innerHTML = `<span style="color:#ff4a4a">Bağlantı Hatası: ${err.message}</span>`;
                 console.error(err);
-            })
-            .finally(() => {
-                if (input) input.value = '';
+            } finally {
+                input.value = '';
                 removeAiImage();
                 sendBtn.disabled = false;
                 responseEl.className = 'ai-response show';
-            });
+            }
         }
 
         // Başlangıç Çağrıları
