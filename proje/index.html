@@ -982,7 +982,7 @@
         <div class="todo-container">
             <div class="todo-title">
                 <span class="todo-title-text">Bugün Ne Yapacaksın?</span>
-                <span class="todo-clear-btn" onclick="todos=[];renderTodos()">Temizle</span>
+                <span class="todo-clear-btn" onclick="localStorage.removeItem('orhan_todos');todos=[];renderTodos()">Temizle</span>
             </div>
             <div class="todo-input-group">
                 <input type="text" id="todo-input" class="todo-input" placeholder="Yeni görev ekle..." onkeypress="handleTodoKey(event)">
@@ -1032,6 +1032,7 @@
         </div>
         
         <button class="next-btn" id="next-question-btn" onclick="generateQuestion()">Sonraki Kelime</button>
+        <button id="reset-word-btn" onclick="resetWordGame()" style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.5);padding:8px 18px;border-radius:50px;font-size:0.7rem;cursor:pointer;float:left;text-transform:uppercase;letter-spacing:1px;font-family:'Mulish',sans-serif;transition:all 0.2s;">⟳ Baştan Başla</button>
         <div style="clear: both;"></div>
 
         <div class="wrong-words-container">
@@ -1135,7 +1136,7 @@
         }
 
         // YAPILACAKLAR LİSTESİ (TODO) MANTIĞI
-        let todos = [];
+        let todos = JSON.parse(localStorage.getItem('orhan_todos')) || [];
 
         function renderTodos() {
             const listEl = document.getElementById('todo-list');
@@ -1162,6 +1163,7 @@
                 li.addEventListener('dragleave', handleDragLeave);
                 listEl.appendChild(li);
             });
+            localStorage.setItem('orhan_todos', JSON.stringify(todos));
         }
 
         function setupTodoEvents() {
@@ -2532,6 +2534,17 @@
                 gameArea.style.display = "block";
                 if (!currentQuestion.word) generateQuestion();
             }
+        }
+
+        function resetWordGame() {
+            showCount = {};
+            localStorage.setItem('orhan_show_count_v3', JSON.stringify(showCount));
+            currentQuestion = {};
+            canAnswer = true;
+            document.getElementById('next-question-btn').style.display = "none";
+            for (let i = 0; i < 3; i++) document.getElementById(`opt-${i}`).className = "option-btn";
+            updateProgress();
+            generateQuestion();
         }
 
         function generateQuestion() {
