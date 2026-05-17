@@ -931,9 +931,9 @@
             backdrop-filter: blur(25px);
             -webkit-backdrop-filter: blur(25px);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            max-width: 900px;
+            max-width: 1100px;
             width: 100%;
-            padding: 2rem;
+            padding: 2rem 1.5rem;
             border-radius: 28px;
             box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
             margin-top: 24px;
@@ -964,150 +964,52 @@
         .week-days {
             display: grid;
             grid-template-columns: repeat(7, 1fr);
-            gap: 6px;
+            gap: 10px;
         }
         .week-day {
-            background: rgba(255,255,255,0.04);
-            border: 1px solid rgba(255,255,255,0.06);
-            border-radius: 12px;
-            padding: 8px 6px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 16px;
+            padding: 18px 10px;
             transition: all 0.2s;
             display: flex;
             flex-direction: column;
-            min-width: 0;
+            align-items: center;
+            justify-content: center;
+            min-height: 90px;
         }
         .week-day:hover {
-            background: rgba(255,255,255,0.06);
-            border-color: rgba(255,255,255,0.1);
+            background: rgba(255,255,255,0.08);
+            border-color: rgba(255,255,255,0.12);
         }
-        .week-day-header {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin-bottom: 6px;
-            gap: 2px;
+        .week-day.today {
+            border-color: rgba(255,179,198,0.5);
+            background: rgba(255,179,198,0.08);
         }
         .week-day-name {
             font-family: 'DM Serif Display', serif;
-            font-size: 0.75rem;
-            color: rgba(255,255,255,0.85);
+            font-size: 1rem;
+            color: rgba(255,255,255,0.9);
             font-weight: 400;
-            text-align: center;
+            margin-bottom: 8px;
         }
         .week-day-hours {
-            font-size: 0.6rem;
-            color: rgba(255,179,198,0.7);
+            font-size: 1.4rem;
+            color: rgba(255,179,198,0.85);
+            font-family: 'DM Serif Display', serif;
             letter-spacing: 0.5px;
         }
-        .week-day-input-row {
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-            margin-bottom: 6px;
-        }
-        .week-day-input {
-            background: rgba(0,0,0,0.2);
-            border: 1px solid rgba(255,255,255,0.08);
-            padding: 4px 6px;
-            border-radius: 6px;
-            color: #fff;
+        .week-day-hours.small {
             font-size: 0.65rem;
-            outline: none;
-            font-family: 'Mulish', sans-serif;
-            transition: all 0.2s;
-            width: 100%;
+            color: rgba(255,255,255,0.3);
         }
-        .week-day-input:focus {
-            border-color: #ffb3c6;
-            background: rgba(0,0,0,0.3);
-        }
-        .week-day-input::placeholder {
-            color: rgba(255,255,255,0.2);
-        }
-        .week-hour-input {
-            background: rgba(0,0,0,0.2);
-            border: 1px solid rgba(255,255,255,0.08);
-            padding: 4px 4px;
-            border-radius: 6px;
-            color: #fff;
-            font-size: 0.65rem;
-            outline: none;
-            font-family: 'Mulish', sans-serif;
+        .week-total-row {
             text-align: center;
-            transition: all 0.2s;
-            width: 100%;
-        }
-        .week-hour-input:focus {
-            border-color: #ffb3c6;
-            background: rgba(0,0,0,0.3);
-        }
-        .week-add-btn {
-            background: linear-gradient(135deg, #ffb3c6, #f07090);
-            color: #5a1e2e;
-            border: none;
-            padding: 4px 6px;
-            border-radius: 6px;
-            font-weight: 700;
-            cursor: pointer;
-            font-size: 0.6rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+            margin-top: 18px;
+            font-size: 0.85rem;
+            color: rgba(255,255,255,0.5);
+            letter-spacing: 1px;
             font-family: 'Mulish', sans-serif;
-            box-shadow: 0 2px 8px rgba(240,112,144,0.35);
-            transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
-            width: 100%;
-        }
-        .week-add-btn:hover {
-            background: #fff;
-            transform: translateY(-1px);
-        }
-        .week-day-tasks {
-            list-style: none;
-            display: flex;
-            flex-direction: column;
-            gap: 3px;
-        }
-        .week-task-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: rgba(255,255,255,0.04);
-            border: 1px solid rgba(255,255,255,0.05);
-            padding: 3px 6px;
-            border-radius: 6px;
-            font-size: 0.6rem;
-            color: rgba(255,255,255,0.8);
-            animation: fadeIn 0.3s ease;
-            gap: 4px;
-        }
-        .week-task-left {
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            min-width: 0;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-        }
-        .week-task-hours {
-            color: rgba(255,179,198,0.75);
-            font-weight: 500;
-            font-size: 0.6rem;
-            flex-shrink: 0;
-        }
-        .week-task-del {
-            background: none;
-            border: none;
-            color: rgba(255,255,255,0.2);
-            cursor: pointer;
-            font-size: 0.7rem;
-            line-height: 1;
-            padding: 0 2px;
-            transition: color 0.2s;
-            flex-shrink: 0;
-        }
-        .week-task-del:hover {
-            color: #ff477e;
         }
         .week-reset-btn {
             background: rgba(255,255,255,0.06);
@@ -1138,13 +1040,6 @@
         body.dark-mode .week-day {
             background: rgba(255,255,255,0.03);
             border-color: rgba(255,255,255,0.05);
-        }
-        body.dark-mode .week-day-input,
-        body.dark-mode .week-hour-input {
-            background: rgba(0,0,0,0.3);
-        }
-        body.dark-mode .week-task-item {
-            background: rgba(255,255,255,0.03);
         }
 
         /* Dark Mode Toggle */
@@ -1205,6 +1100,10 @@
             .motivation-text { font-size: 1.05rem; }
             .dark-toggle { width: 40px; height: 40px; font-size: 17px; bottom: 15px; right: 15px; }
             .week-days { grid-template-columns: repeat(4, 1fr); }
+            .week-day { min-height: 70px; padding: 12px 8px; }
+            .week-day-name { font-size: 0.85rem; }
+            .week-day-hours { font-size: 1.1rem; }
+            .week-container { max-width: 100%; padding: 1.5rem 1rem; }
         }
         @media (max-width: 480px) {
             .week-days { grid-template-columns: repeat(2, 1fr); }
@@ -1264,11 +1163,13 @@
     </div>
 
     <div class="week-container" id="week-area">
-        <div class="week-title">📅 Haftalık Program</div>
+        <div class="week-title">📅 Haftalık Çalışma</div>
 
         <div class="week-days" id="week-days"></div>
 
-        <button class="week-reset-btn" onclick="resetWeek()">Temizle</button>
+        <div class="week-total-row" id="week-total">Toplam: 0dk</div>
+
+        <button class="week-reset-btn" onclick="resetWeek()">Sıfırla</button>
     </div>
 
     <div class="ai-container">
@@ -1400,6 +1301,9 @@
             const btn = document.getElementById('start-stop-btn');
             if (isRunning) {
                 clearInterval(stopwatchInterval);
+                addSecondsToToday(elapsedSeconds);
+                elapsedSeconds = 0;
+                document.getElementById('stopwatch-display').innerText = "00:00:00";
                 btn.innerText = "Başlat";
                 btn.style.background = "rgba(255, 255, 255, 0.15)";
             } else {
@@ -2988,14 +2892,14 @@
 
         // HAFTALIK PROGRAM
         const weekDays = ["Pazartesi", "Salı", "Çarşamba", "Perşembe", "Cuma", "Cumartesi", "Pazar"];
-        let weekData = JSON.parse(localStorage.getItem('orhan_weekly')) || {};
+        let weekData = JSON.parse(localStorage.getItem('orhan_weekly_v2')) || {};
 
         function saveWeek() {
-            localStorage.setItem('orhan_weekly', JSON.stringify(weekData));
+            localStorage.setItem('orhan_weekly_v2', JSON.stringify(weekData));
         }
 
         function initWeek() {
-            weekDays.forEach(d => { if (!weekData[d]) weekData[d] = []; });
+            weekDays.forEach(d => { if (typeof weekData[d] !== 'number') weekData[d] = 0; });
         }
         initWeek();
 
@@ -3012,67 +2916,44 @@
             }
         }
 
+        function todayName() {
+            const map = ["Pazar", "Pazartesi", "Salı", "Çarşamba", "Perşembe", "Cuma", "Cumartesi"];
+            return map[new Date().getDay()];
+        }
+
+        function secsToStr(s) {
+            if (!s || s <= 0) return '';
+            const h = Math.floor(s / 3600);
+            const m = Math.floor((s % 3600) / 60);
+            if (h > 0) return `${h}s ${m}dk`;
+            return `${m}dk`;
+        }
+
         function renderWeek() {
             const container = document.getElementById('week-days');
             container.innerHTML = '';
+            let totalAll = 0;
+            const today = todayName();
             weekDays.forEach(day => {
-                const tasks = weekData[day] || [];
-                const total = tasks.reduce((sum, t) => sum + (parseFloat(t.hours) || 0), 0);
-
+                const secs = weekData[day] || 0;
+                totalAll += secs;
                 const dayEl = document.createElement('div');
-                dayEl.className = 'week-day';
-
-                const header = document.createElement('div');
-                header.className = 'week-day-header';
-                header.innerHTML = `<span class="week-day-name">${day}</span><span class="week-day-hours">${total > 0 ? total.toFixed(1) + ' saat' : ''}</span>`;
-                dayEl.appendChild(header);
-
-                const inputRow = document.createElement('div');
-                inputRow.className = 'week-day-input-row';
-                inputRow.innerHTML = `
-                    <input type="text" class="week-day-input" id="wi-${day}" placeholder="Ne çalıştın?">
-                    <input type="number" class="week-hour-input" id="wh-${day}" placeholder="sa" min="0" step="0.5">
-                    <button class="week-add-btn" onclick="addWeekTask('${day}')">Ekle</button>
+                dayEl.className = 'week-day' + (day === today ? ' today' : '');
+                dayEl.innerHTML = `
+                    <div class="week-day-name">${day}</div>
+                    <div class="week-day-hours">${secsToStr(secs) || '<span class="week-day-hours small">—</span>'}</div>
                 `;
-                dayEl.appendChild(inputRow);
-
-                const taskList = document.createElement('ul');
-                taskList.className = 'week-day-tasks';
-                tasks.forEach((t, i) => {
-                    const li = document.createElement('li');
-                    li.className = 'week-task-item';
-                    li.innerHTML = `
-                        <span class="week-task-left">
-                            <span>${t.task}</span>
-                            <span class="week-task-hours">${parseFloat(t.hours).toFixed(1)}sa</span>
-                        </span>
-                        <button class="week-task-del" onclick="removeWeekTask('${day}', ${i})">×</button>
-                    `;
-                    taskList.appendChild(li);
-                });
-                dayEl.appendChild(taskList);
                 container.appendChild(dayEl);
             });
+            const totalRow = document.getElementById('week-total');
+            if (totalRow) totalRow.textContent = `Toplam: ${secsToStr(totalAll) || '0dk'}`;
         }
 
-        function addWeekTask(day) {
-            const taskInput = document.getElementById(`wi-${day}`);
-            const hourInput = document.getElementById(`wh-${day}`);
-            const task = taskInput.value.trim();
-            const hours = parseFloat(hourInput.value);
-            if (!task || isNaN(hours) || hours <= 0) return;
-            if (!weekData[day]) weekData[day] = [];
-            weekData[day].push({ task, hours });
+        function addSecondsToToday(seconds) {
+            const day = todayName();
+            weekData[day] = (weekData[day] || 0) + seconds;
             saveWeek();
-            taskInput.value = '';
-            hourInput.value = '';
-            renderWeek();
-        }
-
-        function removeWeekTask(day, index) {
-            if (weekData[day]) weekData[day].splice(index, 1);
-            saveWeek();
-            renderWeek();
+            if (document.getElementById('week-area').style.display === 'block') renderWeek();
         }
 
         function resetWeek() {
