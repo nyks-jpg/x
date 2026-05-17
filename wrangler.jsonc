@@ -15,5 +15,11 @@
   ],
   "ai": {
     "binding": "AI"
-  }
+  },
+  "kv_namespaces": [
+    {
+      "binding": "LEADERBOARD",
+      "id": "leaderboard"
+    }
+  ]
 }

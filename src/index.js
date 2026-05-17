@@ -6,7 +6,7 @@ export default {
             return new Response(null, {
                 headers: {
                     "Access-Control-Allow-Origin": "*",
-                    "Access-Control-Allow-Methods": "POST, OPTIONS",
+                    "Access-Control-Allow-Methods": "POST, GET, OPTIONS",
                     "Access-Control-Allow-Headers": "Content-Type",
                 },
             });
@@ -16,9 +16,71 @@ export default {
             return handleChat(request, env);
         }
 
+        if (url.pathname === "/api/leaderboard" && request.method === "GET") {
+            return handleLeaderboardGet(request, env);
+        }
+
+        if (url.pathname === "/api/leaderboard/sync" && request.method === "POST") {
+            return handleLeaderboardSync(request, env);
+        }
+
         return env.ASSETS.fetch(request);
     }
 };
+
+async function handleLeaderboardGet(request, env) {
+    try {
+        const url = new URL(request.url);
+        const date = url.searchParams.get("date") || new Date().toISOString().slice(0, 10);
+        const key = `lb:${date}`;
+        const data = await env.LEADERBOARD.get(key, "json");
+        const list = Array.isArray(data) ? data : [];
+        list.sort((a, b) => b.hours - a.hours);
+        return new Response(JSON.stringify(list), {
+            headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" }
+        });
+    } catch (error) {
+        return new Response(JSON.stringify({ error: error.message }), {
+            status: 500,
+            headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" }
+        });
+    }
+}
+
+async function handleLeaderboardSync(request, env) {
+    try {
+        const body = await request.json();
+        const { nickname, date, hours } = body;
+        if (!nickname || !date || hours === undefined) {
+            return new Response(JSON.stringify({ error: "nickname, date, hours gerekli" }), {
+                status: 400,
+                headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" }
+            });
+        }
+
+        const key = `lb:${date}`;
+        let list = await env.LEADERBOARD.get(key, "json");
+        list = Array.isArray(list) ? list : [];
+
+        const existing = list.find(e => e.nickname === nickname);
+        if (existing) {
+            existing.hours = hours;
+            existing.updated = Date.now();
+        } else {
+            list.push({ nickname, hours, updated: Date.now() });
+        }
+
+        await env.LEADERBOARD.put(key, JSON.stringify(list));
+        return new Response(JSON.stringify({ ok: true }), {
+            headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" }
+        });
+    } catch (error) {
+        return new Response(JSON.stringify({ error: error.message }), {
+            status: 500,
+            headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" }
+        });
+    }
+}
 
 async function handleChat(request, env) {
     try {
