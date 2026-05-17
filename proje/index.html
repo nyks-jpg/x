@@ -915,29 +915,57 @@
             text-shadow: 0 1px 30px rgba(255, 179, 198, 0.1);
         }
 
-        @media (max-width: 768px) {
-            body { padding: 60px 12px 20px; }
-            .word-game-btn { top: 12px; left: 12px; width: 38px; height: 38px; }
-            .countdown-top { position: static; display: flex; flex-direction: row; justify-content: center; gap: 8px; margin-bottom: 12px; }
-            .countdown-item { padding: 6px 10px; font-size: 0.7rem; }
-            .cd-number { font-size: 0.85rem; }
-            .main-row { flex-direction: column; gap: 14px; }
-            .motivation-text { font-size: 1rem; }
-            .motivation-container { margin-top: 4px; }
-            .stopwatch-container,
-            .todo-container,
-            .ai-container,
-            .game-container { padding: 1.25rem; border-radius: 18px; }
-            .stopwatch-display { font-size: 2.4rem; }
-            .stopwatch-btn { padding: 8px 16px; font-size: 0.8rem; }
-            .target-word { font-size: 1.8rem; }
-            .option-btn { padding: 5px 5px 5px 14px; font-size: 0.85rem; }
-            .ai-input { font-size: 0.9rem; }
-            .chat-msg { font-size: 0.85rem; padding: 12px 14px; }
-            .motivation-container { margin-bottom: 20px; }
-            .game-container { padding: 1.25rem; }
+        /* Dark Mode Toggle */
+        .dark-toggle {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            width: 46px;
+            height: 46px;
+            border-radius: 50%;
+            border: 1px solid rgba(255,255,255,0.2);
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            color: #fff;
+            font-size: 20px;
+            cursor: pointer;
+            z-index: 999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            user-select: none;
         }
+        .dark-toggle:hover { transform: scale(1.1); background: rgba(255,255,255,0.18); }
+        body.dark-mode {
+            background: #12121e !important;
+            background-image: none !important;
+            color: #e0e0e0;
+        }
+        body.dark-mode .countdown-item,
+        body.dark-mode .todo-container,
+        body.dark-mode .stopwatch-container,
+        body.dark-mode .ai-container,
+        body.dark-mode .game-container {
+            background: rgba(20, 20, 40, 0.6) !important;
+            border-color: rgba(255,255,255,0.08) !important;
+        }
+        body.dark-mode .ai-input { background: rgba(20, 20, 40, 0.6); border-color: rgba(255,255,255,0.1); color: #e0e0e0; }
+        body.dark-mode .ai-input::placeholder { color: rgba(255,255,255,0.35); }
+        body.dark-mode .option-btn { background: rgba(20, 20, 40, 0.5); border-color: rgba(255,255,255,0.1); color: #e0e0e0; }
+        body.dark-mode .wrong-word-item { background: rgba(40, 20, 20, 0.4); border-color: rgba(255,80,80,0.2); color: #e0a0a0; }
+        body.dark-mode .motivation-text { color: #e0d0d8; text-shadow: 0 1px 30px rgba(100, 50, 80, 0.2); }
 
+        @media (max-width: 768px) {
+            body { padding: 65px 15px 30px 15px; }
+            .word-game-btn { top: 15px; left: 15px; width: 40px; height: 40px; }
+            .countdown-top { top: 15px; right: 15px; gap: 8px; }
+            .countdown-item { padding: 8px 10px; font-size: 0.75rem; }
+            .main-row { flex-direction: column; gap: 16px; }
+            .motivation-text { font-size: 1.05rem; }
+            .dark-toggle { width: 40px; height: 40px; font-size: 17px; bottom: 15px; right: 15px; }
+        }
     </style>
 </head>
 <body style="background:#f8b8cc">
@@ -2767,7 +2795,14 @@
         renderChat();
         setInterval(updateTimers, 1000);
 
+        const darkToggle = document.createElement('button');
+        darkToggle.className = 'dark-toggle';
+        darkToggle.textContent = '🌙';
+        darkToggle.onclick = () => {
+            document.body.classList.toggle('dark-mode');
+            darkToggle.textContent = document.body.classList.contains('dark-mode') ? '☀️' : '🌙';
+        };
+        document.body.appendChild(darkToggle);
     </script>
-
 </body>
 </html>
