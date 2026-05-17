@@ -1,9 +1,8 @@
 <!DOCTYPE html>
-<html lang="tr" style="background:#f8b8cc">
+<html lang="tr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="color-scheme" content="light only">
     <title>Geri Sayım & Kelime Merkezi</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Mulish:wght@300;400;500;600;700&family=Lora:ital,wght@0,400;0,500;1,400;1,500&display=swap" rel="stylesheet">
@@ -21,12 +20,12 @@
 
         body {
             font-family: 'Mulish', sans-serif;
-            background: #f8b8cc;
+            background: #9a6070;
             background-image:
-                radial-gradient(ellipse 80% 60% at 20% 0%, rgba(200, 120, 150, 0.2) 0%, transparent 60%),
-                radial-gradient(ellipse 60% 50% at 80% 100%, rgba(180, 100, 130, 0.2) 0%, transparent 60%),
-                radial-gradient(ellipse 50% 40% at 50% 50%, rgba(160, 80, 110, 0.15) 0%, transparent 70%);
-            color: #4a2c3a;
+                radial-gradient(ellipse 80% 60% at 20% 0%, rgba(180, 80, 110, 0.35) 0%, transparent 60%),
+                radial-gradient(ellipse 60% 50% at 80% 100%, rgba(130, 60, 90, 0.3) 0%, transparent 60%),
+                radial-gradient(ellipse 50% 40% at 50% 50%, rgba(100, 40, 60, 0.25) 0%, transparent 70%);
+            color: #fff;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -45,7 +44,7 @@
             background: rgba(255, 255, 255, 0.08);
             backdrop-filter: blur(24px);
             -webkit-backdrop-filter: blur(24px);
-            border: 1px solid rgba(74, 44, 58, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.18);
             border-radius: 15px;
             display: flex;
             justify-content: center;
@@ -92,9 +91,9 @@
         }
 
         .countdown-item {
-            background: rgba(255, 255, 255, 0.45);
+            background: rgba(255, 255, 255, 0.07);
             backdrop-filter: blur(16px);
-            border: 1px solid rgba(74, 44, 58, 0.12);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             padding: 10px 14px;
             border-radius: 14px;
             display: flex;
@@ -107,30 +106,30 @@
 
         .cd-label {
             font-size: 0.65rem;
-            color: rgba(74, 44, 58, 0.5);
+            color: rgba(255,255,255,0.5);
             letter-spacing: 1px;
             margin-right: 4px;
             font-style: italic;
         }
 
         .cd-number {
-            color: rgba(74, 44, 58, 0.95);
+            color: rgba(255, 255, 255, 0.95);
             font-size: 0.95rem;
             letter-spacing: 0.5px;
         }
 
         .cd-unit {
-            color: rgba(74, 44, 58, 0.35);
+            color: rgba(255, 255, 255, 0.35);
             font-size: 0.6rem;
             margin-right: 2px;
         }
 
         /* KRONOMETRE */
         .stopwatch-container {
-            background: rgba(255, 255, 255, 0.45);
+            background: rgba(255, 255, 255, 0.04);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(74, 44, 58, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.08);
             flex: 1;
             min-width: 0;
             padding: 2rem;
@@ -155,7 +154,7 @@
             font-size: 0.7rem;
             letter-spacing: 4px;
             text-transform: uppercase;
-            color: rgba(74, 44, 58, 0.5);
+            color: rgba(255, 255, 255, 0.5);
             margin-bottom: 12px;
             font-weight: 600;
         }
@@ -170,33 +169,30 @@
         }
 
         .stopwatch-btn {
-            background: linear-gradient(135deg, #ffb3c6, #f07090);
-            border: none;
-            color: #5a1e2e;
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
             padding: 10px 24px;
             font-size: 0.9rem;
             border-radius: 50px;
             cursor: pointer;
-            transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transition: all 0.2s ease;
             text-transform: uppercase;
             letter-spacing: 1px;
             margin: 0 5px;
-            font-weight: 700;
-            box-shadow: 0 4px 16px rgba(240, 112, 144, 0.3);
         }
 
         .stopwatch-btn:hover {
-            background: linear-gradient(135deg, #ffc4d4, #f0809e);
+            background: rgba(255, 255, 255, 0.3);
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(240, 112, 144, 0.4);
         }
 
         /* YAPILACAKLAR LİSTESİ (TODO TABLE) */
         .todo-container {
-            background: rgba(255, 255, 255, 0.45);
+            background: rgba(255, 255, 255, 0.04);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(74, 44, 58, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.08);
             flex: 1;
             min-width: 0;
             padding: 2rem;
@@ -220,7 +216,7 @@
             font-size: 0.7rem;
             letter-spacing: 4px;
             text-transform: uppercase;
-            color: rgba(74, 44, 58, 0.5);
+            color: rgba(255, 255, 255, 0.5);
             margin-bottom: 16px;
             display: flex;
             align-items: center;
@@ -241,11 +237,11 @@
 
         .todo-input {
             flex: 1;
-            background: rgba(74, 44, 58, 0.06);
-            border: 1px solid rgba(74, 44, 58, 0.15);
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             padding: 12px 16px;
             border-radius: 12px;
-            color: #4a2c3a;
+            color: #fff;
             font-size: 0.95rem;
             outline: none;
             transition: all 0.2s;
@@ -253,7 +249,7 @@
 
         .todo-input:focus {
             border-color: #ffb3c6;
-            background: rgba(255, 255, 255, 0.6);
+            background: rgba(0, 0, 0, 0.3);
         }
 
         .todo-add-btn {
@@ -273,7 +269,7 @@
         }
 
         .todo-add-btn:hover {
-            background: linear-gradient(135deg, #ffc4d4, #f0809e);
+            background: #fff;
             transform: translateY(-1px);
         }
 
@@ -296,8 +292,8 @@
             display: flex;
             align-items: center;
             gap: 10px;
-                        background: rgba(255, 255, 255, 0.4);
-            border: 1px solid rgba(74, 44, 58, 0.08);
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.08);
             padding: 10px 14px;
             border-radius: 12px;
             margin-bottom: 8px;
@@ -306,8 +302,8 @@
         }
 
         .todo-item:hover {
-            background: rgba(74, 44, 58, 0.06);
-            border-color: rgba(74,44,58,0.18);
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255,255,255,0.12);
         }
 
         .todo-text {
@@ -321,40 +317,40 @@
         }
 
         .todo-item.completed {
-            background: rgba(74, 44, 58, 0.06);
-            border-color: rgba(74, 44, 58, 0.08);
+            background: rgba(0, 0, 0, 0.25);
+            border-color: rgba(255, 255, 255, 0.04);
         }
 
         .todo-item.completed .todo-text {
             text-decoration: line-through;
-            color: rgba(74, 44, 58, 0.3);
+            color: rgba(255, 255, 255, 0.3);
         }
 
         .todo-clear-btn {
-            font-size: 0.6rem;
-            letter-spacing: 1.5px;
+            font-size: 0.55rem;
+            letter-spacing: 2px;
             text-transform: uppercase;
-            color: rgba(74, 44, 58, 0.6);
+            color: rgba(255,255,255,0.2);
             cursor: pointer;
-            transition: all 0.2s;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
             padding: 5px 12px;
             border-radius: 20px;
-            border: 1px solid rgba(74,44,58,0.12);
-            background: rgba(74,44,58,0.06);
-            font-weight: 600;
-            font-family: 'Mulish', sans-serif;
+            border: 1px solid rgba(255,255,255,0.06);
+            background: rgba(255,255,255,0.03);
+            font-weight: 500;
             flex-shrink: 0;
         }
         .todo-clear-btn:hover {
-            background: rgba(255,179,198,0.2);
-            border-color: rgba(255,179,198,0.3);
-            color: #d4607a;
+            color: #ff7098;
+            border-color: rgba(255,112,152,0.25);
+            background: rgba(255,112,152,0.08);
+            transform: scale(1.04);
         }
 
         .todo-delete-btn {
-                        background: rgba(255, 255, 255, 0.4);
-            border: 1px solid rgba(74, 44, 58, 0.08);
-            color: rgba(74, 44, 58, 0.4);
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            color: rgba(255, 255, 255, 0.4);
             cursor: pointer;
             font-size: 1.1rem;
             width: 30px;
@@ -374,7 +370,33 @@
             color: #ff477e;
         }
 
-        .todo-item.drag-over {
+        /* Drag handle */
+        .drag-handle {
+            color: rgba(255,255,255,0.25);
+            font-size: 1rem;
+            cursor: grab;
+            flex-shrink: 0;
+            padding: 0 2px;
+            line-height: 1;
+            transition: color 0.2s;
+            user-select: none;
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+        }
+
+        .drag-handle span {
+            display: block;
+            width: 14px;
+            height: 1.5px;
+            background: currentColor;
+            border-radius: 2px;
+        }
+
+        .drag-handle:hover { color: rgba(255,255,255,0.55); }
+        .drag-handle:active { cursor: grabbing; }
+
+        .todo-item.dragging {
             opacity: 0.4;
             transform: scale(0.97);
             border-color: rgba(255,179,198,0.3);
@@ -389,10 +411,10 @@
 
         /* KELİME ÇALIŞMASI ALANI */
         .game-container {
-                        background: rgba(255, 255, 255, 0.4);
+            background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(25px);
             -webkit-backdrop-filter: blur(25px);
-            border: 1px solid rgba(74, 44, 58, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             max-width: 900px;
             width: 100%;
             padding: 2.5rem 2rem;
@@ -422,21 +444,21 @@
 
         .game-title {
             font-family: 'Mulish', sans-serif;
-            font-size: 0.85rem;
-            font-weight: 400;
+            font-size: 0.75rem;
+            font-weight: 300;
             letter-spacing: 4px;
             text-transform: uppercase;
-            color: rgba(74, 44, 58, 0.5);
+            color: rgba(255, 179, 198, 0.8);
             margin-bottom: 14px;
             text-align: center;
         }
 
         .target-word {
             font-family: 'DM Serif Display', serif;
-            font-size: 2.6rem;
+            font-size: 2.4rem;
             font-weight: 400;
             margin-bottom: 4px;
-            color: rgba(74, 44, 58, 0.92);
+            color: rgba(255, 255, 255, 0.92);
             text-align: center;
             text-shadow: 0 2px 24px rgba(255,179,198,0.25);
             letter-spacing: -0.5px;
@@ -446,11 +468,11 @@
             font-size: 0.92rem;
             font-weight: 300;
             font-style: italic;
-            color: rgba(74, 44, 58, 0.75);
+            color: rgba(255, 255, 255, 0.6);
             margin: 14px 0 22px;
             text-align: center;
             line-height: 1.65;
-            background: rgba(74, 44, 58, 0.05);
+            background: rgba(0, 0, 0, 0.1);
             padding: 12px 16px;
             border-radius: 14px;
             border-left: 2px solid rgba(255,179,198,0.4);
@@ -464,160 +486,140 @@
         }
 
         .option-btn {
-            background: rgba(255, 255, 255, 0.5);
-            border: 1px solid rgba(74, 44, 58, 0.1);
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.9);
+            padding: 13px 18px;
             border-radius: 16px;
-            padding: 12px 16px 12px 16px;
-            transition: all 0.25s ease;
+            cursor: pointer;
+            text-align: left;
+            font-size: 0.92rem;
+            transition: all 0.2s ease;
             display: flex;
             align-items: center;
-            gap: 12px;
-            font-size: 0.95rem;
-            cursor: pointer;
             font-family: 'Mulish', sans-serif;
-            color: #4a2c3a;
+            font-weight: 400;
+            letter-spacing: 0.2px;
         }
 
         .option-btn:hover {
-            background: rgba(255, 255, 255, 0.7);
-            border-color: rgba(74, 44, 58, 0.2);
-            transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+            background: rgba(255, 255, 255, 0.12);
+            border-color: rgba(255,255,255,0.18);
+            transform: translateX(5px);
         }
 
         .option-prefix {
+            font-weight: 400;
+            color: rgba(255,179,198,0.75);
+            margin-right: 12px;
+            background: rgba(255,179,198,0.08);
+            border: 1px solid rgba(255,179,198,0.15);
+            width: 28px;
+            height: 28px;
             display: inline-flex;
-            align-items: center;
             justify-content: center;
-            width: 32px;
-            height: 32px;
-            background: rgba(255, 179, 198, 0.3);
+            align-items: center;
             border-radius: 50%;
-            font-size: 0.8rem;
-            font-weight: 700;
-            color: #a04560;
+            font-size: 0.78rem;
             flex-shrink: 0;
+        }
+
+        .correct-ans {
+            background: rgba(46, 204, 113, 0.3) !important;
+            border-color: rgba(46, 204, 113, 0.5) !important;
+        }
+
+        .wrong-ans {
+            background: rgba(231, 76, 60, 0.3) !important;
+            border-color: rgba(231, 76, 60, 0.5) !important;
         }
 
         .next-btn {
             background: linear-gradient(135deg, #ffb3c6, #f07090);
             color: #5a1e2e;
             border: none;
-            padding: 10px 32px;
+            padding: 11px 28px;
+            font-size: 0.78rem;
+            font-weight: 600;
             border-radius: 50px;
-            font-weight: 700;
-            font-size: 0.8rem;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            font-family: 'Mulish', sans-serif;
             cursor: pointer;
-            display: block;
-            margin: 0 auto 24px;
-            box-shadow: 0 4px 16px rgba(240, 112, 144, 0.3);
+            float: right;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            display: none;
             transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+            font-family: 'Mulish', sans-serif;
+            box-shadow: 0 4px 16px rgba(240, 112, 144, 0.35);
         }
 
         .next-btn:hover {
-            background: linear-gradient(135deg, #ffc4d4, #f0809e);
+            background: #fff;
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(240, 112, 144, 0.4);
         }
 
-        .correct-ans {
-            background: rgba(100, 200, 150, 0.3) !important;
-            border-color: rgba(100, 200, 150, 0.5) !important;
-        }
-
-        .correct-ans .option-prefix {
-            background: rgba(100, 200, 150, 0.5) !important;
-            color: #1a6b3c !important;
-        }
-
-        .wrong-ans {
-            background: rgba(255, 80, 80, 0.15) !important;
-            border-color: rgba(255, 80, 80, 0.3) !important;
-        }
-
-        .wrong-ans .option-prefix {
-            background: rgba(255, 80, 80, 0.3) !important;
-            color: #a03030 !important;
-        }
-
+        /* YANLIŞ BİLİNEN KELİMELER LİSTESİ */
         .wrong-words-container {
-            border-top: 1px solid rgba(74, 44, 58, 0.08);
-            padding-top: 16px;
-        }
-
-        .wrong-words-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 12px;
+            margin-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 20px;
         }
 
         .wrong-words-title {
-            font-size: 0.7rem;
-            letter-spacing: 2px;
+            font-size: 0.65rem;
+            letter-spacing: 3.5px;
             text-transform: uppercase;
-            color: rgba(74, 44, 58, 0.5);
-            font-weight: 600;
-        }
-
-        .copy-wrong-btn {
-            background: rgba(74, 44, 58, 0.06);
-            border: 1px solid rgba(74, 44, 58, 0.12);
-            color: rgba(74, 44, 58, 0.5);
-            font-size: 0.75rem;
-            padding: 6px 16px;
-            border-radius: 20px;
-            cursor: pointer;
-            font-family: 'Mulish', sans-serif;
-            transition: all 0.2s;
-            letter-spacing: 0.5px;
-        }
-
-        .copy-wrong-btn:hover {
-            background: rgba(255,179,198,0.15);
-            border-color: rgba(255,179,198,0.3);
-            color: #d4607a;
-        }
-
-        .copy-wrong-btn.copied {
-            background: rgba(100,200,150,0.2);
-            border-color: rgba(100,200,150,0.3);
-            color: #1a6b3c;
+            color: rgba(255, 130, 155, 0.8);
+            margin-bottom: 12px;
+            font-weight: 400;
         }
 
         .wrong-words-list {
             list-style: none;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
+            max-height: 150px;
+            overflow-y: auto;
+            padding-right: 5px;
+        }
+
+        .wrong-words-list::-webkit-scrollbar {
+            width: 5px;
+        }
+        .wrong-words-list::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 10px;
         }
 
         .wrong-word-item {
-            display: inline-flex;
+            display: flex;
+            justify-content: space-between;
             align-items: center;
-            gap: 6px;
-            background: rgba(255, 80, 80, 0.08);
-            border: 1px solid rgba(255, 80, 80, 0.15);
-            padding: 5px 8px 5px 12px;
-            border-radius: 20px;
-            font-size: 0.8rem;
+            background: rgba(231, 76, 60, 0.06);
+            border: 1px solid rgba(231, 76, 60, 0.12);
+            padding: 8px 12px;
+            border-radius: 11px;
+            margin-bottom: 6px;
+            font-size: 0.85rem;
+            font-weight: 300;
+            letter-spacing: 0.3px;
+            animation: fadeIn 0.3s ease;
         }
 
         .wrong-word-text {
-            color: rgba(74, 44, 58, 0.8);
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .wrong-word-text strong {
+            color: rgba(255, 179, 198, 0.85);
+            font-weight: 500;
         }
 
         .wrong-word-delete-btn {
-            background: none;
+            background: transparent;
             border: none;
-            color: rgba(74, 44, 58, 0.3);
+            color: rgba(255, 255, 255, 0.4);
             cursor: pointer;
-            font-size: 1rem;
-            padding: 0 2px;
+            font-size: 1.2rem;
             line-height: 1;
+            padding: 0 4px;
             transition: color 0.2s;
         }
 
@@ -625,51 +627,86 @@
             color: #ff477e;
         }
 
-        .todo-move-btn {
-            background: none;
-            border: none;
-            color: rgba(74, 44, 58, 0.25);
-            cursor: pointer;
-            font-size: 0.6rem;
-            padding: 0;
-            line-height: 1;
-            transition: all 0.2s;
-            flex-shrink: 0;
-            width: 20px;
+        /* TODO CHECKBOX */
+        .todo-checkbox {
+            appearance: none;
+            -webkit-appearance: none;
+            width: 18px;
             height: 18px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 4px;
-        }
-
-        .todo-move-btn:hover {
-            background: rgba(74, 44, 58, 0.08);
-            color: rgba(74, 44, 58, 0.6);
-        }
-
-        .move-group {
-            display: inline-flex;
-            flex-direction: column;
-            gap: 2px;
+            border: 1.5px solid rgba(255, 255, 255, 0.35);
+            border-radius: 5px;
+            background: transparent;
+            cursor: pointer;
             flex-shrink: 0;
+            transition: all 0.2s;
+            position: relative;
         }
 
+        .todo-checkbox:checked {
+            background: linear-gradient(135deg, #ffb3c6, #f07090);
+            border-color: transparent;
+            box-shadow: 0 2px 8px rgba(240,112,144,0.4);
+        }
+
+        .todo-checkbox:checked::after {
+            content: '✓';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 10px;
+            color: #5a1e2e;
+            font-weight: 800;
+        }
+
+        /* YANLIŞ KELİMELER BAŞLIK + KOPYALA BUTONU */
+        .wrong-words-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .copy-wrong-btn {
+            background: rgba(255, 179, 198, 0.08);
+            border: 1px solid rgba(255, 179, 198, 0.2);
+            color: rgba(255,179,198,0.7);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            letter-spacing: 0.8px;
+            font-family: 'Mulish', sans-serif;
+            font-weight: 400;
+        }
+
+        .copy-wrong-btn:hover {
+            background: rgba(255, 179, 198, 0.3);
+            color: #fff;
+        }
+
+        .copy-wrong-btn.copied {
+            background: rgba(100, 220, 150, 0.2);
+            border-color: rgba(100, 220, 150, 0.5);
+            color: #80ffb0;
+        }
+
+        /* AI SORU SORMA - Gemini Style */
         .ai-container {
-            background: rgba(255, 255, 255, 0.45);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(74, 44, 58, 0.08);
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             max-width: 900px;
             width: 100%;
-            padding: 2rem;
+            padding: 1.6rem 1.8rem 1.8rem;
             border-radius: 24px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
             margin-top: 24px;
-            margin-bottom: 40px;
+            flex-shrink: 0;
             position: relative;
             overflow: hidden;
-            flex-shrink: 0;
         }
 
         .ai-container::after {
@@ -683,54 +720,33 @@
         .ai-header {
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            margin-bottom: 16px;
+            gap: 10px;
+            margin-bottom: 18px;
         }
 
         .ai-header-text {
-            font-family: 'Mulish', sans-serif;
-            font-size: 0.75rem;
-            letter-spacing: 4px;
-            text-transform: uppercase;
-            color: rgba(74, 44, 58, 0.5);
-            font-weight: 600;
-        }
-
-        .ai-new-btn {
-            background: rgba(74, 44, 58, 0.06);
-            border: 1px solid rgba(74, 44, 58, 0.12);
-            color: rgba(74, 44, 58, 0.6);
-            font-size: 0.6rem;
-            letter-spacing: 1.5px;
-            padding: 5px 12px;
-            border-radius: 20px;
-            cursor: pointer;
-            font-family: 'Mulish', sans-serif;
-            text-transform: uppercase;
-            font-weight: 600;
-            transition: all 0.2s;
-        }
-
-        .ai-new-btn:hover {
-            background: rgba(255,179,198,0.2);
-            border-color: rgba(255,179,198,0.3);
-            color: #d4607a;
+            font-family: 'DM Serif Display', serif;
+            font-size: 1.1rem;
+            font-weight: 400;
+            font-style: italic;
+            color: rgba(255, 255, 255, 0.9);
+            letter-spacing: 0.5px;
         }
 
         .ai-input-wrap {
             display: flex;
-            gap: 8px;
             align-items: flex-end;
-            background: rgba(255, 255, 255, 0.3);
-            border: 1px solid rgba(74, 44, 58, 0.12);
-            border-radius: 16px;
-            padding: 6px 6px 6px 16px;
-            transition: all 0.2s;
+            gap: 10px;
+            background: rgba(0, 0, 0, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            padding: 6px 6px 6px 18px;
+            transition: all 0.25s ease;
         }
 
         .ai-input-wrap:focus-within {
             border-color: rgba(255, 179, 198, 0.4);
-            background: rgba(255, 255, 255, 0.45);
+            background: rgba(0, 0, 0, 0.22);
             box-shadow: 0 0 0 3px rgba(255,179,198,0.06);
         }
 
@@ -739,7 +755,7 @@
             background: transparent;
             border: none;
             padding: 8px 0;
-            color: #4a2c3a;
+            color: #fff;
             font-size: 0.95rem;
             outline: none;
             font-family: 'Mulish', sans-serif;
@@ -748,7 +764,7 @@
             max-height: 120px;
         }
 
-        .ai-input::placeholder { color: rgba(74,44,58,0.3); }
+        .ai-input::placeholder { color: rgba(255,255,255,0.3); }
 
         .ai-actions {
             display: flex;
@@ -760,9 +776,9 @@
             width: 40px;
             height: 40px;
             border-radius: 50%;
-            border: 1px solid rgba(74, 44, 58, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.15);
             background: rgba(255, 255, 255, 0.06);
-            color: rgba(74, 44, 58, 0.6);
+            color: rgba(255, 255, 255, 0.6);
             cursor: pointer;
             display: flex;
             align-items: center;
@@ -773,9 +789,9 @@
         }
 
         .ai-action-btn:hover {
-            background: rgba(255, 255, 255, 0.25);
-            color: #4a2c3a;
-            border-color: rgba(74, 44, 58, 0.25);
+            background: rgba(255, 255, 255, 0.14);
+            color: #fff;
+            border-color: rgba(255, 255, 255, 0.25);
         }
 
         .ai-send-btn {
@@ -813,11 +829,11 @@
             align-items: center;
             gap: 10px;
             padding: 10px 14px;
-            background: rgba(74,44,58,0.06);
+            background: rgba(0,0,0,0.12);
             border-radius: 14px;
             margin-top: 12px;
             font-size: 0.82rem;
-            color: rgba(74,44,58,0.6);
+            color: rgba(255,255,255,0.6);
         }
 
         .ai-img-preview img {
@@ -828,7 +844,7 @@
         .ai-img-preview .remove-img {
             background: none;
             border: none;
-            color: rgba(74,44,58,0.4);
+            color: rgba(255,255,255,0.3);
             cursor: pointer;
             font-size: 1.2rem;
             padding: 0 4px;
@@ -840,55 +856,25 @@
 
         .ai-response {
             margin-top: 16px;
-            max-height: 360px;
-            overflow-y: auto;
-            display: none;
-            flex-direction: column;
-            gap: 10px;
-            padding: 4px 0;
-        }
-
-        .ai-response::-webkit-scrollbar { width: 4px; }
-        .ai-response::-webkit-scrollbar-track { background: transparent; }
-        .ai-response::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 4px; }
-
-        .chat-msg {
-            padding: 14px 18px;
+            padding: 16px 18px;
+            background: rgba(0, 0, 0, 0.1);
             border-radius: 16px;
             font-size: 0.92rem;
             line-height: 1.7;
-            word-wrap: break-word;
+            color: rgba(255, 255, 255, 0.85);
+            display: none;
             white-space: pre-wrap;
-            max-width: 88%;
-            animation: fadeIn 0.3s ease;
+            word-wrap: break-word;
         }
 
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
-
-        .chat-msg.user {
-            align-self: flex-end;
-            background: rgba(255, 179, 198, 0.12);
-            color: rgba(74, 44, 58, 0.9);
-            border: 1px solid rgba(255, 179, 198, 0.15);
-        }
-
-        .chat-msg.ai {
-            align-self: flex-start;
-            background: rgba(74,44,58,0.06);
-            color: rgba(74, 44, 58, 0.85);
-            border: 1px solid rgba(74, 44, 58, 0.06);
-        }
-
-        .chat-msg.loading-msg {
-            align-self: flex-start;
-            background: transparent;
-            color: rgba(74, 44, 58, 0.4);
+        .ai-response.loading {
+            display: block;
+            color: rgba(255, 255, 255, 0.5);
             font-style: italic;
-            font-size: 0.85rem;
         }
 
         .ai-response.show {
-            display: flex;
+            display: block;
         }
 
         .motivation-container {
@@ -906,7 +892,7 @@
             font-size: 1.3rem;
             font-weight: 400;
             font-style: italic;
-            color: rgba(74, 44, 58, 0.82);
+            color: rgba(255, 255, 255, 0.82);
             letter-spacing: 0.5px;
             text-align: center;
             max-width: 700px;
@@ -968,7 +954,7 @@
         }
     </style>
 </head>
-<body style="background:#f8b8cc">
+<body>
 
     <div class="word-game-btn" onclick="toggleWordGame()" title="Kelime Çalışmasını Aç/Kapat">
         <svg viewBox="0 0 24 24">
@@ -1021,7 +1007,6 @@
     <div class="ai-container">
         <div class="ai-header">
             <span class="ai-header-text">Oran'a Sor</span>
-            <button class="ai-new-btn" onclick="newChat()" title="Yeni Sohbet">Yeni Sohbet</button>
         </div>
         <div class="ai-img-preview" id="ai-img-preview">
             <img id="ai-img-preview-img" src="" alt="">
@@ -1041,7 +1026,7 @@
 
     <div class="game-container" id="game-area">
         <div class="game-title">Kelime Çalışması</div>
-        <div id="progress-label" style="font-size:0.85rem; color:rgba(74,44,58,0.5); text-align:center; margin-bottom:14px; letter-spacing:2px; font-weight:300;">Tamamlanan: 0 / 0</div>
+        <div id="progress-label" style="font-size:0.75rem; color:rgba(255,179,198,0.65); text-align:center; margin-bottom:14px; letter-spacing:2px; font-weight:300;">Tamamlanan: 0 / 0</div>
         <div class="target-word" id="word-target">Word</div>
         <div class="sentence-box" id="sentence-target">"Orhan is studying."</div>
         
@@ -1074,32 +1059,7 @@
             "Şimdi ter dökmeyen, ileride gözyaşı döker.",
             "Başarı, her gün tekrar edilen küçük çabaların toplamıdır.",
             "Hayallerin, bahanelerinden daha büyük olmak zorunda.",
-            "Bugünün emeği, yarının özgürlüğüdür.",
-            "Sen bunu başarabilirsin, yeter ki inan.",
-            "Vazgeçmek en büyük yenilgidir.",
-            "En karanlık an, şafağa en yakın andır.",
-            "Kendine güven, her şeyi başarırsın.",
-            "Başlamak bitirmenin yarısıdır.",
-            "Düştüysen kalk, yine dene, asla pes etme.",
-            "Bugün yapabileceğini yarına bırakma.",
-            "Sınırlarını zorla, potansiyelini keşfet.",
-            "Engeller seni durdurmak için değil, ne kadar istediğini görmek için vardır.",
-            "Mükemmel olmak zorunda değilsin, sadece bugün dünden iyi ol.",
-            "Başarı bir yolculuktur, varış noktası değil.",
-            "Yapabileceğini düşünüyorsan haklısın, yapamayacağını düşünüyorsan da haklısın.",
-            "Hayatının en büyük pişmanlığı, denemediğin şeyler olacak.",
-            "Zorluklar seni yıldıramaz, aksine güçlendirir.",
-            "En iyi intikamın, başarındır.",
-            "Kendine inan, başka kimse inanmasa bile.",
-            "Her büyük başarı, bir cesaretle başlar.",
-            "Yolun sonu yok, sadece yeni başlangıçlar var.",
-            "Düşüncelerine dikkat et, geleceğin olurlar.",
-            "Çalışmanın yerini hiçbir şey tutamaz.",
-            "Zaman su gibi akıyor, onu iyi değerlendir.",
-            "Son nefesine kadar savaş, zafer senindir.",
-            "Yıldızlar karanlıkta parlar, sen de öyle.",
-            "Hayat kısa, pişmanlıkları değil başarıları biriktir.",
-            "Daha fazlasını hak ediyorsun, bunu hak et."
+            "Bugünün emeği, yarının özgürlüğüdür."
         ];
 
         function changeQuote() {
@@ -1191,10 +1151,7 @@
                 li.draggable = true;
                 li.dataset.index = index;
                 li.innerHTML = `
-                    <span class="move-group">
-                        <button class="todo-move-btn" onclick="moveTodo(${index}, -1)" title="Yukarı">▲</button>
-                        <button class="todo-move-btn" onclick="moveTodo(${index}, 1)" title="Aşağı">▼</button>
-                    </span>
+                    <span class="drag-handle"><span></span><span></span><span></span></span>
                     <input type="checkbox" class="todo-checkbox" ${todo.completed ? 'checked' : ''}>
                     <span class="todo-text">${todo.text}</span>
                     <button class="todo-delete-btn">×</button>
@@ -1285,16 +1242,8 @@
             renderTodos();
         }
 
-        function moveTodo(index, direction) {
-            const target = index + direction;
-            if (target < 0 || target >= todos.length) return;
-            const [moved] = todos.splice(index, 1);
-            todos.splice(target, 0, moved);
-            renderTodos();
-        }
-
         // YANLIŞ BİLİNEN KELİMELER MANTIĞI
-        let wrongWords = [];
+        let wrongWords = JSON.parse(localStorage.getItem('orhan_wrong_words')) || [];
 
         function renderWrongWords() {
             const wrongListEl = document.getElementById('wrong-words-list');
@@ -1308,6 +1257,7 @@
                 `;
                 wrongListEl.appendChild(li);
             });
+            localStorage.setItem('orhan_wrong_words', JSON.stringify(wrongWords));
         }
 
         function addWrongWord(word, mean) {
@@ -2529,22 +2479,16 @@
         }
 
         // Kaç kez gösterildi (localStorage'da tutulur)
-        let showCount = {};
-        let correctCount = {};
+        let showCount = JSON.parse(localStorage.getItem('orhan_show_count_v3')) || {};
         let lastWord = null;
 
         function _key(word) { return word.toLowerCase().trim(); }
 
         function getShown(word) { return showCount[_key(word)] || 0; }
 
-        function isCorrect(word) { return correctCount[_key(word)] || false; }
-
-        function markCorrect(word) {
-            correctCount[_key(word)] = true;
-        }
-
         function incrementShown(word) {
             showCount[_key(word)] = getShown(word) + 1;
+            localStorage.setItem('orhan_show_count_v3', JSON.stringify(showCount));
         }
 
         function selectNextWord() {
@@ -2554,7 +2498,7 @@
             // Havuz bittiyse sayaçları sıfırla, yeniden başla
             if (pool.length === 0) {
                 showCount = {};
-                correctCount = {};
+                localStorage.setItem('orhan_show_count_v3', JSON.stringify(showCount));
                 pool = uniqueWordBank;
             }
 
@@ -2570,35 +2514,10 @@
 
         // İlerleme göstergesi
         function updateProgress() {
-            const done = uniqueWordBank.filter(e => isCorrect(e.word)).length;
+            const done = uniqueWordBank.filter(e => getShown(e.word) >= 2).length;
             const total = uniqueWordBank.length;
             const el = document.getElementById('progress-label');
             if (el) el.textContent = `Tamamlanan: ${done} / ${total}`;
-        }
-
-        function confetti() {
-            const colors = ['#ffb3c6', '#f07090', '#ff477e', '#ffd700', '#50c878', '#ff8c00', '#9370db'];
-            for (let i = 0; i < 100; i++) {
-                const el = document.createElement('div');
-                el.style.position = 'fixed';
-                el.style.zIndex = '9999';
-                el.style.pointerEvents = 'none';
-                el.style.left = Math.random() * 100 + 'vw';
-                el.style.top = '-10px';
-                el.style.width = 6 + Math.random() * 6 + 'px';
-                el.style.height = 6 + Math.random() * 6 + 'px';
-                el.style.background = colors[Math.floor(Math.random() * colors.length)];
-                el.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
-                el.style.opacity = '1';
-                el.style.transform = 'translateY(0)';
-                el.style.transition = 'transform ' + (3 + Math.random() * 2) + 's cubic-bezier(.25,.46,.45,.94), opacity ' + (3 + Math.random() * 2) + 's ease';
-                document.body.appendChild(el);
-                requestAnimationFrame(function() {
-                    el.style.transform = 'translateY(' + (window.innerHeight + 50) + 'px) rotate(' + (Math.random() * 720) + 'deg) translateX(' + ((Math.random() - 0.5) * 200) + 'px)';
-                    el.style.opacity = '0';
-                });
-                setTimeout(function() { el.remove(); }, 3000);
-            }
         }
 
         let currentQuestion = {};
@@ -2651,10 +2570,7 @@
                 }
             }
 
-            if (selectedIndex === currentQuestion.correctIndex) {
-                markCorrect(currentQuestion.word);
-                confetti();
-            } else {
+            if (selectedIndex !== currentQuestion.correctIndex) {
                 addWrongWord(currentQuestion.word, currentQuestion.mean);
             }
 
@@ -2662,38 +2578,9 @@
         }
 
     // ========================================================
-        // AI SORU SORMA - SOHBET GEÇMİŞİ
+        // AI SORU SORMA - GERÇEK GEMINI ENTEGRASYONU (GÜNCEL)
         // ========================================================
         let aiFileData = null;
-        let chatHistory = [];
-
-        function escHtml(str) {
-            const div = document.createElement('div');
-            div.textContent = str;
-            return div.innerHTML;
-        }
-
-        function renderChat() {
-            const el = document.getElementById('ai-response');
-            if (!el) return;
-            if (chatHistory.length === 0) {
-                el.innerHTML = '';
-                el.className = 'ai-response';
-                return;
-            }
-            el.innerHTML = chatHistory.map((msg, i) =>
-                `<div class="chat-msg ${msg.role}">${msg.text}</div>`
-            ).join('');
-            el.className = 'ai-response show';
-            el.scrollTop = el.scrollHeight;
-        }
-
-        function newChat() {
-            chatHistory = [];
-            renderChat();
-            document.getElementById('ai-input').value = '';
-            removeAiImage();
-        }
 
         function handleAiKey(e) {
             if (e.key === 'Enter' && !e.shiftKey) { 
@@ -2738,19 +2625,9 @@
 
             if (!question && !aiFileData) return;
 
-            const hasFile = aiFileData;
-            const userText = question || (hasFile ? `[Dosya: ${aiFileData.name}]` : '');
-            const userMsg = hasFile && aiFileData.type.startsWith('image/')
-                ? `${userText}<br><img src="${aiFileData.data}" style="max-width:200px;border-radius:10px;margin-top:6px;">`
-                : userText;
-            chatHistory.push({ role: 'user', text: userMsg });
-
-            input.value = '';
-            removeAiImage();
-            chatHistory.push({ role: 'loading-msg', text: 'Oran düşünüyor... 🧠' });
-            renderChat();
-
             sendBtn.disabled = true;
+            responseEl.textContent = 'Oran düşünüyor... 🧠';
+            responseEl.className = 'ai-response loading';
 
             try {
                 const formData = new FormData();
@@ -2772,18 +2649,19 @@
                 }
 
                 const data = await res.json();
-                const reply = data.error ? `Hata: ${escHtml(data.error)}` : escHtml(data.reply || data.text || JSON.stringify(data));
-
-                chatHistory.pop();
-                chatHistory.push({ role: 'ai', text: reply });
-                renderChat();
+                if (data.error) {
+                    responseEl.innerHTML = `<span style="color:#ff4a4a">Hata: ${data.error}</span>`;
+                } else {
+                    responseEl.textContent = data.reply || data.text || JSON.stringify(data);
+                }
             } catch (err) {
-                chatHistory.pop();
-                chatHistory.push({ role: 'ai', text: `Bağlantı Hatası: ${escHtml(err.message)}` });
-                renderChat();
+                responseEl.innerHTML = `<span style="color:#ff4a4a">Bağlantı Hatası: ${err.message}</span>`;
                 console.error(err);
             } finally {
+                input.value = '';
+                removeAiImage();
                 sendBtn.disabled = false;
+                responseEl.className = 'ai-response show';
             }
         }
 
@@ -2792,9 +2670,9 @@
         changeQuote();
         renderTodos();
         renderWrongWords();
-        renderChat();
         setInterval(updateTimers, 1000);
 
+        // Dark Mode Toggle
         const darkToggle = document.createElement('button');
         darkToggle.className = 'dark-toggle';
         darkToggle.textContent = '🌙';
