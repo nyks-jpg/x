@@ -33,16 +33,13 @@ async function handleChat(request, env) {
             });
         }
 
-        const systemMsg = { role: "system", content: "Sen zeki, samimi ve arkadaş canlısı bir asistansın. Kullanıcıya her zaman TÜRKÇE yanıt ver. Resmi değil, günlük konuşma dilinde cevap ver. Sorulara detaylı, mantıklı ve doğru cevaplar ver. Düşünerek, adım adım açıkla gerektiğinde." };
-        const textModel = "@cf/meta/llama-3.1-8b-instruct";
-        const visionModel = "@cf/meta/llama-3.2-11b-vision-instruct";
-        await env.AI.run(textModel, { prompt: "agree" }).catch(() => {});
-        await env.AI.run(visionModel, { prompt: "agree" }).catch(() => {});
+        const systemMsg = { role: "system", content: "Sen zeki, samimi ve arkadaş canlısı bir asistansın. Kullanıcıya her zaman TÜRKÇE yanıt ver. Günlük konuşma dilinde, kısa ve net cevap ver. Gereksiz detaydan kaçın." };
+        const model = "@cf/meta/llama-3.2-11b-vision-instruct";
+        await env.AI.run(model, { prompt: "agree" }).catch(() => {});
 
-        let model, aiInput;
+        let aiInput;
 
         if (file && file.size > 0 && file.type.startsWith("image/")) {
-            model = visionModel;
             const arrayBuffer = await file.arrayBuffer();
             const base64Data = btoa(
                 new Uint8Array(arrayBuffer).reduce((data, byte) => data + String.fromCharCode(byte), '')
@@ -60,7 +57,7 @@ async function handleChat(request, env) {
                         ]
                     }
                 ],
-                max_tokens: 1024,
+                max_tokens: 512,
                 temperature: 0.7
             };
         } else {
@@ -73,7 +70,7 @@ async function handleChat(request, env) {
                     systemMsg,
                     { role: "user", content: context }
                 ],
-                max_tokens: 1024,
+                max_tokens: 512,
                 temperature: 0.7
             };
         }
