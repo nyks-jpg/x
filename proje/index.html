@@ -2534,15 +2534,22 @@
             updateProgress();
         }
 
-        // AI SORU SORMA
+       // ========================================================
+        // AI SORU SORMA - GERÇEK GEMINI ENTEGRASYONU (GÜNCEL)
+        // ========================================================
         let aiFileData = null;
 
         function handleAiKey(e) {
-            if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); askAi(); }
+            if (e.key === 'Enter' && !e.shiftKey) { 
+                e.preventDefault(); 
+                askAi(); 
+            }
             setTimeout(() => {
                 const el = document.getElementById('ai-input');
-                el.style.height = 'auto';
-                el.style.height = Math.min(el.scrollHeight, 120) + 'px';
+                if (el) {
+                    el.style.height = 'auto';
+                    el.style.height = Math.min(el.scrollHeight, 120) + 'px';
+                }
             }, 0);
         }
 
@@ -2561,8 +2568,10 @@
 
         function removeAiImage() {
             aiFileData = null;
-            document.getElementById('ai-img-input').value = '';
-            document.getElementById('ai-img-preview').style.display = 'none';
+            const input = document.getElementById('ai-img-input');
+            if (input) input.value = '';
+            const preview = document.getElementById('ai-img-preview');
+            if (preview) preview.style.display = 'none';
         }
 
         function askAi() {
@@ -2571,34 +2580,55 @@
             const sendBtn = document.getElementById('ai-send-btn');
             const question = input.value.trim();
 
+            // Soru yoksa ve dosya yüklenmediyse işlem yapma
             if (!question && !aiFileData) return;
 
+            // Arayüzü kilitle ve yükleniyor animasyonuna geç
             sendBtn.disabled = true;
-            responseEl.textContent = 'Yanıt bekleniyor...';
+            responseEl.textContent = 'Gemini düşünüyor... 🧠';
             responseEl.className = 'ai-response loading';
 
-            // AI entegrasyonu buraya gelecek.
-            // `question` değişkeni: yazılan soru
-            // `aiFileData` değişkeni: { name, data (base64), type } — varsa dosya
-            //
-            // Örnek kullanım için bir fonksiyon çağrılabilir:
-            // sendToGemini(question, aiFileData).then(text => { ... })
-            //
-            // Şu an örnek cevap dönüyor:
-            setTimeout(() => {
-                let reply = `Sorunuz alındı.`;
-                if (question) reply += `\n\nSoru: "${question}"`;
-                if (aiFileData) reply += `\n\nDosya: ${aiFileData.name}`;
-                reply += `\n\n(Yapay zeka entegrasyonu eklendiğinde burada gerçek yanıtlar görünecek)`;
-                responseEl.textContent = reply;
-                responseEl.className = 'ai-response show';
-                input.value = '';
+            // Verileri Cloudflare API'sine iletmek üzere FormData formatına alıyoruz
+            const formData = new FormData();
+            formData.append('message', question);
+            
+            // Eğer yüklenen bir dosya varsa FormData içine gömüyoruz
+            const fileInput = document.getElementById('ai-img-input');
+            if (fileInput && fileInput.files[0]) {
+                formData.append('file', fileInput.files[0]);
+            }
+
+            // Cloudflare Worker/Pages backend endpoint'ine istek atıyoruz
+            fetch('/api/chat', {
+                method: 'POST',
+                body: formData
+            })
+            .then(res => {
+                if (!res.ok) throw new Error("Sunucu hata kodu döndürdü: " + res.status);
+                return res.json();
+            })
+            .then(data => {
+                if (data.error) {
+                    responseEl.innerHTML = `<span style="color:#ff4a4a">Hata: ${data.error}</span>`;
+                } else {
+                    // YANIT GELDİ: Gerçek yapay zeka cevabını ekrana basıyoruz
+                    responseEl.textContent = data.reply;
+                }
+            })
+            .catch(err => {
+                responseEl.innerHTML = `<span style="color:#ff4a4a">Bağlantı Hatası: Yapay zeka sunucusuna ulaşılamadı.</span>`;
+                console.error(err);
+            })
+            .finally(() => {
+                // Girişleri temizle ve arayüzü eski haline getir
+                if (input) input.value = '';
                 removeAiImage();
                 sendBtn.disabled = false;
-            }, 800);
+                responseEl.className = 'ai-response show';
+            });
         }
 
-        // Başlangıç Çağrıları
+        // Başlangıç Çağrıları (Senin mevcut fonksiyonların)
         updateTimers();
         changeQuote();
         renderTodos();
@@ -2608,96 +2638,3 @@
     </script>
 </body>
 </html>
-<script>
-        async function istekGonder() {
-            const dosyaGirdisi = document.getElementById('dosyaYukle');
-            const mesajGirdisi = document.getElementById('kullaniciMesaj');
-            const cevapAlani = document.getElementById('yapayZekaCevap');
-
-            if (!mesajGirdisi.value.trim()) {
-                alert("Lütfen bir mesaj yazın!");
-                return;
-            }
-
-            cevapAlani.innerHTML = "<strong>Düşünüyorum... 🧠</strong>";
-
-            const formData = new FormData();
-            formData.append('message', mesajGirdisi.value);
-            if (dosyaGirdisi.files[0]) {
-                formData.append('file', dosyaGirdisi.files[0]);
-            }
-
-            try {
-                // Cloudflare Pages fonksiyonumuza istek atıyoruz
-                const response = await fetch('/api/chat', {
-                    method: 'POST',
-                    body: formData
-                });
-
-                const data = await response.json();
-                
-                if (data.error) {
-                    cevapAlani.innerHTML = `<span style="color:red">Hata: ${data.error}</span>`;
-                } else {
-                    cevapAlani.innerHTML = `<strong>Gemini:</strong> ${data.reply}`;
-                }
-            } catch (error) {
-                cevapAlani.innerHTML = `<span style="color:red">Bağlantı Hatası: ${error.message}</span>`;
-            }
-        }
-    </script>
-<script>
-    window.addEventListener('DOMContentLoaded', () => {
-        // Sayfadaki gönder butonunu otomatik buluyoruz
-        const buton = document.querySelector('button');
-        if (!buton) return;
-
-        // Eski tetikleyicileri temizleyip kurşun geçirmez yeni dinleyiciyi bağlıyoruz
-        buton.removeAttribute('onclick');
-        buton.addEventListener('click', async (e) => {
-            e.preventDefault();
-            
-            const dosyaGirdisi = document.querySelector('input[type="file"]');
-            const mesajGirdisi = document.querySelector('textarea') || document.querySelector('input[type="text"]');
-            
-            // Cevabın yazılacağı alanı bul (yoksa geçici olarak butonun altına ekler)
-            let cevapAlani = document.getElementById('yapayZekaCevap') || document.getElementById('output');
-            if (!cevapAlani) {
-                cevapAlani = document.createElement('div');
-                cevapAlani.id = 'yapayZekaCevap';
-                cevapAlani.style.marginTop = '15px';
-                buton.parentNode.appendChild(cevapAlani);
-            }
-
-            if (!mesajGirdisi || !mesajGirdisi.value.trim()) {
-                alert("Lütfen bir mesaj yazın!");
-                return;
-            }
-
-            cevapAlani.innerHTML = "<strong>Düşünüyorum... 🧠</strong>";
-
-            const formData = new FormData();
-            formData.append('message', mesajGirdisi.value);
-            if (dosyaGirdisi && dosyaGirdisi.files[0]) {
-                formData.append('file', dosyaGirdisi.files[0]);
-            }
-
-            try {
-                const response = await fetch('/api/chat', {
-                    method: 'POST',
-                    body: formData
-                });
-
-                const data = await response.json();
-                
-                if (data.error) {
-                    cevapAlani.innerHTML = `<span style="color:red">Hata: ${data.error}</span>`;
-                } else {
-                    cevapAlani.innerHTML = `<strong>Gemini:</strong> ${data.reply}`;
-                }
-            } catch (error) {
-                cevapAlani.innerHTML = `<span style="color:red">Bağlantı Hatası: Sunucu yanıt vermedi.</span>`;
-            }
-        });
-    });
-</script>
