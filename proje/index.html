@@ -1197,22 +1197,64 @@
         body.dark-mode .motivation-text { color: #e0d0d8; text-shadow: 0 1px 30px rgba(100, 50, 80, 0.2); }
 
         @media (max-width: 768px) {
-            body { padding: 65px 15px 30px 15px; }
-            .word-game-btn { top: 15px; left: 15px; width: 40px; height: 40px; }
-            .week-btn { top: 66px; left: 15px; width: 40px; height: 40px; font-size: 16px; }
-            .countdown-top { top: 15px; right: 15px; gap: 8px; }
-            .countdown-item { padding: 8px 10px; font-size: 0.75rem; }
-            .main-row { flex-direction: column; gap: 16px; }
-            .motivation-text { font-size: 1.05rem; }
-            .dark-toggle { width: 40px; height: 40px; font-size: 17px; bottom: 15px; right: 15px; }
-            .week-days { grid-template-columns: repeat(4, 1fr); }
-            .week-day { min-height: 100px; padding: 14px 8px; }
-            .week-day-name { font-size: 0.9rem; }
-            .week-day-hours { font-size: 1.1rem; }
-            .week-container { max-width: 100%; padding: 1.5rem 0.8rem; }
+            body { padding: 70px 10px 30px 10px; }
+            .word-game-btn { top: 15px; left: 12px; width: 40px; height: 40px; }
+            .week-btn { top: 63px; left: 12px; width: 40px; height: 40px; font-size: 16px; }
+            .countdown-top { top: 15px; right: 12px; gap: 6px; }
+            .countdown-item { padding: 6px 8px; font-size: 0.65rem; }
+            .countdown-item .cd-number { font-size: 0.8rem; }
+            .main-row { flex-direction: column; gap: 14px; }
+            .todo-container, .stopwatch-container { padding: 1.2rem; }
+            .motivation-text { font-size: 0.95rem; max-width: 100%; }
+            .dark-toggle { width: 38px; height: 38px; font-size: 15px; bottom: 12px; right: 12px; }
+            .ai-container { padding: 1.2rem; }
+            .game-container { padding: 1.2rem; }
+            .week-container { max-width: 100%; padding: 1rem 0.6rem; }
+            .week-days {
+                display: flex;
+                gap: 8px;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+                scroll-snap-type: x mandatory;
+                padding-bottom: 6px;
+            }
+            .week-days::-webkit-scrollbar { height: 3px; }
+            .week-days::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 10px; }
+            .week-day {
+                min-width: 130px;
+                min-height: 110px;
+                flex-shrink: 0;
+                padding: 10px 8px;
+                scroll-snap-align: start;
+            }
+            .week-day-name { font-size: 0.8rem; }
+            .week-day-hours { font-size: 1rem; }
+            .week-tasks { gap: 2px; }
+            .week-task { font-size: 0.6rem; padding: 3px 6px; }
+            .week-add-input { font-size: 0.55rem; padding: 3px 5px; }
+            .week-add-task-btn { font-size: 0.5rem; padding: 3px 6px; }
+            .week-total-row { font-size: 0.75rem; }
+            .stopwatch-display { font-size: 2.2rem; }
+            .todo-list { max-height: 200px; }
         }
         @media (max-width: 480px) {
-            .week-days { grid-template-columns: repeat(2, 1fr); }
+            body { padding: 65px 8px 20px 8px; }
+            .word-game-btn { top: 12px; left: 10px; width: 36px; height: 36px; }
+            .week-btn { top: 55px; left: 10px; width: 36px; height: 36px; font-size: 14px; }
+            .countdown-top { top: 12px; right: 10px; gap: 4px; }
+            .countdown-item { padding: 4px 6px; font-size: 0.55rem; }
+            .countdown-item .cd-number { font-size: 0.7rem; }
+            .todo-container, .stopwatch-container { padding: 1rem; }
+            .ai-container { padding: 1rem; }
+            .game-container { padding: 1rem; }
+            .week-container { padding: 0.8rem 0.4rem; }
+            .week-day { min-width: 110px; min-height: 100px; padding: 8px 6px; }
+            .week-day-name { font-size: 0.75rem; }
+            .week-day-hours { font-size: 0.9rem; }
+            .target-word { font-size: 1.6rem; }
+            .stopwatch-display { font-size: 1.8rem; }
+            .option-btn { font-size: 0.8rem; padding: 10px 14px; }
+            .motivation-text { font-size: 0.85rem; }
         }
     </style>
 </head>
