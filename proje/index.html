@@ -962,16 +962,18 @@
             text-align: center;
         }
         .week-days {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 12px;
         }
         .week-day {
             background: rgba(255,255,255,0.04);
             border: 1px solid rgba(255,255,255,0.06);
             border-radius: 18px;
-            padding: 14px 16px;
+            padding: 12px 12px;
             transition: all 0.2s;
+            display: flex;
+            flex-direction: column;
         }
         .week-day:hover {
             background: rgba(255,255,255,0.06);
@@ -1190,6 +1192,7 @@
             .main-row { flex-direction: column; gap: 16px; }
             .motivation-text { font-size: 1.05rem; }
             .dark-toggle { width: 40px; height: 40px; font-size: 17px; bottom: 15px; right: 15px; }
+            .week-days { grid-template-columns: repeat(2, 1fr); }
         }
     </style>
 </head>
