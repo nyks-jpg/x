@@ -40,7 +40,7 @@ async function handleChat(request, env) {
         });
     }
 
-    const model = env.GEMINI_MODEL || "gemini-2.0-flash";
+    const model = env.GEMINI_MODEL || "gemini-2.0-flash-lite";
 const googleUrl = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
     let parts = [{ text: message }];
 
