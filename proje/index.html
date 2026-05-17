@@ -2563,7 +2563,7 @@
                 el.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
                 el.style.opacity = '1';
                 el.style.transform = 'translateY(0)';
-                el.style.transition = 'transform ' + (1.5 + Math.random() * 1) + 's cubic-bezier(.25,.46,.45,.94), opacity ' + (1.5 + Math.random() * 1) + 's ease';
+                el.style.transition = 'transform ' + (3 + Math.random() * 2) + 's cubic-bezier(.25,.46,.45,.94), opacity ' + (3 + Math.random() * 2) + 's ease';
                 document.body.appendChild(el);
                 requestAnimationFrame(function() {
                     el.style.transform = 'translateY(' + (window.innerHeight + 50) + 'px) rotate(' + (Math.random() * 720) + 'deg) translateX(' + ((Math.random() - 0.5) * 200) + 'px)';
