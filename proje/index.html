@@ -1201,6 +1201,8 @@
         </svg>
     </div>
 
+    <div class="week-btn" id="week-btn" onclick="toggleWeek()" title="Haftalık Program">📅</div>
+
     <div class="countdown-top">
         <div class="countdown-item">
             <span class="cd-label">9 Haz</span>
@@ -1428,8 +1430,6 @@
                         <button class="todo-move-btn" data-dir="up" style="background:none;border:none;color:rgba(255,255,255,0.3);cursor:pointer;font-size:10px;line-height:1;padding:1px 3px;">▲</button>
                         <button class="todo-move-btn" data-dir="down" style="background:none;border:none;color:rgba(255,255,255,0.3);cursor:pointer;font-size:10px;line-height:1;padding:1px 3px;">▼</button>
     </div>
-
-    <div class="week-btn" id="week-btn" onclick="toggleWeek()" title="Haftalık Program">📅</div>
                     <input type="checkbox" class="todo-checkbox" ${todo.completed ? 'checked' : ''}>
                     <span class="todo-text">${todo.text}</span>
                     <button class="todo-delete-btn">×</button>
