@@ -970,11 +970,11 @@
             background: rgba(255,255,255,0.05);
             border: 1px solid rgba(255,255,255,0.08);
             border-radius: 14px;
-            padding: 12px 8px;
+            padding: 16px 10px;
             transition: all 0.2s;
             display: flex;
             flex-direction: column;
-            min-height: 120px;
+            min-height: 150px;
             position: relative;
         }
         .week-day:hover {
@@ -982,28 +982,37 @@
             border-color: rgba(255,255,255,0.12);
         }
         .week-day.today {
-            border-color: rgba(255,179,198,0.5);
-            background: rgba(255,179,198,0.08);
+            border-color: #ff7098 !important;
+            border-width: 2px;
+            background: rgba(255,112,152,0.12) !important;
+            box-shadow: 0 0 20px rgba(255,112,152,0.15);
         }
         .week-day-name {
             font-family: 'DM Serif Display', serif;
-            font-size: 0.85rem;
+            font-size: 0.95rem;
             color: rgba(255,255,255,0.9);
             font-weight: 400;
             text-align: center;
             margin-bottom: 2px;
         }
+        .week-day.today .week-day-name {
+            color: #ff7098;
+            font-weight: 600;
+        }
         .week-day-hours {
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             color: rgba(255,179,198,0.85);
             font-family: 'DM Serif Display', serif;
             letter-spacing: 0.5px;
             text-align: center;
-            margin-bottom: 6px;
+            margin-bottom: 8px;
+        }
+        .week-day.today .week-day-hours {
+            color: #ff7098;
         }
         .week-day-hours.small {
-            font-size: 0.6rem;
-            color: rgba(255,255,255,0.25);
+            font-size: 0.65rem;
+            color: rgba(255,255,255,0.3);
         }
         .week-tasks {
             list-style: none;
@@ -1127,14 +1136,16 @@
             border-color: rgba(255,255,255,0.05);
         }
         body.dark-mode .week-day.today {
-            border-color: #ff7098 !important;
-            background: rgba(255,112,152,0.15) !important;
+            border-color: #ff477e !important;
+            border-width: 2px;
+            background: rgba(255,71,126,0.18) !important;
+            box-shadow: 0 0 24px rgba(255,71,126,0.2);
         }
         body.dark-mode .week-day.today .week-day-name {
-            color: #ffb3c6;
+            color: #ff90b0;
         }
         body.dark-mode .week-day.today .week-day-hours {
-            color: #ff90b0;
+            color: #ff7098;
         }
 
         /* Dark Mode Toggle */
@@ -1195,10 +1206,10 @@
             .motivation-text { font-size: 1.05rem; }
             .dark-toggle { width: 40px; height: 40px; font-size: 17px; bottom: 15px; right: 15px; }
             .week-days { grid-template-columns: repeat(4, 1fr); }
-            .week-day { min-height: 70px; padding: 12px 8px; }
-            .week-day-name { font-size: 0.85rem; }
+            .week-day { min-height: 100px; padding: 14px 8px; }
+            .week-day-name { font-size: 0.9rem; }
             .week-day-hours { font-size: 1.1rem; }
-            .week-container { max-width: 100%; padding: 1.5rem 1rem; }
+            .week-container { max-width: 100%; padding: 1.5rem 0.8rem; }
         }
         @media (max-width: 480px) {
             .week-days { grid-template-columns: repeat(2, 1fr); }
