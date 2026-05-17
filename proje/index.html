@@ -70,6 +70,41 @@
             fill: currentColor;
         }
 
+        /* Haftalık Program Butonu (kalp butonunun altı) */
+        .week-btn {
+            position: absolute;
+            top: 82px;
+            left: 25px;
+            width: 46px;
+            height: 46px;
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            border-radius: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #ffb3c6;
+            text-decoration: none;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 0 4px 24px rgba(0,0,0,0.18), inset 0 1px 0 rgba(255,255,255,0.12);
+            z-index: 100;
+            cursor: pointer;
+            font-size: 18px;
+            line-height: 1;
+        }
+        .week-btn:hover {
+            background: rgba(255, 255, 255, 0.18);
+            color: #ff477e;
+            transform: scale(1.08) translateY(-1px);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.22), inset 0 1px 0 rgba(255,255,255,0.2);
+        }
+        .week-btn.active {
+            background: rgba(255, 179, 198, 0.25);
+            border-color: rgba(255, 179, 198, 0.5);
+        }
+
         .main-row {
             display: flex;
             gap: 24px;
@@ -890,6 +925,214 @@
             text-shadow: 0 1px 30px rgba(255, 179, 198, 0.1);
         }
 
+        /* HAFTALIK PROGRAM */
+        .week-container {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            max-width: 900px;
+            width: 100%;
+            padding: 2rem;
+            border-radius: 28px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
+            margin-top: 24px;
+            margin-bottom: 40px;
+            display: none;
+            animation: fadeIn 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+        .week-container::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+        }
+        .week-title {
+            font-family: 'Mulish', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 300;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: rgba(255, 179, 198, 0.8);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .week-days {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        .week-day {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 18px;
+            padding: 14px 16px;
+            transition: all 0.2s;
+        }
+        .week-day:hover {
+            background: rgba(255,255,255,0.06);
+            border-color: rgba(255,255,255,0.1);
+        }
+        .week-day-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .week-day-name {
+            font-family: 'DM Serif Display', serif;
+            font-size: 1.1rem;
+            color: rgba(255,255,255,0.85);
+            font-weight: 400;
+        }
+        .week-day-hours {
+            font-size: 0.75rem;
+            color: rgba(255,179,198,0.7);
+            letter-spacing: 1px;
+        }
+        .week-day-input-row {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+        .week-day-input {
+            flex: 1;
+            background: rgba(0,0,0,0.2);
+            border: 1px solid rgba(255,255,255,0.08);
+            padding: 8px 12px;
+            border-radius: 10px;
+            color: #fff;
+            font-size: 0.85rem;
+            outline: none;
+            font-family: 'Mulish', sans-serif;
+            transition: all 0.2s;
+        }
+        .week-day-input:focus {
+            border-color: #ffb3c6;
+            background: rgba(0,0,0,0.3);
+        }
+        .week-day-input::placeholder {
+            color: rgba(255,255,255,0.2);
+        }
+        .week-hour-input {
+            width: 60px;
+            background: rgba(0,0,0,0.2);
+            border: 1px solid rgba(255,255,255,0.08);
+            padding: 8px 8px;
+            border-radius: 10px;
+            color: #fff;
+            font-size: 0.85rem;
+            outline: none;
+            font-family: 'Mulish', sans-serif;
+            text-align: center;
+            transition: all 0.2s;
+        }
+        .week-hour-input:focus {
+            border-color: #ffb3c6;
+            background: rgba(0,0,0,0.3);
+        }
+        .week-add-btn {
+            background: linear-gradient(135deg, #ffb3c6, #f07090);
+            color: #5a1e2e;
+            border: none;
+            padding: 8px 14px;
+            border-radius: 10px;
+            font-weight: 700;
+            cursor: pointer;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-family: 'Mulish', sans-serif;
+            box-shadow: 0 4px 16px rgba(240,112,144,0.35);
+            transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .week-add-btn:hover {
+            background: #fff;
+            transform: translateY(-1px);
+        }
+        .week-day-tasks {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .week-task-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.05);
+            padding: 7px 12px;
+            border-radius: 10px;
+            font-size: 0.82rem;
+            color: rgba(255,255,255,0.8);
+            animation: fadeIn 0.3s ease;
+        }
+        .week-task-left {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .week-task-hours {
+            color: rgba(255,179,198,0.75);
+            font-weight: 500;
+            font-size: 0.78rem;
+        }
+        .week-task-del {
+            background: none;
+            border: none;
+            color: rgba(255,255,255,0.2);
+            cursor: pointer;
+            font-size: 1rem;
+            line-height: 1;
+            padding: 0 4px;
+            transition: color 0.2s;
+        }
+        .week-task-del:hover {
+            color: #ff477e;
+        }
+        .week-reset-btn {
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: rgba(255,255,255,0.5);
+            padding: 10px 24px;
+            border-radius: 50px;
+            font-size: 0.7rem;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-family: 'Mulish', sans-serif;
+            transition: all 0.2s;
+            margin-top: 18px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .week-reset-btn:hover {
+            background: rgba(255,255,255,0.12);
+            color: #ff7098;
+            border-color: rgba(255,112,152,0.3);
+        }
+        body.dark-mode .week-container {
+            background: rgba(20, 20, 40, 0.6) !important;
+            border-color: rgba(255,255,255,0.08) !important;
+        }
+        body.dark-mode .week-day {
+            background: rgba(255,255,255,0.03);
+            border-color: rgba(255,255,255,0.05);
+        }
+        body.dark-mode .week-day-input,
+        body.dark-mode .week-hour-input {
+            background: rgba(0,0,0,0.3);
+        }
+        body.dark-mode .week-task-item {
+            background: rgba(255,255,255,0.03);
+        }
+
         /* Dark Mode Toggle */
         .dark-toggle {
             position: fixed;
@@ -941,6 +1184,7 @@
         @media (max-width: 768px) {
             body { padding: 65px 15px 30px 15px; }
             .word-game-btn { top: 15px; left: 15px; width: 40px; height: 40px; }
+            .week-btn { top: 66px; left: 15px; width: 40px; height: 40px; font-size: 16px; }
             .countdown-top { top: 15px; right: 15px; gap: 8px; }
             .countdown-item { padding: 8px 10px; font-size: 0.75rem; }
             .main-row { flex-direction: column; gap: 16px; }
@@ -997,6 +1241,14 @@
             <button class="stopwatch-btn" id="start-stop-btn" onclick="toggleStopwatch()">Başlat</button>
             <button class="stopwatch-btn" onclick="resetStopwatch()">Sıfırla</button>
         </div>
+    </div>
+
+    <div class="week-container" id="week-area">
+        <div class="week-title">📅 Haftalık Program</div>
+
+        <div class="week-days" id="week-days"></div>
+
+        <button class="week-reset-btn" onclick="resetWeek()">Temizle</button>
     </div>
 
     <div class="ai-container">
@@ -1175,7 +1427,9 @@
                     <div class="move-group" style="display:flex;flex-direction:column;gap:2px;flex-shrink:0;margin-right:4px;">
                         <button class="todo-move-btn" data-dir="up" style="background:none;border:none;color:rgba(255,255,255,0.3);cursor:pointer;font-size:10px;line-height:1;padding:1px 3px;">▲</button>
                         <button class="todo-move-btn" data-dir="down" style="background:none;border:none;color:rgba(255,255,255,0.3);cursor:pointer;font-size:10px;line-height:1;padding:1px 3px;">▼</button>
-                    </div>
+    </div>
+
+    <div class="week-btn" id="week-btn" onclick="toggleWeek()" title="Haftalık Program">📅</div>
                     <input type="checkbox" class="todo-checkbox" ${todo.completed ? 'checked' : ''}>
                     <span class="todo-text">${todo.text}</span>
                     <button class="todo-delete-btn">×</button>
@@ -2712,6 +2966,102 @@
                 sendBtn.disabled = false;
                 responseEl.className = 'ai-response show';
             }
+        }
+
+        // HAFTALIK PROGRAM
+        const weekDays = ["Pazartesi", "Salı", "Çarşamba", "Perşembe", "Cuma", "Cumartesi", "Pazar"];
+        let weekData = JSON.parse(localStorage.getItem('orhan_weekly')) || {};
+
+        function saveWeek() {
+            localStorage.setItem('orhan_weekly', JSON.stringify(weekData));
+        }
+
+        function initWeek() {
+            weekDays.forEach(d => { if (!weekData[d]) weekData[d] = []; });
+        }
+        initWeek();
+
+        function toggleWeek() {
+            const el = document.getElementById('week-area');
+            const btn = document.getElementById('week-btn');
+            if (el.style.display === 'block') {
+                el.style.display = 'none';
+                btn.classList.remove('active');
+            } else {
+                el.style.display = 'block';
+                btn.classList.add('active');
+                renderWeek();
+            }
+        }
+
+        function renderWeek() {
+            const container = document.getElementById('week-days');
+            container.innerHTML = '';
+            weekDays.forEach(day => {
+                const tasks = weekData[day] || [];
+                const total = tasks.reduce((sum, t) => sum + (parseFloat(t.hours) || 0), 0);
+
+                const dayEl = document.createElement('div');
+                dayEl.className = 'week-day';
+
+                const header = document.createElement('div');
+                header.className = 'week-day-header';
+                header.innerHTML = `<span class="week-day-name">${day}</span><span class="week-day-hours">${total > 0 ? total.toFixed(1) + ' saat' : ''}</span>`;
+                dayEl.appendChild(header);
+
+                const inputRow = document.createElement('div');
+                inputRow.className = 'week-day-input-row';
+                inputRow.innerHTML = `
+                    <input type="text" class="week-day-input" id="wi-${day}" placeholder="Ne çalıştın?">
+                    <input type="number" class="week-hour-input" id="wh-${day}" placeholder="sa" min="0" step="0.5">
+                    <button class="week-add-btn" onclick="addWeekTask('${day}')">Ekle</button>
+                `;
+                dayEl.appendChild(inputRow);
+
+                const taskList = document.createElement('ul');
+                taskList.className = 'week-day-tasks';
+                tasks.forEach((t, i) => {
+                    const li = document.createElement('li');
+                    li.className = 'week-task-item';
+                    li.innerHTML = `
+                        <span class="week-task-left">
+                            <span>${t.task}</span>
+                            <span class="week-task-hours">${parseFloat(t.hours).toFixed(1)}sa</span>
+                        </span>
+                        <button class="week-task-del" onclick="removeWeekTask('${day}', ${i})">×</button>
+                    `;
+                    taskList.appendChild(li);
+                });
+                dayEl.appendChild(taskList);
+                container.appendChild(dayEl);
+            });
+        }
+
+        function addWeekTask(day) {
+            const taskInput = document.getElementById(`wi-${day}`);
+            const hourInput = document.getElementById(`wh-${day}`);
+            const task = taskInput.value.trim();
+            const hours = parseFloat(hourInput.value);
+            if (!task || isNaN(hours) || hours <= 0) return;
+            if (!weekData[day]) weekData[day] = [];
+            weekData[day].push({ task, hours });
+            saveWeek();
+            taskInput.value = '';
+            hourInput.value = '';
+            renderWeek();
+        }
+
+        function removeWeekTask(day, index) {
+            if (weekData[day]) weekData[day].splice(index, 1);
+            saveWeek();
+            renderWeek();
+        }
+
+        function resetWeek() {
+            weekData = {};
+            initWeek();
+            saveWeek();
+            renderWeek();
         }
 
         // Başlangıç Çağrıları
