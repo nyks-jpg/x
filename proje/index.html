@@ -733,17 +733,15 @@
         .ai-new-btn {
             background: rgba(255,255,255,0.06);
             border: 1px solid rgba(255,255,255,0.12);
-            border-radius: 50%;
-            width: 32px;
-            height: 32px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            border-radius: 14px;
+            padding: 4px 12px;
             cursor: pointer;
-            font-size: 0.9rem;
+            font-size: 0.72rem;
             color: rgba(255,255,255,0.5);
             transition: all 0.2s;
             flex-shrink: 0;
+            font-family: 'Mulish', sans-serif;
+            letter-spacing: 0.3px;
         }
 
         .ai-new-btn:hover {
@@ -1023,7 +1021,7 @@
         <div class="ai-header">
             <div class="ai-header-left">
                 <span class="ai-header-text">Oran'a Sor</span>
-                <button class="ai-new-btn" onclick="newChat()" title="Yeni Sohbet">✕</button>
+                <button class="ai-new-btn" onclick="newChat()" title="Yeni Sohbet">Yeni Sohbet</button>
             </div>
         </div>
         <div class="ai-img-preview" id="ai-img-preview">
@@ -2601,6 +2599,12 @@
         let aiFileData = null;
         let chatHistory = JSON.parse(localStorage.getItem('oranChat') || '[]');
 
+        function escHtml(str) {
+            const div = document.createElement('div');
+            div.textContent = str;
+            return div.innerHTML;
+        }
+
         function renderChat() {
             const el = document.getElementById('ai-response');
             if (!el) return;
@@ -2673,7 +2677,12 @@
 
             input.value = '';
 
-            chatHistory.push({ role: 'user', text: question || (aiFileData ? `[Dosya: ${aiFileData.name}]` : '') });
+            const hasFile = aiFileData;
+            const userText = question || (hasFile ? `[Dosya: ${aiFileData.name}]` : '');
+            const userMsg = hasFile && aiFileData.type.startsWith('image/')
+                ? `${userText}<br><img src="${aiFileData.data}" style="max-width:200px;border-radius:10px;margin-top:6px;">`
+                : userText;
+            chatHistory.push({ role: 'user', text: userMsg });
             chatHistory.push({ role: 'loading-msg', text: 'Oran düşünüyor... 🧠' });
             renderChat();
             saveChat();
@@ -2700,7 +2709,7 @@
                 }
 
                 const data = await res.json();
-                const reply = data.error ? `Hata: ${data.error}` : (data.reply || data.text || JSON.stringify(data));
+                const reply = data.error ? `Hata: ${escHtml(data.error)}` : escHtml(data.reply || data.text || JSON.stringify(data));
 
                 chatHistory.pop();
                 chatHistory.push({ role: 'ai', text: reply });
@@ -2708,7 +2717,7 @@
                 saveChat();
             } catch (err) {
                 chatHistory.pop();
-                chatHistory.push({ role: 'ai', text: `Bağlantı Hatası: ${err.message}` });
+                chatHistory.push({ role: 'ai', text: `Bağlantı Hatası: ${escHtml(err.message)}` });
                 renderChat();
                 saveChat();
                 console.error(err);
