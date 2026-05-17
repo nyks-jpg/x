@@ -2548,40 +2548,26 @@
             if (el) el.textContent = `Tamamlanan: ${done} / ${total}`;
         }
 
-        let currentQuestion = {};
-        let canAnswer = true;
-
-        function toggleWordGame() {
-            const gameArea = document.getElementById('game-area');
-            if (gameArea.style.display === "block") {
-                gameArea.style.display = "none";
-            } else {
-                gameArea.style.display = "block";
-                if (!currentQuestion.word) generateQuestion();
+        function confetti() {
+            const colors = ['#ffb3c6', '#f07090', '#ff477e', '#ffd700', '#50c878', '#ff8c00', '#9370db'];
+            for (let i = 0; i < 60; i++) {
+                const el = document.createElement('div');
+                el.style.cssText = `
+                    position:fixed; z-index:9999; pointer-events:none;
+                    left:${Math.random() * 100}vw; top:-10px;
+                    width:${6 + Math.random() * 6}px; height:${6 + Math.random() * 6}px;
+                    background:${colors[Math.floor(Math.random() * colors.length)]};
+                    border-radius:${Math.random() > 0.5 ? '50%' : '2px'};
+                    opacity:1;
+                    transition: transform ${1.5 + Math.random() * 1}s cubic-bezier(.25,.46,.45,.94), opacity ${1.5 + Math.random() * 1}s ease;
+                `;
+                document.body.appendChild(el);
+                requestAnimationFrame(() => {
+                    el.style.transform = `translateY(${window.innerHeight + 50}px) rotate(${Math.random() * 720}deg) translateX(${(Math.random() - 0.5) * 200}px)`;
+                    el.style.opacity = '0';
+                });
+                setTimeout(() => el.remove(), 3000);
             }
-        }
-
-        function generateQuestion() {
-            canAnswer = true;
-            document.getElementById('next-question-btn').style.display = "none";
-            for (let i = 0; i < 3; i++) document.getElementById(`opt-${i}`).className = "option-btn";
-
-            currentQuestion = selectNextWord();
-
-            document.getElementById('word-target').innerText = currentQuestion.word;
-            document.getElementById('sentence-target').innerText = `"${currentQuestion.sentence}"`;
-
-            let wrongMeans = uniqueWordBank
-                .filter(w => w.mean !== currentQuestion.mean)
-                .map(w => w.mean);
-            wrongMeans = [...new Set(wrongMeans)].sort(() => 0.5 - Math.random()).slice(0, 2);
-
-            const options = [currentQuestion.mean, wrongMeans[0], wrongMeans[1]].sort(() => 0.5 - Math.random());
-            currentQuestion.correctIndex = options.indexOf(currentQuestion.mean);
-
-            for (let i = 0; i < 3; i++) document.getElementById(`text-${i}`).innerText = options[i];
-
-            updateProgress();
         }
 
         function checkAnswer(selectedIndex) {
@@ -2600,6 +2586,7 @@
 
             if (selectedIndex === currentQuestion.correctIndex) {
                 markCorrect(currentQuestion.word);
+                confetti();
             } else {
                 addWrongWord(currentQuestion.word, currentQuestion.mean);
             }
