@@ -3257,6 +3257,7 @@
             if (!question && !aiFileData) return;
 
             sendBtn.disabled = true;
+            input.value = '';
             responseEl.textContent = 'Oran düşünüyor... 🧠';
             responseEl.className = 'ai-response loading';
 
