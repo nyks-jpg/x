@@ -97,6 +97,141 @@
             transform: translateZ(0);
         }
 
+        .fc-btn {
+            position: absolute;
+            top: 139px;
+            left: 25px;
+            width: 46px;
+            height: 46px;
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            border-radius: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #ffb3c6;
+            text-decoration: none;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 0 4px 24px rgba(0,0,0,0.18), inset 0 1px 0 rgba(255,255,255,0.12);
+            z-index: 100;
+            cursor: pointer;
+            font-size: 18px;
+            transform: translateZ(0);
+        }
+        .fc-btn:hover { background: rgba(255, 255, 255, 0.18); color: #ff477e; transform: scale(1.08) translateY(-1px); box-shadow: 0 8px 32px rgba(0,0,0,0.22), inset 0 1px 0 rgba(255,255,255,0.2); }
+
+        .flashcard-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(8px);
+            z-index: 999;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .flashcard-overlay.open { display: flex; }
+        .flashcard-modal {
+            background: rgba(30, 30, 50, 0.95);
+            backdrop-filter: blur(30px);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 28px;
+            padding: 2rem;
+            max-width: 420px;
+            width: 100%;
+            box-shadow: 0 30px 80px rgba(0,0,0,0.4);
+        }
+        .flashcard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+        .flashcard-title { font-family: 'DM Serif Display', serif; font-size: 1.1rem; font-style: italic; color: rgba(255,255,255,0.9); }
+        .flashcard-close { font-size: 1.5rem; color: rgba(255,255,255,0.3); cursor: pointer; transition: 0.2s; line-height: 1; }
+        .flashcard-close:hover { color: #ff477e; transform: scale(1.2); }
+        .flashcard-progress {
+            height: 3px;
+            background: rgba(255,255,255,0.06);
+            border-radius: 4px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+        .flashcard-progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #ffb3c6, #f07090);
+            border-radius: 4px;
+            transition: width 0.3s;
+        }
+        .flashcard-card {
+            perspective: 1000px;
+            height: 200px;
+            cursor: pointer;
+            margin-bottom: 20px;
+        }
+        .flashcard-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transform-style: preserve-3d;
+        }
+        .flashcard-card.flipped .flashcard-inner { transform: rotateX(180deg); }
+        .flashcard-front, .flashcard-back {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            backface-visibility: hidden;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 18px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            text-align: center;
+        }
+        .flashcard-back { transform: rotateX(180deg); background: rgba(255,179,198,0.06); border-color: rgba(255,179,198,0.12); }
+        .flashcard-word { font-size: 1.4rem; font-weight: 700; color: rgba(255,255,255,0.95); margin-bottom: 6px; }
+        .flashcard-mean { font-size: 1rem; color: #ffb3c6; }
+        .flashcard-tap-hint { font-size: 0.65rem; color: rgba(255,255,255,0.25); margin-top: 8px; letter-spacing: 1px; }
+        .flashcard-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .fc-nav-btn {
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.08);
+            color: rgba(255,255,255,0.7);
+            padding: 8px 20px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: all 0.2s;
+            font-family: 'Mulish', sans-serif;
+        }
+        .fc-nav-btn:hover { background: rgba(255,179,198,0.12); color: #ffb3c6; border-color: rgba(255,179,198,0.2); }
+        .fc-count { font-size: 0.8rem; color: rgba(255,255,255,0.4); letter-spacing: 1px; }
+        .flashcard-empty {
+            display: none;
+            text-align: center;
+            padding: 40px 20px;
+            color: rgba(255,255,255,0.3);
+            font-size: 0.9rem;
+        }
+
+        body.dark-mode .fc-btn {
+            background: rgba(20, 20, 40, 0.6);
+            border-color: rgba(255,255,255,0.15);
+            box-shadow: 0 4px 24px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.06);
+        }
+        body.dark-mode .fc-btn:hover { background: rgba(20, 20, 40, 0.8); }
+        body.dark-mode .flashcard-modal { background: rgba(15, 15, 30, 0.97); }
+
         .main-row {
             display: flex;
             gap: 24px;
@@ -1394,6 +1529,7 @@
             body { padding: 70px 10px 30px 10px; }
             .word-game-btn { top: 15px; left: 12px; width: 40px; height: 40px; }
             .week-btn { top: 63px; left: 12px; width: 40px; height: 40px; font-size: 16px; }
+            .fc-btn { top: 111px; left: 12px; width: 40px; height: 40px; font-size: 16px; }
             .countdown-top { top: 15px; right: 12px; gap: 6px; }
             .countdown-item { padding: 6px 8px; font-size: 0.65rem; }
             .countdown-item .cd-number { font-size: 0.8rem; }
@@ -1403,6 +1539,8 @@
             .dark-toggle { width: 38px; height: 38px; font-size: 15px; bottom: 12px; right: 12px; }
             .ai-container { padding: 1.2rem; }
             .game-container { padding: 1.2rem; }
+            .flashcard-modal { padding: 1.2rem; }
+            .flashcard-card { height: 160px; }
             .week-container { max-width: 100%; padding: 1rem 0.6rem; }
             .week-days {
                 display: grid;
@@ -1457,6 +1595,30 @@
     </div>
 
     <div class="week-btn" id="week-btn" onclick="toggleWeek()" title="Haftalık Program">📅</div>
+
+    <div class="fc-btn" id="flashcard-btn" onclick="openFlashcards()" title="Flashcard">🃏</div>
+
+    <div class="flashcard-overlay" id="flashcard-overlay" onclick="closeFlashcards(event)">
+        <div class="flashcard-modal" onclick="event.stopPropagation()">
+            <div class="flashcard-header">
+                <span class="flashcard-title">Flashcard</span>
+                <span class="flashcard-close" onclick="closeFlashcards()">×</span>
+            </div>
+            <div class="flashcard-progress" id="fc-progress"></div>
+            <div class="flashcard-card" id="fc-card" onclick="flipFlashcard()">
+                <div class="flashcard-inner">
+                    <div class="flashcard-front" id="fc-front"></div>
+                    <div class="flashcard-back" id="fc-back"></div>
+                </div>
+            </div>
+            <div class="flashcard-nav">
+                <button class="fc-nav-btn" onclick="prevFlashcard()">←</button>
+                <span class="fc-count" id="fc-count"></span>
+                <button class="fc-nav-btn" onclick="nextFlashcard()">→</button>
+            </div>
+            <div class="flashcard-empty" id="fc-empty">Yanlış bilinen kelime yok.</div>
+        </div>
+    </div>
 
     <div class="countdown-top">
         <div class="countdown-item">
@@ -3205,6 +3367,67 @@
                 else canvas.remove();
             }
             draw();
+        }
+
+        // FLASHCARD
+        let fcIndex = 0;
+
+        function openFlashcards() {
+            const list = JSON.parse(localStorage.getItem('orhan_wrong_words')) || [];
+            const overlay = document.getElementById('flashcard-overlay');
+            const emptyEl = document.getElementById('fc-empty');
+            const modal = document.querySelector('.flashcard-modal');
+            if (list.length === 0) {
+                overlay.classList.add('open');
+                emptyEl.style.display = 'block';
+                modal.querySelector('.flashcard-card').style.display = 'none';
+                modal.querySelector('.flashcard-nav').style.display = 'none';
+                modal.querySelector('.flashcard-progress').style.display = 'none';
+                return;
+            }
+            emptyEl.style.display = 'none';
+            modal.querySelector('.flashcard-card').style.display = 'block';
+            modal.querySelector('.flashcard-nav').style.display = 'flex';
+            modal.querySelector('.flashcard-progress').style.display = 'block';
+            fcIndex = 0;
+            showFlashcard(list);
+            overlay.classList.add('open');
+        }
+
+        function closeFlashcards(e) {
+            if (e && e.target !== e.currentTarget) return;
+            document.getElementById('flashcard-overlay').classList.remove('open');
+        }
+
+        function showFlashcard(list) {
+            if (!list || list.length === 0) return;
+            const item = list[fcIndex];
+            document.getElementById('fc-front').innerHTML = `<div class="flashcard-word">${item.word}</div><div class="flashcard-tap-hint">DOKUN</div>`;
+            document.getElementById('fc-back').innerHTML = `<div class="flashcard-mean">${item.mean}</div>`;
+            document.getElementById('fc-count').textContent = `${fcIndex + 1} / ${list.length}`;
+            document.getElementById('fc-card').classList.remove('flipped');
+            const pct = ((fcIndex + 1) / list.length) * 100;
+            let bar = document.querySelector('.flashcard-progress-bar');
+            if (!bar) {
+                bar = document.createElement('div');
+                bar.className = 'flashcard-progress-bar';
+                document.querySelector('.flashcard-progress').appendChild(bar);
+            }
+            bar.style.width = pct + '%';
+        }
+
+        function flipFlashcard() {
+            document.getElementById('fc-card').classList.toggle('flipped');
+        }
+
+        function nextFlashcard() {
+            const list = JSON.parse(localStorage.getItem('orhan_wrong_words')) || [];
+            if (fcIndex < list.length - 1) { fcIndex++; showFlashcard(list); }
+        }
+
+        function prevFlashcard() {
+            const list = JSON.parse(localStorage.getItem('orhan_wrong_words')) || [];
+            if (fcIndex > 0) { fcIndex--; showFlashcard(list); }
         }
 
     // ========================================================
