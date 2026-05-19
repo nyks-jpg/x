@@ -4060,6 +4060,19 @@
             localStorage.setItem('orhan_dark_mode', isDark ? 'dark' : 'light');
         };
         document.body.appendChild(darkToggle);
+
+        // Safari kapatınca/küçültünce verileri kaydet
+        function saveAll() {
+            saveStopwatch();
+            saveNotes();
+            saveWeek();
+            localStorage.setItem('orhan_correct_words', JSON.stringify(correctWords));
+            localStorage.setItem('orhan_wrong_words', JSON.stringify(wrongWords));
+            localStorage.setItem('orhan_show_count_v3', JSON.stringify(showCount));
+            localStorage.setItem('orhan_todos', JSON.stringify(todos));
+        }
+        document.addEventListener('visibilitychange', () => { if (document.hidden) saveAll(); });
+        window.addEventListener('pagehide', saveAll);
     </script>
 </body>
 </html>
