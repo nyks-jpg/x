@@ -1524,6 +1524,43 @@
             color: rgba(255,255,255,0.35);
         }
 
+        .notes-pages {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+        .notes-page-btn {
+            color: rgba(255,255,255,0.3);
+            cursor: pointer;
+            font-size: 0.7rem;
+            transition: 0.2s;
+            padding: 2px 8px;
+            border-radius: 10px;
+            user-select: none;
+        }
+        .notes-page-btn:hover { color: #ffb3c6; background: rgba(255,255,255,0.04); }
+        .notes-page-count {
+            font-size: 0.65rem;
+            color: rgba(255,255,255,0.25);
+            letter-spacing: 1px;
+            min-width: 40px;
+            text-align: center;
+        }
+        .notes-page-add {
+            font-size: 0.5rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.2);
+            cursor: pointer;
+            padding: 3px 10px;
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.06);
+            transition: 0.2s;
+            margin-left: auto;
+        }
+        .notes-page-add:hover { color: #ffb3c6; border-color: rgba(255,179,198,0.2); }
+
         /* Dark Mode Toggle */
         .dark-toggle {
             position: fixed;
@@ -1744,7 +1781,7 @@
     </div>
 
     <div class="week-container" id="week-area">
-        <div class="week-title">📅 Haftalık Çalışma</div>
+        <div class="week-title">Haftalık Çalışma</div>
 
         <div class="week-days" id="week-days"></div>
 
@@ -1757,6 +1794,12 @@
         <div class="notes-header">
             <span class="notes-title">Not Defteri</span>
             <span class="notes-clear-btn" onclick="clearNotes()">Temizle</span>
+        </div>
+        <div class="notes-pages" id="notes-pages">
+            <span class="notes-page-btn" onclick="notesPrevPage()">◀</span>
+            <span class="notes-page-count" id="notes-page-count">1 / 1</span>
+            <span class="notes-page-btn" onclick="notesNextPage()">▶</span>
+            <span class="notes-page-add" onclick="notesAddPage()">+ Sayfa</span>
         </div>
         <textarea class="notes-textarea" id="notes-textarea" placeholder="Not almak için buraya yaz..." oninput="saveNotes();autoResize(this)"></textarea>
     </div>
@@ -1925,16 +1968,9 @@
             const btn = document.getElementById('start-stop-btn');
             if (isRunning) {
                 clearInterval(stopwatchInterval);
-                if (stopwatchMode === 'stopwatch') {
-                    addSecondsToToday(elapsedSeconds);
-                } else {
-                    addSecondsToToday(countdownTotal - elapsedSeconds);
-                }
-                elapsedSeconds = 0;
-                document.getElementById('stopwatch-display').innerText = "00:00:00";
+                isRunning = false;
                 btn.innerText = "Başlat";
                 btn.style.background = "rgba(255, 255, 255, 0.15)";
-                isRunning = false;
                 saveStopwatch();
                 return;
             }
@@ -3910,11 +3946,26 @@
             renderWeek();
         }
 
-        // NOT DEFTERI
+        // NOT DEFTERI (SAYFALI)
+        // eski tek sayfadan taşı
+        if (localStorage.getItem('orhan_notes') && !localStorage.getItem('orhan_notes_pages')) {
+            const old = localStorage.getItem('orhan_notes');
+            localStorage.setItem('orhan_notes_pages', JSON.stringify([old]));
+            localStorage.removeItem('orhan_notes');
+        }
+        let notesPages = JSON.parse(localStorage.getItem('orhan_notes_pages')) || [''];
+        let notesCurrentPage = parseInt(localStorage.getItem('orhan_notes_current')) || 0;
+        if (notesCurrentPage < 0 || notesCurrentPage >= notesPages.length) notesCurrentPage = 0;
+
+        function renderNotesNav() {
+            const el = document.getElementById('notes-page-count');
+            if (el) el.textContent = `${notesCurrentPage + 1} / ${notesPages.length}`;
+        }
+
         function loadNotes() {
-            const saved = localStorage.getItem('orhan_notes');
             const el = document.getElementById('notes-textarea');
-            if (saved && el) { el.value = saved; autoResize(el); }
+            if (el) { el.value = notesPages[notesCurrentPage] || ''; autoResize(el); }
+            renderNotesNav();
         }
 
         function autoResize(el) {
@@ -3924,12 +3975,35 @@
 
         function saveNotes() {
             const el = document.getElementById('notes-textarea');
-            if (el) localStorage.setItem('orhan_notes', el.value);
+            if (el) {
+                notesPages[notesCurrentPage] = el.value;
+                localStorage.setItem('orhan_notes_pages', JSON.stringify(notesPages));
+                localStorage.setItem('orhan_notes_current', notesCurrentPage);
+            }
         }
 
         function clearNotes() {
             const el = document.getElementById('notes-textarea');
-            if (el) { el.value = ''; localStorage.removeItem('orhan_notes'); }
+            if (el) { notesPages[notesCurrentPage] = ''; el.value = ''; localStorage.setItem('orhan_notes_pages', JSON.stringify(notesPages)); autoResize(el); }
+        }
+
+        function notesPrevPage() {
+            if (notesCurrentPage > 0) { saveNotes(); notesCurrentPage--; loadNotes(); }
+        }
+
+        function notesNextPage() {
+            if (notesCurrentPage < notesPages.length - 1) { saveNotes(); notesCurrentPage++; loadNotes(); }
+        }
+
+        function notesAddPage() {
+            saveNotes();
+            notesPages.push('');
+            notesCurrentPage = notesPages.length - 1;
+            localStorage.setItem('orhan_notes_pages', JSON.stringify(notesPages));
+            localStorage.setItem('orhan_notes_current', notesCurrentPage);
+            loadNotes();
+            const el = document.getElementById('notes-textarea');
+            if (el) { el.focus(); autoResize(el); }
         }
 
         // Başlangıç çağrıları
