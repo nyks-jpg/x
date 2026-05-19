@@ -70,41 +70,6 @@
             fill: currentColor;
         }
 
-        /* Haftalık Program Butonu (kalp butonunun altı) */
-        .week-btn {
-            position: absolute;
-            top: 82px;
-            left: 25px;
-            width: 46px;
-            height: 46px;
-            background: rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(24px);
-            -webkit-backdrop-filter: blur(24px);
-            border: 1px solid rgba(255, 255, 255, 0.18);
-            border-radius: 15px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: #ffb3c6;
-            text-decoration: none;
-            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-            box-shadow: 0 4px 24px rgba(0,0,0,0.18), inset 0 1px 0 rgba(255,255,255,0.12);
-            z-index: 100;
-            cursor: pointer;
-            font-size: 18px;
-            line-height: 1;
-        }
-        .week-btn:hover {
-            background: rgba(255, 255, 255, 0.18);
-            color: #ff477e;
-            transform: scale(1.08) translateY(-1px);
-            box-shadow: 0 8px 32px rgba(0,0,0,0.22), inset 0 1px 0 rgba(255,255,255,0.2);
-        }
-        .week-btn.active {
-            background: rgba(255, 179, 198, 0.25);
-            border-color: rgba(255, 179, 198, 0.5);
-        }
-
         .main-row {
             display: flex;
             gap: 24px;
@@ -716,6 +681,111 @@
             color: #80ffb0;
         }
 
+        /* NOT ALMA ALANI */
+        .notes-container {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            max-width: 900px;
+            width: 100%;
+            padding: 1.6rem 1.8rem 1.8rem;
+            border-radius: 24px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+            margin-top: 24px;
+            flex-shrink: 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .notes-container::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+        }
+
+        .notes-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+
+        .notes-title {
+            font-family: 'DM Serif Display', serif;
+            font-size: 1.1rem;
+            font-weight: 400;
+            font-style: italic;
+            color: rgba(255, 255, 255, 0.9);
+            letter-spacing: 0.5px;
+        }
+
+        .notes-textarea {
+            width: 100%;
+            min-height: 100px;
+            max-height: 300px;
+            background: rgba(0, 0, 0, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 14px 16px;
+            color: rgba(255, 255, 255, 0.85);
+            font-family: 'Mulish', sans-serif;
+            font-size: 0.92rem;
+            line-height: 1.7;
+            outline: none;
+            resize: vertical;
+            transition: all 0.25s ease;
+        }
+
+        .notes-textarea:focus {
+            border-color: rgba(255, 179, 198, 0.4);
+            background: rgba(0, 0, 0, 0.22);
+            box-shadow: 0 0 0 3px rgba(255,179,198,0.06);
+        }
+
+        .notes-textarea::placeholder {
+            color: rgba(255, 255, 255, 0.3);
+        }
+
+        .notes-clear-btn {
+            font-size: 0.55rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.2);
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            padding: 5px 12px;
+            border-radius: 20px;
+            border: 1px solid rgba(255,255,255,0.06);
+            background: rgba(255,255,255,0.03);
+            font-weight: 500;
+            flex-shrink: 0;
+        }
+
+        .notes-clear-btn:hover {
+            color: #ff7098;
+            border-color: rgba(255,112,152,0.25);
+            background: rgba(255,112,152,0.08);
+            transform: scale(1.04);
+        }
+
+        body.dark-mode .notes-container {
+            background: rgba(20, 20, 40, 0.6) !important;
+            border-color: rgba(255,255,255,0.08) !important;
+        }
+
+        body.dark-mode .notes-textarea {
+            background: rgba(20, 20, 40, 0.6);
+            border-color: rgba(255,255,255,0.1);
+            color: #e0e0e0;
+        }
+
+        body.dark-mode .notes-textarea::placeholder {
+            color: rgba(255,255,255,0.35);
+        }
+
         /* AI SORU SORMA - Gemini Style */
         .ai-container {
             background: rgba(255, 255, 255, 0.05);
@@ -925,229 +995,6 @@
             text-shadow: 0 1px 30px rgba(255, 179, 198, 0.1);
         }
 
-        /* HAFTALIK PROGRAM */
-        .week-container {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(25px);
-            -webkit-backdrop-filter: blur(25px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            max-width: 98vw;
-            width: 100%;
-            padding: 2rem 1rem;
-            border-radius: 28px;
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
-            margin-top: 24px;
-            margin-bottom: 40px;
-            display: none;
-            animation: fadeIn 0.4s ease;
-            position: relative;
-            overflow: hidden;
-            flex-shrink: 0;
-        }
-        .week-container::after {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-        }
-        .week-title {
-            font-family: 'Mulish', sans-serif;
-            font-size: 0.75rem;
-            font-weight: 300;
-            letter-spacing: 4px;
-            text-transform: uppercase;
-            color: rgba(255, 179, 198, 0.8);
-            margin-bottom: 20px;
-            text-align: center;
-        }
-        .week-days {
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            gap: 8px;
-        }
-        .week-day {
-            background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.08);
-            border-radius: 14px;
-            padding: 16px 10px;
-            transition: all 0.2s;
-            display: flex;
-            flex-direction: column;
-            min-height: 150px;
-            position: relative;
-        }
-        .week-day:hover {
-            background: rgba(255,255,255,0.08);
-            border-color: rgba(255,255,255,0.12);
-        }
-        .week-day.today {
-            border-color: #ff7098 !important;
-            border-width: 2px;
-            background: rgba(255,112,152,0.12) !important;
-            box-shadow: 0 0 20px rgba(255,112,152,0.15);
-        }
-        .week-day-name {
-            font-family: 'DM Serif Display', serif;
-            font-size: 0.95rem;
-            color: rgba(255,255,255,0.9);
-            font-weight: 400;
-            text-align: center;
-            margin-bottom: 2px;
-        }
-        .week-day.today .week-day-name {
-            color: #ff7098;
-            font-weight: 600;
-        }
-        .week-day-hours {
-            font-size: 1.2rem;
-            color: rgba(255,179,198,0.85);
-            font-family: 'DM Serif Display', serif;
-            letter-spacing: 0.5px;
-            text-align: center;
-            margin-bottom: 8px;
-        }
-        .week-day.today .week-day-hours {
-            color: #ff7098;
-        }
-        .week-day-hours.small {
-            font-size: 0.65rem;
-            color: rgba(255,255,255,0.3);
-        }
-        .week-tasks {
-            list-style: none;
-            display: flex;
-            flex-direction: column;
-            gap: 3px;
-            flex: 1;
-            min-height: 0;
-        }
-        .week-task {
-            background: rgba(255,255,255,0.04);
-            border: 1px solid rgba(255,255,255,0.05);
-            padding: 4px 8px;
-            border-radius: 6px;
-            font-size: 0.65rem;
-            color: rgba(255,255,255,0.8);
-            cursor: grab;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            transition: all 0.15s;
-            user-select: none;
-        }
-        .week-task:active { cursor: grabbing; }
-        .week-task.dragging {
-            opacity: 0.3;
-            transform: scale(0.95);
-        }
-        .week-task.drag-over {
-            border-color: rgba(255,179,198,0.4);
-            background: rgba(255,179,198,0.1);
-            transform: translateY(-2px);
-        }
-        .week-task-del {
-            background: none;
-            border: none;
-            color: rgba(255,255,255,0.2);
-            cursor: pointer;
-            font-size: 0.7rem;
-            line-height: 1;
-            padding: 0 2px;
-            transition: color 0.15s;
-        }
-        .week-task-del:hover { color: #ff477e; }
-        .week-add-row {
-            display: flex;
-            gap: 4px;
-            margin-top: 6px;
-        }
-        .week-add-input {
-            flex: 1;
-            background: rgba(0,0,0,0.2);
-            border: 1px solid rgba(255,255,255,0.08);
-            padding: 4px 6px;
-            border-radius: 6px;
-            color: #fff;
-            font-size: 0.6rem;
-            outline: none;
-            font-family: 'Mulish', sans-serif;
-            transition: all 0.2s;
-            min-width: 0;
-        }
-        .week-add-input:focus {
-            border-color: #ffb3c6;
-            background: rgba(0,0,0,0.3);
-        }
-        .week-add-input::placeholder { color: rgba(255,255,255,0.2); }
-        .week-add-task-btn {
-            background: linear-gradient(135deg, #ffb3c6, #f07090);
-            color: #5a1e2e;
-            border: none;
-            padding: 4px 8px;
-            border-radius: 6px;
-            font-weight: 700;
-            cursor: pointer;
-            font-size: 0.55rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            font-family: 'Mulish', sans-serif;
-            box-shadow: 0 2px 8px rgba(240,112,144,0.35);
-            transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
-            flex-shrink: 0;
-        }
-        .week-add-task-btn:hover { background: #fff; }
-        .week-total-row {
-            text-align: center;
-            margin-top: 18px;
-            font-size: 0.85rem;
-            color: rgba(255,255,255,0.5);
-            letter-spacing: 1px;
-            font-family: 'Mulish', sans-serif;
-        }
-        .week-reset-btn {
-            background: rgba(255,255,255,0.06);
-            border: 1px solid rgba(255,255,255,0.1);
-            color: rgba(255,255,255,0.5);
-            padding: 10px 24px;
-            border-radius: 50px;
-            font-size: 0.7rem;
-            cursor: pointer;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            font-family: 'Mulish', sans-serif;
-            transition: all 0.2s;
-            margin-top: 18px;
-            display: block;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        .week-reset-btn:hover {
-            background: rgba(255,255,255,0.12);
-            color: #ff7098;
-            border-color: rgba(255,112,152,0.3);
-        }
-        body.dark-mode .week-container {
-            background: rgba(20, 20, 40, 0.6) !important;
-            border-color: rgba(255,255,255,0.08) !important;
-        }
-        body.dark-mode .week-day {
-            background: rgba(255,255,255,0.03);
-            border-color: rgba(255,255,255,0.05);
-        }
-        body.dark-mode .week-day.today {
-            border-color: #ff477e !important;
-            border-width: 2px;
-            background: rgba(255,71,126,0.18) !important;
-            box-shadow: 0 0 24px rgba(255,71,126,0.2);
-        }
-        body.dark-mode .week-day.today .week-day-name {
-            color: #ff90b0;
-        }
-        body.dark-mode .week-day.today .week-day-hours {
-            color: #ff7098;
-        }
-
         /* Dark Mode Toggle */
         .dark-toggle {
             position: fixed;
@@ -1197,60 +1044,13 @@
         body.dark-mode .motivation-text { color: #e0d0d8; text-shadow: 0 1px 30px rgba(100, 50, 80, 0.2); }
 
         @media (max-width: 768px) {
-            body { padding: 70px 10px 30px 10px; }
-            .word-game-btn { top: 15px; left: 12px; width: 40px; height: 40px; }
-            .week-btn { top: 63px; left: 12px; width: 40px; height: 40px; font-size: 16px; }
-            .countdown-top { top: 15px; right: 12px; gap: 6px; }
-            .countdown-item { padding: 6px 8px; font-size: 0.65rem; }
-            .countdown-item .cd-number { font-size: 0.8rem; }
-            .main-row { flex-direction: column; gap: 14px; }
-            .todo-container, .stopwatch-container { padding: 1.2rem; }
-            .motivation-text { font-size: 0.95rem; max-width: 100%; }
-            .dark-toggle { width: 38px; height: 38px; font-size: 15px; bottom: 12px; right: 12px; }
-            .ai-container { padding: 1.2rem; }
-            .game-container { padding: 1.2rem; }
-            .week-container { max-width: 100%; padding: 1rem 0.6rem; }
-            .week-days {
-                display: grid;
-                grid-template-columns: repeat(7, 1fr);
-                gap: 4px;
-            }
-            .week-day {
-                min-height: auto;
-                padding: 6px 4px;
-                border-radius: 10px;
-                min-width: 0;
-            }
-            .week-day-name { font-size: 0.65rem; margin-bottom: 1px; }
-            .week-day-hours { font-size: 0.7rem; margin-bottom: 4px; }
-            .week-tasks { display: none; }
-            .week-add-row { display: none; }
-            .week-total-row { font-size: 0.7rem; margin-top: 10px; }
-            .stopwatch-display { font-size: 2.2rem; }
-            .todo-list { max-height: 200px; }
-            .week-task { font-size: 0.55rem; padding: 2px 4px; }
-            .week-add-input { font-size: 0.5rem; padding: 2px 4px; }
-            .week-add-task-btn { font-size: 0.45rem; padding: 2px 5px; }
-        }
-        @media (max-width: 480px) {
-            body { padding: 65px 6px 20px 6px; }
-            .word-game-btn { top: 12px; left: 8px; width: 34px; height: 34px; }
-            .week-btn { top: 52px; left: 8px; width: 34px; height: 34px; font-size: 13px; }
-            .countdown-top { top: 12px; right: 8px; gap: 4px; }
-            .countdown-item { padding: 3px 5px; font-size: 0.5rem; }
-            .countdown-item .cd-number { font-size: 0.65rem; }
-            .todo-container, .stopwatch-container { padding: 0.8rem; }
-            .ai-container { padding: 0.8rem; }
-            .game-container { padding: 0.8rem; }
-            .week-container { padding: 0.6rem 0.3rem; }
-            .week-day { padding: 4px 3px; border-radius: 8px; }
-            .week-day-name { font-size: 0.55rem; }
-            .week-day-hours { font-size: 0.6rem; }
-            .target-word { font-size: 1.4rem; }
-            .stopwatch-display { font-size: 1.5rem; }
-            .option-btn { font-size: 0.75rem; padding: 8px 10px; }
-            .motivation-text { font-size: 0.8rem; }
-            .week-total-row { font-size: 0.6rem; }
+            body { padding: 65px 15px 30px 15px; }
+            .word-game-btn { top: 15px; left: 15px; width: 40px; height: 40px; }
+            .countdown-top { top: 15px; right: 15px; gap: 8px; }
+            .countdown-item { padding: 8px 10px; font-size: 0.75rem; }
+            .main-row { flex-direction: column; gap: 16px; }
+            .motivation-text { font-size: 1.05rem; }
+            .dark-toggle { width: 40px; height: 40px; font-size: 17px; bottom: 15px; right: 15px; }
         }
     </style>
 </head>
@@ -1261,8 +1061,6 @@
             <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
         </svg>
     </div>
-
-    <div class="week-btn" id="week-btn" onclick="toggleWeek()" title="Haftalık Program">📅</div>
 
     <div class="countdown-top">
         <div class="countdown-item">
@@ -1306,14 +1104,12 @@
         </div>
     </div>
 
-    <div class="week-container" id="week-area">
-        <div class="week-title">📅 Haftalık Çalışma</div>
-
-        <div class="week-days" id="week-days"></div>
-
-        <div class="week-total-row" id="week-total">Toplam: 0dk</div>
-
-        <button class="week-reset-btn" onclick="resetWeek()">Sıfırla</button>
+    <div class="notes-container">
+        <div class="notes-header">
+            <span class="notes-title">Not Defteri</span>
+            <span class="notes-clear-btn" onclick="clearNotes()">Temizle</span>
+        </div>
+        <textarea class="notes-textarea" id="notes-textarea" placeholder="Not almak için buraya yaz..." oninput="saveNotes()"></textarea>
     </div>
 
     <div class="ai-container">
@@ -1416,38 +1212,13 @@
 
         // KRONOMETRE
         let stopwatchInterval;
-        let elapsedSeconds = parseInt(localStorage.getItem('orhan_elapsed')) || 0;
+        let elapsedSeconds = 0;
         let isRunning = false;
-
-        function saveStopwatch() {
-            localStorage.setItem('orhan_elapsed', elapsedSeconds);
-            localStorage.setItem('orhan_stopwatch_running', isRunning ? '1' : '');
-        }
-
-        // Sayfa yüklenince süreyi göster ve çalışıyorsa devam et
-        (function restoreStopwatch() {
-            const hrs = Math.floor(elapsedSeconds / 3600);
-            const mins = Math.floor((elapsedSeconds % 3600) / 60);
-            const secs = elapsedSeconds % 60;
-            const display = document.getElementById('stopwatch-display');
-            if (display) display.innerText =
-                `${hrs < 10 ? '0'+hrs : hrs}:${mins < 10 ? '0'+mins : mins}:${secs < 10 ? '0'+secs : secs}`;
-            const wasRunning = localStorage.getItem('orhan_stopwatch_running') === '1';
-            if (wasRunning) {
-                isRunning = true;
-                stopwatchInterval = setInterval(updateStopwatch, 1000);
-                const btn = document.getElementById('start-stop-btn');
-                if (btn) { btn.innerText = "Durdur"; btn.style.background = "rgba(231, 76, 60, 0.3)"; }
-            }
-        })();
 
         function toggleStopwatch() {
             const btn = document.getElementById('start-stop-btn');
             if (isRunning) {
                 clearInterval(stopwatchInterval);
-                addSecondsToToday(elapsedSeconds);
-                elapsedSeconds = 0;
-                document.getElementById('stopwatch-display').innerText = "00:00:00";
                 btn.innerText = "Başlat";
                 btn.style.background = "rgba(255, 255, 255, 0.15)";
             } else {
@@ -1456,7 +1227,6 @@
                 btn.style.background = "rgba(231, 76, 60, 0.3)";
             }
             isRunning = !isRunning;
-            saveStopwatch();
         }
 
         function resetStopwatch() {
@@ -1467,7 +1237,6 @@
             const btn = document.getElementById('start-stop-btn');
             btn.innerText = "Başlat";
             btn.style.background = "rgba(255, 255, 255, 0.15)";
-            saveStopwatch();
         }
 
         function updateStopwatch() {
@@ -1475,9 +1244,8 @@
             const hrs = Math.floor(elapsedSeconds / 3600);
             const mins = Math.floor((elapsedSeconds % 3600) / 60);
             const secs = elapsedSeconds % 60;
-            document.getElementById('stopwatch-display').innerText =
+            document.getElementById('stopwatch-display').innerText = 
                 `${hrs < 10 ? '0'+hrs : hrs}:${mins < 10 ? '0'+mins : mins}:${secs < 10 ? '0'+secs : secs}`;
-            saveStopwatch();
         }
 
         // YAPILACAKLAR LİSTESİ (TODO) MANTIĞI
@@ -1495,7 +1263,7 @@
                     <div class="move-group" style="display:flex;flex-direction:column;gap:2px;flex-shrink:0;margin-right:4px;">
                         <button class="todo-move-btn" data-dir="up" style="background:none;border:none;color:rgba(255,255,255,0.3);cursor:pointer;font-size:10px;line-height:1;padding:1px 3px;">▲</button>
                         <button class="todo-move-btn" data-dir="down" style="background:none;border:none;color:rgba(255,255,255,0.3);cursor:pointer;font-size:10px;line-height:1;padding:1px 3px;">▼</button>
-    </div>
+                    </div>
                     <input type="checkbox" class="todo-checkbox" ${todo.completed ? 'checked' : ''}>
                     <span class="todo-text">${todo.text}</span>
                     <button class="todo-delete-btn">×</button>
@@ -2828,7 +2596,6 @@
 
         // Kaç kez gösterildi (localStorage'da tutulur)
         let showCount = JSON.parse(localStorage.getItem('orhan_show_count_v3')) || {};
-        let correctWords = JSON.parse(localStorage.getItem('orhan_correct_words')) || [];
         let lastWord = null;
 
         function _key(word) { return word.toLowerCase().trim(); }
@@ -2863,7 +2630,7 @@
 
         // İlerleme göstergesi
         function updateProgress() {
-            const done = correctWords.length;
+            const done = uniqueWordBank.filter(e => getShown(e.word) > 0).length;
             const total = uniqueWordBank.length;
             const el = document.getElementById('progress-label');
             if (el) el.textContent = `Tamamlanan: ${done} / ${total}`;
@@ -2876,10 +2643,8 @@
             const gameArea = document.getElementById('game-area');
             if (gameArea.style.display === "block") {
                 gameArea.style.display = "none";
-                localStorage.setItem('orhan_game_visible', '0');
             } else {
                 gameArea.style.display = "block";
-                localStorage.setItem('orhan_game_visible', '1');
                 if (!currentQuestion.word) generateQuestion();
             }
         }
@@ -2887,9 +2652,6 @@
         function resetWordGame() {
             showCount = {};
             localStorage.setItem('orhan_show_count_v3', JSON.stringify(showCount));
-            correctWords = [];
-            localStorage.setItem('orhan_correct_words', JSON.stringify(correctWords));
-            localStorage.removeItem('orhan_wrong_words');
             currentQuestion = {};
             canAnswer = true;
             document.getElementById('next-question-btn').style.display = "none";
@@ -2937,12 +2699,6 @@
 
             if (selectedIndex !== currentQuestion.correctIndex) {
                 addWrongWord(currentQuestion.word, currentQuestion.mean);
-            } else {
-                const key = _key(currentQuestion.word);
-                if (!correctWords.includes(key)) {
-                    correctWords.push(key);
-                    localStorage.setItem('orhan_correct_words', JSON.stringify(correctWords));
-                }
             }
 
             updateProgress();
@@ -3036,184 +2792,21 @@
             }
         }
 
-        // HAFTALIK PROGRAM
-        const weekDays = ["Pazartesi", "Salı", "Çarşamba", "Perşembe", "Cuma", "Cumartesi", "Pazar"];
-        let weekData = JSON.parse(localStorage.getItem('orhan_weekly_v3')) || {};
-
-        function saveWeek() {
-            localStorage.setItem('orhan_weekly_v3', JSON.stringify(weekData));
+        // NOT DEFTERİ (localStorage)
+        function loadNotes() {
+            const saved = localStorage.getItem('orhan_notes');
+            const el = document.getElementById('notes-textarea');
+            if (saved && el) el.value = saved;
         }
 
-        function getWeekKey() {
-            const now = new Date();
-            const dayOfWeek = now.getDay();
-            const diffToMon = dayOfWeek === 0 ? -6 : 1 - dayOfWeek;
-            const monday = new Date(now);
-            monday.setDate(now.getDate() + diffToMon);
-            return monday.toISOString().slice(0, 10);
+        function saveNotes() {
+            const el = document.getElementById('notes-textarea');
+            if (el) localStorage.setItem('orhan_notes', el.value);
         }
 
-        function checkWeekReset() {
-            const weekKey = getWeekKey();
-            const savedKey = localStorage.getItem('orhan_week_key');
-            if (savedKey !== weekKey) {
-                weekData = {};
-                weekDays.forEach(d => weekData[d] = { s: 0, t: [] });
-                saveWeek();
-                localStorage.setItem('orhan_week_key', weekKey);
-                if (document.getElementById('week-area').style.display === 'block') renderWeek();
-                return true;
-            }
-            return false;
-        }
-
-        function initWeek() {
-            if (!checkWeekReset()) {
-                weekDays.forEach(d => {
-                    if (!weekData[d] || typeof weekData[d].s !== 'number') weekData[d] = { s: 0, t: [] };
-                });
-            }
-        }
-        initWeek();
-        // her 30 sn'de bir pazartesi 00:00 kontrolü
-        setInterval(checkWeekReset, 30000);
-
-        function toggleWeek() {
-            const el = document.getElementById('week-area');
-            const btn = document.getElementById('week-btn');
-            if (el.style.display === 'block') {
-                el.style.display = 'none';
-                btn.classList.remove('active');
-                localStorage.setItem('orhan_week_visible', '0');
-            } else {
-                el.style.display = 'block';
-                btn.classList.add('active');
-                localStorage.setItem('orhan_week_visible', '1');
-                renderWeek();
-            }
-        }
-
-        function todayName() {
-            const map = ["Pazar", "Pazartesi", "Salı", "Çarşamba", "Perşembe", "Cuma", "Cumartesi"];
-            return map[new Date().getDay()];
-        }
-
-        function secsToStr(s) {
-            if (!s || s <= 0) return '';
-            const h = Math.floor(s / 3600);
-            const m = Math.floor((s % 3600) / 60);
-            if (h > 0) return `${h}s ${m}dk`;
-            return `${m}dk`;
-        }
-
-        function renderWeek() {
-            const container = document.getElementById('week-days');
-            container.innerHTML = '';
-            let totalAll = 0;
-            const today = todayName();
-            weekDays.forEach(day => {
-                const d = weekData[day] || { s: 0, t: [] };
-                totalAll += d.s;
-                const dayEl = document.createElement('div');
-                dayEl.className = 'week-day' + (day === today ? ' today' : '');
-                dayEl.setAttribute('data-day', day);
-
-                let tasksHtml = '';
-                (d.t || []).forEach((task, i) => {
-                    tasksHtml += `<li class="week-task" draggable="true" data-day="${day}" data-idx="${i}">
-                        <span>${task}</span>
-                        <button class="week-task-del" onclick="event.stopPropagation(); removeWeekTask('${day}',${i})">×</button>
-                    </li>`;
-                });
-
-                dayEl.innerHTML = `
-                    <div class="week-day-name">${day}</div>
-                    <div class="week-day-hours">${secsToStr(d.s) || '<span class="week-day-hours small">—</span>'}</div>
-                    <ul class="week-tasks" id="wt-${day}">${tasksHtml}</ul>
-                    <div class="week-add-row">
-                        <input class="week-add-input" id="wa-${day}" placeholder="Görev ekle..." onkeypress="if(event.key==='Enter')addWeekTask('${day}')">
-                        <button class="week-add-task-btn" onclick="addWeekTask('${day}')">+</button>
-                    </div>
-                `;
-                container.appendChild(dayEl);
-            });
-
-            // Drag events
-            document.querySelectorAll('.week-task').forEach(el => {
-                el.addEventListener('dragstart', handleWeekDragStart);
-                el.addEventListener('dragend', handleWeekDragEnd);
-            });
-            document.querySelectorAll('.week-tasks').forEach(el => {
-                el.addEventListener('dragover', handleWeekDragOver);
-                el.addEventListener('dragenter', handleWeekDragEnter);
-                el.addEventListener('dragleave', handleWeekDragLeave);
-                el.addEventListener('drop', handleWeekDrop);
-            });
-
-            const totalRow = document.getElementById('week-total');
-            if (totalRow) totalRow.textContent = `Toplam: ${secsToStr(totalAll) || '0dk'}`;
-        }
-
-        let weekDragSrc = null;
-        function handleWeekDragStart(e) {
-            weekDragSrc = { day: e.target.getAttribute('data-day'), idx: parseInt(e.target.getAttribute('data-idx')) };
-            e.target.classList.add('dragging');
-            e.dataTransfer.effectAllowed = 'move';
-        }
-        function handleWeekDragEnd(e) {
-            e.target.classList.remove('dragging');
-            document.querySelectorAll('.week-task.drag-over').forEach(el => el.classList.remove('drag-over'));
-        }
-        function handleWeekDragOver(e) { e.preventDefault(); e.dataTransfer.dropEffect = 'move'; }
-        function handleWeekDragEnter(e) { e.preventDefault(); if (e.target.classList.contains('week-task')) e.target.classList.add('drag-over'); }
-        function handleWeekDragLeave(e) { if (e.target.classList.contains('week-task')) e.target.classList.remove('drag-over'); }
-        function handleWeekDrop(e) {
-            e.preventDefault();
-            const target = e.target.closest('.week-task');
-            if (!target || !weekDragSrc) return;
-            const targetDay = target.getAttribute('data-day');
-            const targetIdx = parseInt(target.getAttribute('data-idx'));
-            if (weekDragSrc.day !== targetDay) return; // sadece aynı gün içinde
-            const tasks = weekData[targetDay].t;
-            const [moved] = tasks.splice(weekDragSrc.idx, 1);
-            tasks.splice(targetIdx, 0, moved);
-            weekData[targetDay].t = tasks;
-            saveWeek();
-            renderWeek();
-        }
-
-        function addWeekTask(day) {
-            const input = document.getElementById(`wa-${day}`);
-            const text = input.value.trim();
-            if (!text) return;
-            if (!weekData[day]) weekData[day] = { s: 0, t: [] };
-            weekData[day].t.push(text);
-            saveWeek();
-            input.value = '';
-            renderWeek();
-        }
-
-        function removeWeekTask(day, idx) {
-            if (weekData[day] && weekData[day].t) {
-                weekData[day].t.splice(idx, 1);
-                saveWeek();
-                renderWeek();
-            }
-        }
-
-        function addSecondsToToday(seconds) {
-            const day = todayName();
-            if (!weekData[day]) weekData[day] = { s: 0, t: [] };
-            weekData[day].s = (weekData[day].s || 0) + seconds;
-            saveWeek();
-            if (document.getElementById('week-area').style.display === 'block') renderWeek();
-        }
-
-        function resetWeek() {
-            weekData = {};
-            weekDays.forEach(d => weekData[d] = { s: 0, t: [] });
-            saveWeek();
-            renderWeek();
+        function clearNotes() {
+            const el = document.getElementById('notes-textarea');
+            if (el) { el.value = ''; localStorage.removeItem('orhan_notes'); }
         }
 
         // Başlangıç Çağrıları
@@ -3221,34 +2814,16 @@
         changeQuote();
         renderTodos();
         renderWrongWords();
+        loadNotes();
         setInterval(updateTimers, 1000);
-
-        // Açık panel durumlarını geri yükle
-        if (localStorage.getItem('orhan_game_visible') === '1') {
-            document.getElementById('game-area').style.display = 'block';
-            if (!currentQuestion.word) generateQuestion();
-        }
-        if (localStorage.getItem('orhan_week_visible') === '1') {
-            document.getElementById('week-area').style.display = 'block';
-            document.getElementById('week-btn').classList.add('active');
-            renderWeek();
-        }
 
         // Dark Mode Toggle
         const darkToggle = document.createElement('button');
         darkToggle.className = 'dark-toggle';
-        const savedMode = localStorage.getItem('orhan_dark_mode');
-        if (savedMode === 'dark') {
-            document.body.classList.add('dark-mode');
-            darkToggle.textContent = '☀️';
-        } else {
-            darkToggle.textContent = '🌙';
-        }
+        darkToggle.textContent = '🌙';
         darkToggle.onclick = () => {
             document.body.classList.toggle('dark-mode');
-            const isDark = document.body.classList.contains('dark-mode');
-            darkToggle.textContent = isDark ? '☀️' : '🌙';
-            localStorage.setItem('orhan_dark_mode', isDark ? 'dark' : 'light');
+            darkToggle.textContent = document.body.classList.contains('dark-mode') ? '☀️' : '🌙';
         };
         document.body.appendChild(darkToggle);
     </script>
