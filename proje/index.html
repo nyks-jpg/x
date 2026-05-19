@@ -3185,15 +3185,15 @@
                     vr: (Math.random() - 0.5) * 4
                 });
             }
-            let frame = 0;
-            const maxFrames = 200;
             function draw() {
+                let alive = false;
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
                 particles.forEach(p => {
                     p.y += p.vy;
                     p.x += p.vx;
                     p.vy += 0.04;
                     p.rot += p.vr;
+                    if (p.y < canvas.height + 20) alive = true;
                     ctx.save();
                     ctx.translate(p.x, p.y);
                     ctx.rotate(p.rot * Math.PI / 180);
@@ -3201,8 +3201,7 @@
                     ctx.fillRect(-p.w/2, -p.h/2, p.w, p.h);
                     ctx.restore();
                 });
-                frame++;
-                if (frame < maxFrames) requestAnimationFrame(draw);
+                if (alive) requestAnimationFrame(draw);
                 else canvas.remove();
             }
             draw();
