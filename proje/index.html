@@ -169,8 +169,9 @@
         }
         .flashcard-overlay.open { display: flex; }
         .flashcard-modal {
-            background: rgba(30, 30, 50, 0.95);
+            background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
             border: 1px solid rgba(255,255,255,0.1);
             border-radius: 28px;
             padding: 2rem;
@@ -259,7 +260,7 @@
         }
 
         body.dark-mode .flashcard-overlay { background: rgba(0,0,0,0.75); }
-        body.dark-mode .flashcard-modal { background: rgba(15, 15, 30, 0.97); border-color: rgba(255,255,255,0.06); }
+        body.dark-mode .flashcard-modal { background: rgba(20, 20, 40, 0.6) !important; border-color: rgba(255,255,255,0.08) !important; }
         body.dark-mode .flashcard-front,
         body.dark-mode .flashcard-back { background: rgba(255,255,255,0.02); border-color: rgba(255,255,255,0.03); }
         body.dark-mode .flashcard-back { background: rgba(255,179,198,0.03); border-color: rgba(255,179,198,0.06); }
@@ -377,7 +378,7 @@
             text-shadow: 0 2px 24px rgba(255,179,198,0.2);
         }
 
-        .stopwatch-title { display:flex; gap:8px; align-items:center; flex-wrap:wrap; }
+        .stopwatch-title { display:flex; gap:8px; align-items:center; flex-wrap:wrap; justify-content:center; }
 
         .stopwatch-mode-btn {
             font-size: 0.55rem;
@@ -1726,8 +1727,15 @@
                 <span class="stopwatch-mode-btn active" data-mode="stopwatch" onclick="setStopwatchMode('stopwatch')">Süre Tut</span>
                 <span class="stopwatch-mode-btn" data-mode="countdown" onclick="setStopwatchMode('countdown')">Geri Say</span>
             </div>
-            <div id="countdown-input-wrap" style="display:none;margin-bottom:12px;">
-                <input type="number" id="countdown-input" min="1" max="999" placeholder="Dakika" style="width:100%;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:10px 14px;color:white;font-size:1rem;text-align:center;outline:none;font-family:'Mulish',sans-serif;">
+            <div id="countdown-input-wrap" style="display:none;margin-bottom:12px;text-align:center;">
+                <div style="display:inline-flex;gap:6px;align-items:center;">
+                    <input type="number" id="cd-h" min="0" max="99" value="0" placeholder="00" style="width:50px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:8px 6px;color:white;font-size:1rem;text-align:center;outline:none;font-family:'Mulish',sans-serif;">
+                    <span style="color:rgba(255,255,255,0.3);font-size:0.7rem;">s</span>
+                    <input type="number" id="cd-m" min="0" max="59" value="0" placeholder="00" style="width:50px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:8px 6px;color:white;font-size:1rem;text-align:center;outline:none;font-family:'Mulish',sans-serif;">
+                    <span style="color:rgba(255,255,255,0.3);font-size:0.7rem;">d</span>
+                    <input type="number" id="cd-s" min="0" max="59" value="0" placeholder="00" style="width:50px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:8px 6px;color:white;font-size:1rem;text-align:center;outline:none;font-family:'Mulish',sans-serif;">
+                    <span style="color:rgba(255,255,255,0.3);font-size:0.7rem;">sn</span>
+                </div>
             </div>
             <div class="stopwatch-display" id="stopwatch-display">00:00:00</div>
             <button class="stopwatch-btn" id="start-stop-btn" onclick="toggleStopwatch()">Başlat</button>
@@ -1931,15 +1939,17 @@
                 return;
             }
             if (stopwatchMode === 'countdown') {
-                const input = document.getElementById('countdown-input');
-                const minutes = parseInt(input.value);
-                if (!minutes || minutes < 1) { input.focus(); return; }
-                elapsedSeconds = minutes * 60;
-                countdownTotal = elapsedSeconds;
-                const m = Math.floor(elapsedSeconds / 60);
-                const s = elapsedSeconds % 60;
+                const h = parseInt(document.getElementById('cd-h').value) || 0;
+                const m = parseInt(document.getElementById('cd-m').value) || 0;
+                const s = parseInt(document.getElementById('cd-s').value) || 0;
+                const total = h * 3600 + m * 60 + s;
+                if (total < 1) { return; }
+                elapsedSeconds = total;
+                countdownTotal = total;
+                const mm = Math.floor(elapsedSeconds / 60);
+                const ss = elapsedSeconds % 60;
                 document.getElementById('stopwatch-display').innerText =
-                    `${m < 10 ? '0'+m : m}:${s < 10 ? '0'+s : s}`;
+                    `${mm < 10 ? '0'+mm : mm}:${ss < 10 ? '0'+ss : ss}`;
             }
             stopwatchInterval = setInterval(updateStopwatch, 1000);
             btn.innerText = "Durdur";
