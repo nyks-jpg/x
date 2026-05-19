@@ -1720,7 +1720,10 @@
         <div class="wrong-words-container">
             <div class="wrong-words-header">
                 <div class="wrong-words-title" style="margin-bottom:0;">Yanlış Bilinen Kelimeler</div>
-                <button class="copy-wrong-btn" id="copy-wrong-btn" onclick="copyWrongWords()">📋 Kopyala</button>
+                <div style="display:flex;gap:6px;">
+                    <button class="copy-wrong-btn" onclick="clearWrongWords()" style="font-size:0.5rem;">Temizle</button>
+                    <button class="copy-wrong-btn" id="copy-wrong-btn" onclick="copyWrongWords()">📋 Kopyala</button>
+                </div>
             </div>
             <ul id="wrong-words-list" class="wrong-words-list"></ul>
         </div>
@@ -1989,6 +1992,11 @@
 
         function deleteWrongWord(index) {
             wrongWords.splice(index, 1);
+            renderWrongWords();
+        }
+
+        function clearWrongWords() {
+            wrongWords = [];
             renderWrongWords();
         }
 
@@ -3371,9 +3379,15 @@
 
         // FLASHCARD
         let fcIndex = 0;
+        let fcList = [];
+
+        function shuffleArr(a) {
+            for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; }
+            return a;
+        }
 
         function openFlashcards() {
-            const list = JSON.parse(localStorage.getItem('orhan_wrong_words')) || [];
+            fcList = shuffleArr(JSON.parse(localStorage.getItem('orhan_wrong_words')) || []);
             const overlay = document.getElementById('flashcard-overlay');
             const emptyEl = document.getElementById('fc-empty');
             const modal = document.querySelector('.flashcard-modal');
@@ -3390,7 +3404,7 @@
             modal.querySelector('.flashcard-nav').style.display = 'flex';
             modal.querySelector('.flashcard-progress').style.display = 'block';
             fcIndex = 0;
-            showFlashcard(list);
+            showFlashcard();
             overlay.classList.add('open');
         }
 
@@ -3399,14 +3413,14 @@
             document.getElementById('flashcard-overlay').classList.remove('open');
         }
 
-        function showFlashcard(list) {
-            if (!list || list.length === 0) return;
-            const item = list[fcIndex];
+        function showFlashcard() {
+            if (!fcList || fcList.length === 0) return;
+            const item = fcList[fcIndex];
             document.getElementById('fc-front').innerHTML = `<div class="flashcard-word">${item.word}</div><div class="flashcard-tap-hint">DOKUN</div>`;
             document.getElementById('fc-back').innerHTML = `<div class="flashcard-mean">${item.mean}</div>`;
-            document.getElementById('fc-count').textContent = `${fcIndex + 1} / ${list.length}`;
+            document.getElementById('fc-count').textContent = `${fcIndex + 1} / ${fcList.length}`;
             document.getElementById('fc-card').classList.remove('flipped');
-            const pct = ((fcIndex + 1) / list.length) * 100;
+            const pct = ((fcIndex + 1) / fcList.length) * 100;
             let bar = document.querySelector('.flashcard-progress-bar');
             if (!bar) {
                 bar = document.createElement('div');
@@ -3421,13 +3435,11 @@
         }
 
         function nextFlashcard() {
-            const list = JSON.parse(localStorage.getItem('orhan_wrong_words')) || [];
-            if (fcIndex < list.length - 1) { fcIndex++; showFlashcard(list); }
+            if (fcIndex < fcList.length - 1) { fcIndex++; showFlashcard(); }
         }
 
         function prevFlashcard() {
-            const list = JSON.parse(localStorage.getItem('orhan_wrong_words')) || [];
-            if (fcIndex > 0) { fcIndex--; showFlashcard(list); }
+            if (fcIndex > 0) { fcIndex--; showFlashcard(); }
         }
 
     // ========================================================
