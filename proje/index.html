@@ -1123,27 +1123,43 @@
             margin-right: auto;
         }
         .week-reset-btn:hover {
-            background: rgba(255,255,255,0.12);
+            background: rgba(255, 112, 152, 0.12);
             color: #ff7098;
-            border-color: rgba(255,112,152,0.3);
+            border-color: rgba(255, 112, 152, 0.3);
         }
-        body.dark-mode .week-container {
-            background: rgba(20, 20, 40, 0.6) !important;
-            border-color: rgba(255,255,255,0.08) !important;
+
+        .week-task.done span {
+            text-decoration: line-through;
+            opacity: 0.4;
         }
-        body.dark-mode .week-day {
-            background: rgba(255,255,255,0.03);
-            border-color: rgba(255,255,255,0.05);
+
+        .week-task .tick-btn {
+            background: none;
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 50%;
+            width: 16px;
+            height: 16px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.5rem;
+            cursor: pointer;
+            flex-shrink: 0;
+            padding: 0;
+            transition: all 0.2s;
+            color: transparent;
         }
-        body.dark-mode .week-day.today {
-            border-color: #ff477e !important;
-            border-width: 2px;
-            background: rgba(255,71,126,0.18) !important;
-            box-shadow: 0 0 24px rgba(255,71,126,0.2);
+
+        .week-task .tick-btn:hover {
+            border-color: rgba(255,112,152,0.4);
+            color: rgba(255,112,152,0.6);
         }
-        body.dark-mode .week-day.today .week-day-name {
-            color: #ff90b0;
+
+        .week-task.done .tick-btn {
+            border-color: #4ade80;
+            color: #4ade80;
         }
+
         body.dark-mode .week-day.today .week-day-hours {
             color: #ff7098;
         }
@@ -1432,6 +1448,7 @@
     <div class="ai-container">
         <div class="ai-header">
             <span class="ai-header-text">Oran'a Sor</span>
+            <span class="notes-clear-btn" onclick="clearChat()">Yeni Sohbet</span>
         </div>
         <div class="ai-img-preview" id="ai-img-preview">
             <img id="ai-img-preview-img" src="" alt="">
@@ -3149,6 +3166,11 @@
             }
         }
 
+        function clearChat() {
+            const el = document.getElementById('ai-response');
+            if (el) { el.textContent = ''; el.className = 'ai-response'; }
+        }
+
         // HAFTALIK PROGRAM
         const weekDays = ["Pazartesi", "Salı", "Çarşamba", "Perşembe", "Cuma", "Cumartesi", "Pazar"];
         let weekData = JSON.parse(localStorage.getItem('orhan_weekly_v3')) || {};
@@ -3233,8 +3255,11 @@
 
                 let tasksHtml = '';
                 (d.t || []).forEach((task, i) => {
-                    tasksHtml += `<li class="week-task" draggable="true" data-day="${day}" data-idx="${i}">
-                        <span>${task}</span>
+                    const text = typeof task === 'string' ? task : (task.t || task.text || '');
+                    const done = typeof task === 'object' && (task.d === true || task.done === true);
+                    tasksHtml += `<li class="week-task${done ? ' done' : ''}" draggable="true" data-day="${day}" data-idx="${i}">
+                        <button class="tick-btn" onclick="event.stopPropagation(); toggleWeekTask('${day}',${i})">${done ? '✓' : ''}</button>
+                        <span>${text}</span>
                         <button class="week-task-del" onclick="event.stopPropagation(); removeWeekTask('${day}',${i})">×</button>
                     </li>`;
                 });
@@ -3313,6 +3338,32 @@
                 renderWeek();
             }
         }
+
+        function toggleWeekTask(day, idx) {
+            if (weekData[day] && weekData[day].t && weekData[day].t[idx]) {
+                const task = weekData[day].t[idx];
+                if (typeof task === 'string') {
+                    weekData[day].t[idx] = { t: task, d: true };
+                } else {
+                    task.d = !task.d;
+                }
+                saveWeek();
+                renderWeek();
+            }
+        }
+
+        function migrateWeekTasks() {
+            weekDays.forEach(day => {
+                if (weekData[day] && weekData[day].t) {
+                    weekData[day].t = weekData[day].t.map(task => {
+                        if (typeof task === 'string') return { t: task, d: false };
+                        return task;
+                    });
+                }
+            });
+        }
+        // migrate old string tasks to object format
+        migrateWeekTasks();
 
         function addSecondsToToday(seconds) {
             const day = todayName();
