@@ -744,6 +744,7 @@
         .ai-header {
             display: flex;
             align-items: center;
+            justify-content: space-between;
             gap: 10px;
             margin-bottom: 18px;
         }
@@ -1370,6 +1371,20 @@
         body.dark-mode .option-btn { background: rgba(20, 20, 40, 0.5); border-color: rgba(255,255,255,0.1); color: #e0e0e0; }
         body.dark-mode .wrong-word-item { background: rgba(40, 20, 20, 0.4); border-color: rgba(255,80,80,0.2); color: #e0a0a0; }
         body.dark-mode .motivation-text { color: #e0d0d8; text-shadow: 0 1px 30px rgba(100, 50, 80, 0.2); }
+        body.dark-mode .word-game-btn,
+        body.dark-mode .week-btn {
+            background: rgba(20, 20, 40, 0.6);
+            border-color: rgba(255,255,255,0.15);
+            box-shadow: 0 4px 24px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.06);
+        }
+        body.dark-mode .word-game-btn:hover,
+        body.dark-mode .week-btn:hover {
+            background: rgba(20, 20, 40, 0.8);
+        }
+        body.dark-mode .week-btn.active {
+            background: rgba(255, 179, 198, 0.15);
+            border-color: rgba(255, 179, 198, 0.3);
+        }
 
         @media (max-width: 768px) {
             body { padding: 70px 10px 30px 10px; }
@@ -1556,7 +1571,15 @@
             "Şimdi ter dökmeyen, ileride gözyaşı döker.",
             "Başarı, her gün tekrar edilen küçük çabaların toplamıdır.",
             "Hayallerin, bahanelerinden daha büyük olmak zorunda.",
-            "Bugünün emeği, yarının özgürlüğüdür."
+            "Bugünün emeği, yarının özgürlüğüdür.",
+            "Her gün bir adım daha yaklaşıyorsun hedefine.",
+            "Sen bunu başarabilirsin, yeter ki inan.",
+            "Bugün kendine yatırım yap, yarın karşılığını al.",
+            "Vazgeçmek kolaydır, asıl güç devam etmektir.",
+            "Küçük zaferler büyük başarıları doğurur.",
+            "Geç kalmış değilsin, tam zamanındasın.",
+            "Disiplin, motivasyonun olmadığı günlerde seni ayakta tutar.",
+            "Potansiyelinin farkına var ve harekete geç."
         ];
 
         function changeQuote() {
