@@ -1547,7 +1547,7 @@
             min-width: 40px;
             text-align: center;
         }
-        .notes-page-add {
+        .notes-page-add, .notes-page-del {
             font-size: 0.5rem;
             letter-spacing: 2px;
             text-transform: uppercase;
@@ -1557,9 +1557,10 @@
             border-radius: 12px;
             border: 1px solid rgba(255,255,255,0.06);
             transition: 0.2s;
-            margin-left: auto;
         }
         .notes-page-add:hover { color: #ffb3c6; border-color: rgba(255,179,198,0.2); }
+        .notes-page-del:hover { color: #ff477e; border-color: rgba(255,71,126,0.2); }
+        .notes-page-add { margin-left: auto; }
 
         /* Dark Mode Toggle */
         .dark-toggle {
@@ -1793,12 +1794,13 @@
     <div class="notes-container">
         <div class="notes-header">
             <span class="notes-title">Not Defteri</span>
-            <span class="notes-clear-btn" onclick="clearNotes()">Temizle</span>
+            <span class="copy-wrong-btn" onclick="clearNotes()" style="font-size:0.55rem;letter-spacing:2px;text-transform:uppercase;">Temizle</span>
         </div>
         <div class="notes-pages" id="notes-pages">
             <span class="notes-page-btn" onclick="notesPrevPage()">◀</span>
             <span class="notes-page-count" id="notes-page-count">1 / 1</span>
             <span class="notes-page-btn" onclick="notesNextPage()">▶</span>
+            <span class="notes-page-del" onclick="notesDeletePage()">Sil</span>
             <span class="notes-page-add" onclick="notesAddPage()">+ Sayfa</span>
         </div>
         <textarea class="notes-textarea" id="notes-textarea" placeholder="Not almak için buraya yaz..." oninput="saveNotes();autoResize(this)"></textarea>
@@ -1969,12 +1971,12 @@
             if (isRunning) {
                 clearInterval(stopwatchInterval);
                 isRunning = false;
-                btn.innerText = "Başlat";
+                btn.innerText = stopwatchMode === 'countdown' && elapsedSeconds > 0 ? "Devam Et" : "Başlat";
                 btn.style.background = "rgba(255, 255, 255, 0.15)";
                 saveStopwatch();
                 return;
             }
-            if (stopwatchMode === 'countdown') {
+            if (stopwatchMode === 'countdown' && elapsedSeconds <= 0) {
                 const h = parseInt(document.getElementById('cd-h').value) || 0;
                 const m = parseInt(document.getElementById('cd-m').value) || 0;
                 const s = parseInt(document.getElementById('cd-s').value) || 0;
@@ -1982,6 +1984,8 @@
                 if (total < 1) { return; }
                 elapsedSeconds = total;
                 countdownTotal = total;
+            }
+            if (stopwatchMode === 'countdown' && elapsedSeconds > 0) {
                 const mm = Math.floor(elapsedSeconds / 60);
                 const ss = elapsedSeconds % 60;
                 document.getElementById('stopwatch-display').innerText =
@@ -4004,6 +4008,16 @@
             loadNotes();
             const el = document.getElementById('notes-textarea');
             if (el) { el.focus(); autoResize(el); }
+        }
+
+        function notesDeletePage() {
+            if (notesPages.length <= 1) return;
+            saveNotes();
+            notesPages.splice(notesCurrentPage, 1);
+            if (notesCurrentPage >= notesPages.length) notesCurrentPage = notesPages.length - 1;
+            localStorage.setItem('orhan_notes_pages', JSON.stringify(notesPages));
+            localStorage.setItem('orhan_notes_current', notesCurrentPage);
+            loadNotes();
         }
 
         // Başlangıç çağrıları
