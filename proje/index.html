@@ -122,6 +122,40 @@
         }
         .fc-btn:hover { background: rgba(255, 255, 255, 0.18); color: #ff477e; transform: scale(1.08) translateY(-1px); box-shadow: 0 8px 32px rgba(0,0,0,0.22), inset 0 1px 0 rgba(255,255,255,0.2); }
 
+        .week-btn.active,
+        .word-game-btn.active,
+        .ai-btn.active {
+            background: rgba(255, 179, 198, 0.18);
+            border-color: rgba(255, 179, 198, 0.35);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+        }
+
+        .ai-btn {
+            position: absolute;
+            top: 196px;
+            left: 25px;
+            width: 46px;
+            height: 46px;
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            border-radius: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #ffb3c6;
+            text-decoration: none;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 0 4px 24px rgba(0,0,0,0.18), inset 0 1px 0 rgba(255,255,255,0.12);
+            z-index: 100;
+            cursor: pointer;
+            font-size: 18px;
+            transform: translateZ(0);
+        }
+        .ai-btn:hover { background: rgba(255, 255, 255, 0.18); color: #ff477e; transform: scale(1.08) translateY(-1px); box-shadow: 0 8px 32px rgba(0,0,0,0.22), inset 0 1px 0 rgba(255,255,255,0.2); }
+
         .flashcard-overlay {
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
@@ -224,12 +258,14 @@
             font-size: 0.9rem;
         }
 
-        body.dark-mode .fc-btn {
+        body.dark-mode .fc-btn,
+        body.dark-mode .ai-btn {
             background: rgba(20, 20, 40, 0.6);
             border-color: rgba(255,255,255,0.15);
             box-shadow: 0 4px 24px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.06);
         }
-        body.dark-mode .fc-btn:hover { background: rgba(20, 20, 40, 0.8); }
+        body.dark-mode .fc-btn:hover,
+        body.dark-mode .ai-btn:hover { background: rgba(20, 20, 40, 0.8); }
         body.dark-mode .flashcard-modal { background: rgba(15, 15, 30, 0.97); }
 
         .main-row {
@@ -859,6 +895,7 @@
             flex-shrink: 0;
             position: relative;
             overflow: hidden;
+            display: none;
         }
 
         .ai-container::after {
@@ -1519,7 +1556,8 @@
             background: rgba(20, 20, 40, 0.8);
         }
         body.dark-mode .week-btn.active,
-        body.dark-mode .word-game-btn.active {
+        body.dark-mode .word-game-btn.active,
+        body.dark-mode .ai-btn.active {
             background: rgba(255, 179, 198, 0.12);
             border-color: rgba(255, 179, 198, 0.25);
         }
@@ -1529,6 +1567,7 @@
             .word-game-btn { top: 15px; left: 12px; width: 40px; height: 40px; }
             .week-btn { top: 63px; left: 12px; width: 40px; height: 40px; font-size: 16px; }
             .fc-btn { top: 111px; left: 12px; width: 40px; height: 40px; font-size: 16px; }
+            .ai-btn { top: 159px; left: 12px; width: 40px; height: 40px; font-size: 16px; }
             .countdown-top { top: 15px; right: 12px; gap: 6px; }
             .countdown-item { padding: 6px 8px; font-size: 0.65rem; }
             .countdown-item .cd-number { font-size: 0.8rem; }
@@ -1596,6 +1635,8 @@
     <div class="week-btn" id="week-btn" onclick="toggleWeek()" title="Haftalık Program">📅</div>
 
     <div class="fc-btn" id="flashcard-btn" onclick="openFlashcards()" title="Flashcard">🃏</div>
+
+    <div class="ai-btn" id="ai-btn" onclick="toggleAi()" title="Oran'a Sor">🤖</div>
 
     <div class="flashcard-overlay" id="flashcard-overlay" onclick="closeFlashcards(event)">
         <div class="flashcard-modal" onclick="event.stopPropagation()">
@@ -1679,7 +1720,7 @@
         <textarea class="notes-textarea" id="notes-textarea" placeholder="Not almak için buraya yaz..." oninput="saveNotes();autoResize(this)"></textarea>
     </div>
 
-    <div class="ai-container">
+    <div class="ai-container" id="ai-container">
         <div class="ai-header">
             <span class="ai-header-text">Oran'a Sor</span>
             <span class="notes-clear-btn" onclick="clearChat()">Yeni Sohbet</span>
@@ -3592,6 +3633,20 @@
             }
         }
 
+        function toggleAi() {
+            const el = document.getElementById('ai-container');
+            const btn = document.getElementById('ai-btn');
+            if (el.style.display === 'block') {
+                el.style.display = 'none';
+                btn.classList.remove('active');
+                localStorage.setItem('orhan_ai_visible', '0');
+            } else {
+                el.style.display = 'block';
+                btn.classList.add('active');
+                localStorage.setItem('orhan_ai_visible', '1');
+            }
+        }
+
         function todayName() {
             const map = ["Pazar", "Pazartesi", "Salı", "Çarşamba", "Perşembe", "Cuma", "Cumartesi"];
             return map[new Date().getDay()];
@@ -3786,6 +3841,10 @@
         if (localStorage.getItem('orhan_game_visible') === '1') {
             document.getElementById('game-area').style.display = 'block';
             if (!currentQuestion.word) generateQuestion();
+        }
+        if (localStorage.getItem('orhan_ai_visible') === '1') {
+            document.getElementById('ai-container').style.display = 'block';
+            document.getElementById('ai-btn').classList.add('active');
         }
         if (localStorage.getItem('orhan_week_visible') === '1') {
             document.getElementById('week-area').style.display = 'block';
