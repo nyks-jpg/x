@@ -100,9 +100,12 @@
             transform: scale(1.08) translateY(-1px);
             box-shadow: 0 8px 32px rgba(0,0,0,0.22), inset 0 1px 0 rgba(255,255,255,0.2);
         }
-        .week-btn.active {
-            background: rgba(255, 179, 198, 0.25);
-            border-color: rgba(255, 179, 198, 0.5);
+        .week-btn.active,
+        .word-game-btn.active {
+            background: rgba(255, 179, 198, 0.18);
+            border-color: rgba(255, 179, 198, 0.35);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
         }
 
         .main-row {
@@ -1381,9 +1384,10 @@
         body.dark-mode .week-btn:hover {
             background: rgba(20, 20, 40, 0.8);
         }
-        body.dark-mode .week-btn.active {
-            background: rgba(255, 179, 198, 0.15);
-            border-color: rgba(255, 179, 198, 0.3);
+        body.dark-mode .week-btn.active,
+        body.dark-mode .word-game-btn.active {
+            background: rgba(255, 179, 198, 0.12);
+            border-color: rgba(255, 179, 198, 0.25);
         }
 
         @media (max-width: 768px) {
@@ -1446,7 +1450,7 @@
 </head>
 <body>
 
-    <div class="word-game-btn" onclick="toggleWordGame()" title="Kelime Çalışmasını Aç/Kapat">
+    <div class="word-game-btn" id="word-game-btn" onclick="toggleWordGame()" title="Kelime Çalışmasını Aç/Kapat">
         <svg viewBox="0 0 24 24">
             <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
         </svg>
@@ -3081,12 +3085,15 @@
 
         function toggleWordGame() {
             const gameArea = document.getElementById('game-area');
+            const btn = document.getElementById('word-game-btn');
             if (gameArea.style.display === "block") {
                 gameArea.style.display = "none";
                 localStorage.setItem('orhan_game_visible', '0');
+                if (btn) btn.classList.remove('active');
             } else {
                 gameArea.style.display = "block";
                 localStorage.setItem('orhan_game_visible', '1');
+                if (btn) btn.classList.add('active');
                 if (!currentQuestion.word) generateQuestion();
             }
         }
@@ -3165,21 +3172,21 @@
             const ctx = canvas.getContext('2d');
             const colors = ['#ffb3c6','#ff7098','#ff477e','#ffd166','#06d6a0','#118ab2','#fcf6bd','#d0f4de'];
             const particles = [];
-            for (let i = 0; i < 120; i++) {
+            for (let i = 0; i < 250; i++) {
                 particles.push({
                     x: Math.random() * canvas.width,
                     y: Math.random() * canvas.height - canvas.height,
                     w: Math.random() * 8 + 4,
                     h: Math.random() * 6 + 3,
                     color: colors[Math.floor(Math.random() * colors.length)],
-                    vy: Math.random() * 3 + 2,
-                    vx: (Math.random() - 0.5) * 4,
+                    vy: Math.random() * 2 + 1.5,
+                    vx: (Math.random() - 0.5) * 3,
                     rot: Math.random() * 360,
-                    vr: (Math.random() - 0.5) * 6
+                    vr: (Math.random() - 0.5) * 4
                 });
             }
             let frame = 0;
-            const maxFrames = 120;
+            const maxFrames = 200;
             function draw() {
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
                 particles.forEach(p => {
