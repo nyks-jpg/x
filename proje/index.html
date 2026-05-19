@@ -3488,7 +3488,15 @@
                     task.d = !task.d;
                 }
                 saveWeek();
-                renderWeek();
+                const li = document.querySelector(`.week-task[data-day="${day}"][data-idx="${idx}"]`);
+                if (li) {
+                    const done = typeof weekData[day].t[idx] === 'object' && weekData[day].t[idx].d;
+                    li.classList.toggle('done', done);
+                    const btn = li.querySelector('.tick-btn');
+                    if (btn) btn.textContent = done ? '✓' : '';
+                } else {
+                    renderWeek();
+                }
             }
         }
 
