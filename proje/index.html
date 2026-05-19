@@ -1399,7 +1399,6 @@
         .notes-textarea {
             width: 100%;
             min-height: 100px;
-            max-height: 300px;
             background: rgba(0, 0, 0, 0.15);
             border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 16px;
@@ -1677,7 +1676,7 @@
             <span class="notes-title">Not Defteri</span>
             <span class="notes-clear-btn" onclick="clearNotes()">Temizle</span>
         </div>
-        <textarea class="notes-textarea" id="notes-textarea" placeholder="Not almak için buraya yaz..." oninput="saveNotes()"></textarea>
+        <textarea class="notes-textarea" id="notes-textarea" placeholder="Not almak için buraya yaz..." oninput="saveNotes();autoResize(this)"></textarea>
     </div>
 
     <div class="ai-container">
@@ -1721,7 +1720,7 @@
             <div class="wrong-words-header">
                 <div class="wrong-words-title" style="margin-bottom:0;">Yanlış Bilinen Kelimeler</div>
                 <div style="display:flex;gap:6px;">
-                    <button class="copy-wrong-btn" onclick="clearWrongWords()" style="font-size:0.5rem;">Temizle</button>
+                    <button class="copy-wrong-btn" onclick="clearWrongWords()">Temizle</button>
                     <button class="copy-wrong-btn" id="copy-wrong-btn" onclick="copyWrongWords()">📋 Kopyala</button>
                 </div>
             </div>
@@ -3391,7 +3390,7 @@
             const overlay = document.getElementById('flashcard-overlay');
             const emptyEl = document.getElementById('fc-empty');
             const modal = document.querySelector('.flashcard-modal');
-            if (list.length === 0) {
+            if (fcList.length === 0) {
                 overlay.classList.add('open');
                 emptyEl.style.display = 'block';
                 modal.querySelector('.flashcard-card').style.display = 'none';
@@ -3757,7 +3756,12 @@
         function loadNotes() {
             const saved = localStorage.getItem('orhan_notes');
             const el = document.getElementById('notes-textarea');
-            if (saved && el) el.value = saved;
+            if (saved && el) { el.value = saved; autoResize(el); }
+        }
+
+        function autoResize(el) {
+            el.style.height = 'auto';
+            el.style.height = el.scrollHeight + 'px';
         }
 
         function saveNotes() {
