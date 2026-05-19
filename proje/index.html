@@ -258,6 +258,16 @@
             font-size: 0.9rem;
         }
 
+        body.dark-mode .flashcard-overlay { background: rgba(0,0,0,0.75); }
+        body.dark-mode .flashcard-modal { background: rgba(15, 15, 30, 0.97); border-color: rgba(255,255,255,0.06); }
+        body.dark-mode .flashcard-front,
+        body.dark-mode .flashcard-back { background: rgba(255,255,255,0.02); border-color: rgba(255,255,255,0.03); }
+        body.dark-mode .flashcard-back { background: rgba(255,179,198,0.03); border-color: rgba(255,179,198,0.06); }
+        body.dark-mode .flashcard-word { color: rgba(255,255,255,0.8); }
+        body.dark-mode .flashcard-mean { color: #e0a0b0; }
+        body.dark-mode .fc-nav-btn { background: rgba(255,255,255,0.03); border-color: rgba(255,255,255,0.05); color: rgba(255,255,255,0.5); }
+        body.dark-mode .fc-nav-btn:hover { background: rgba(255,179,198,0.08); color: #e0a0b0; }
+
         body.dark-mode .fc-btn,
         body.dark-mode .ai-btn {
             background: rgba(20, 20, 40, 0.6);
@@ -366,6 +376,23 @@
             margin-bottom: 20px;
             text-shadow: 0 2px 24px rgba(255,179,198,0.2);
         }
+
+        .stopwatch-title { display:flex; gap:8px; align-items:center; flex-wrap:wrap; }
+
+        .stopwatch-mode-btn {
+            font-size: 0.55rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.25);
+            cursor: pointer;
+            padding: 4px 12px;
+            border-radius: 20px;
+            border: 1px solid rgba(255,255,255,0.06);
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+        .stopwatch-mode-btn:hover { color: rgba(255,255,255,0.5); border-color: rgba(255,255,255,0.12); }
+        .stopwatch-mode-btn.active { color: #ffb3c6; border-color: rgba(255,179,198,0.3); background: rgba(255,179,198,0.08); }
 
         .stopwatch-btn {
             background: rgba(255, 255, 255, 0.15);
@@ -1695,7 +1722,13 @@
         </div>
 
         <div class="stopwatch-container">
-            <div class="stopwatch-title">Süre Başlat</div>
+            <div class="stopwatch-title">
+                <span class="stopwatch-mode-btn active" data-mode="stopwatch" onclick="setStopwatchMode('stopwatch')">Süre Tut</span>
+                <span class="stopwatch-mode-btn" data-mode="countdown" onclick="setStopwatchMode('countdown')">Geri Say</span>
+            </div>
+            <div id="countdown-input-wrap" style="display:none;margin-bottom:12px;">
+                <input type="number" id="countdown-input" min="1" max="999" placeholder="Dakika" style="width:100%;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:10px 14px;color:white;font-size:1rem;text-align:center;outline:none;font-family:'Mulish',sans-serif;">
+            </div>
             <div class="stopwatch-display" id="stopwatch-display">00:00:00</div>
             <button class="stopwatch-btn" id="start-stop-btn" onclick="toggleStopwatch()">Başlat</button>
             <button class="stopwatch-btn" onclick="resetStopwatch()">Sıfırla</button>
@@ -1723,7 +1756,7 @@
     <div class="ai-container" id="ai-container">
         <div class="ai-header">
             <span class="ai-header-text">Oran'a Sor</span>
-            <span class="notes-clear-btn" onclick="clearChat()">Yeni Sohbet</span>
+            <span class="copy-wrong-btn" onclick="clearChat()" style="font-size:0.55rem;letter-spacing:2px;text-transform:uppercase;">Yeni Sohbet</span>
         </div>
         <div class="ai-img-preview" id="ai-img-preview">
             <img id="ai-img-preview-img" src="" alt="">
@@ -1830,18 +1863,41 @@
             setTimeValues(target20 - now, '20');
         }
 
-        // KRONOMETRE
+        // KRONOMETRE / GERİ SAYIM
         let stopwatchInterval;
         let elapsedSeconds = parseInt(localStorage.getItem('orhan_elapsed')) || 0;
         let isRunning = false;
+        let stopwatchMode = localStorage.getItem('orhan_stopwatch_mode') || 'stopwatch';
+        let countdownTotal = 0;
+
+        function setStopwatchMode(mode) {
+            if (mode === stopwatchMode) return;
+            clearInterval(stopwatchInterval);
+            isRunning = false;
+            stopwatchMode = mode;
+            localStorage.setItem('orhan_stopwatch_mode', mode);
+            document.querySelectorAll('.stopwatch-mode-btn').forEach(el => {
+                el.classList.toggle('active', el.dataset.mode === mode);
+            });
+            document.getElementById('countdown-input-wrap').style.display = mode === 'countdown' ? 'block' : 'none';
+            document.getElementById('stopwatch-display').innerText = '00:00:00';
+            const btn = document.getElementById('start-stop-btn');
+            btn.innerText = 'Başlat';
+            btn.style.background = 'rgba(255, 255, 255, 0.15)';
+            elapsedSeconds = 0;
+        }
 
         function saveStopwatch() {
             localStorage.setItem('orhan_elapsed', elapsedSeconds);
             localStorage.setItem('orhan_stopwatch_running', isRunning ? '1' : '');
         }
 
-        // Sayfa yüklenince süreyi göster ve çalışıyorsa devam et
         (function restoreStopwatch() {
+            const savedMode = localStorage.getItem('orhan_stopwatch_mode') || 'stopwatch';
+            document.querySelectorAll('.stopwatch-mode-btn').forEach(el => {
+                el.classList.toggle('active', el.dataset.mode === savedMode);
+            });
+            if (savedMode === 'countdown') document.getElementById('countdown-input-wrap').style.display = 'block';
             const hrs = Math.floor(elapsedSeconds / 3600);
             const mins = Math.floor((elapsedSeconds % 3600) / 60);
             const secs = elapsedSeconds % 60;
@@ -1849,7 +1905,7 @@
             if (display) display.innerText =
                 `${hrs < 10 ? '0'+hrs : hrs}:${mins < 10 ? '0'+mins : mins}:${secs < 10 ? '0'+secs : secs}`;
             const wasRunning = localStorage.getItem('orhan_stopwatch_running') === '1';
-            if (wasRunning) {
+            if (wasRunning && savedMode === 'stopwatch') {
                 isRunning = true;
                 stopwatchInterval = setInterval(updateStopwatch, 1000);
                 const btn = document.getElementById('start-stop-btn');
@@ -1861,17 +1917,34 @@
             const btn = document.getElementById('start-stop-btn');
             if (isRunning) {
                 clearInterval(stopwatchInterval);
-                addSecondsToToday(elapsedSeconds);
+                if (stopwatchMode === 'stopwatch') {
+                    addSecondsToToday(elapsedSeconds);
+                } else {
+                    addSecondsToToday(countdownTotal - elapsedSeconds);
+                }
                 elapsedSeconds = 0;
                 document.getElementById('stopwatch-display').innerText = "00:00:00";
                 btn.innerText = "Başlat";
                 btn.style.background = "rgba(255, 255, 255, 0.15)";
-            } else {
-                stopwatchInterval = setInterval(updateStopwatch, 1000);
-                btn.innerText = "Durdur";
-                btn.style.background = "rgba(231, 76, 60, 0.3)";
+                isRunning = false;
+                saveStopwatch();
+                return;
             }
-            isRunning = !isRunning;
+            if (stopwatchMode === 'countdown') {
+                const input = document.getElementById('countdown-input');
+                const minutes = parseInt(input.value);
+                if (!minutes || minutes < 1) { input.focus(); return; }
+                elapsedSeconds = minutes * 60;
+                countdownTotal = elapsedSeconds;
+                const m = Math.floor(elapsedSeconds / 60);
+                const s = elapsedSeconds % 60;
+                document.getElementById('stopwatch-display').innerText =
+                    `${m < 10 ? '0'+m : m}:${s < 10 ? '0'+s : s}`;
+            }
+            stopwatchInterval = setInterval(updateStopwatch, 1000);
+            btn.innerText = "Durdur";
+            btn.style.background = "rgba(231, 76, 60, 0.3)";
+            isRunning = true;
             saveStopwatch();
         }
 
@@ -1887,13 +1960,33 @@
         }
 
         function updateStopwatch() {
-            elapsedSeconds++;
-            const hrs = Math.floor(elapsedSeconds / 3600);
-            const mins = Math.floor((elapsedSeconds % 3600) / 60);
-            const secs = elapsedSeconds % 60;
-            document.getElementById('stopwatch-display').innerText =
-                `${hrs < 10 ? '0'+hrs : hrs}:${mins < 10 ? '0'+mins : mins}:${secs < 10 ? '0'+secs : secs}`;
-            saveStopwatch();
+            if (stopwatchMode === 'stopwatch') {
+                elapsedSeconds++;
+                const hrs = Math.floor(elapsedSeconds / 3600);
+                const mins = Math.floor((elapsedSeconds % 3600) / 60);
+                const secs = elapsedSeconds % 60;
+                document.getElementById('stopwatch-display').innerText =
+                    `${hrs < 10 ? '0'+hrs : hrs}:${mins < 10 ? '0'+mins : mins}:${secs < 10 ? '0'+secs : secs}`;
+                saveStopwatch();
+            } else {
+                elapsedSeconds--;
+                if (elapsedSeconds <= 0) {
+                    elapsedSeconds = 0;
+                    clearInterval(stopwatchInterval);
+                    isRunning = false;
+                    const btn = document.getElementById('start-stop-btn');
+                    btn.innerText = "Başlat";
+                    btn.style.background = "rgba(255, 255, 255, 0.15)";
+                    addSecondsToToday(countdownTotal);
+                    document.getElementById('stopwatch-display').innerText = "00:00";
+                    saveStopwatch();
+                    return;
+                }
+                const m = Math.floor(elapsedSeconds / 60);
+                const s = elapsedSeconds % 60;
+                document.getElementById('stopwatch-display').innerText =
+                    `${m < 10 ? '0'+m : m}:${s < 10 ? '0'+s : s}`;
+            }
         }
 
         // YAPILACAKLAR LİSTESİ (TODO) MANTIĞI
