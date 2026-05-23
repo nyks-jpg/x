@@ -2251,6 +2251,7 @@
         function toggleTodo(index) {
             todos[index].completed = !todos[index].completed;
             renderTodos();
+            if (authUsername) saveToServer();
         }
 
         function deleteTodo(index) {
@@ -4738,7 +4739,7 @@
 
         function applyServerData(data) {
             if (!data || data.todos === undefined) return;
-            if (data.todos !== undefined && data.todos.length > 0) { localStorage.setItem('orhan_todos', JSON.stringify(data.todos)); todos = data.todos; }
+            if (data.todos !== undefined && data.todos.length > 0 && authUsername) { localStorage.setItem('orhan_todos', JSON.stringify(data.todos)); todos = data.todos; }
             if (data.totalStudy !== undefined) localStorage.setItem('orhan_total_study_v2', data.totalStudy);
             if (data.studyDays !== undefined) localStorage.setItem('orhan_study_days_v2', JSON.stringify(data.studyDays));
             // restore weekly seconds (weeklySecs = new, weekly = legacy), NEVER touch tasks
@@ -4797,7 +4798,7 @@
             }, 2000);
         }
 
-        // Try auto-login on page load (server tek kaynak)
+        // Auto-login on page load: localStorage öncelikli (sayfa kapanırken kaydedildi)
         (async function() {
             var tok = getCookie('session');
             if (!tok) return;
@@ -4812,8 +4813,8 @@
                         if (data.todos !== undefined) {
                             lbName = decodeURIComponent(uname);
                             localStorage.setItem('orhan_lb_name_v4', lbName);
-                            applyServerData(data);
                         }
+                        // localStorage'dan render et (sunucudaki eski verilerle ezme)
                         renderTodos();
                         renderAnalysis();
                         renderWrongWords();
